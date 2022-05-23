@@ -1,9 +1,13 @@
-import React from 'react';
+import {ApolloProvider} from '@apollo/client';
+import {client} from './apollo';
+import Router from './routes';
 
 const App = () => {
 	return (
 		<>
-			<h1 className='real'>Uber Eats</h1>
+			<ApolloProvider client={client}>
+				<Router />
+			</ApolloProvider>
 		</>
 	);
 };
