@@ -9,7 +9,7 @@ const Home = () => {
 		<>
 			<Nav />
 
-			<div className='container'>Welcom to Home</div>
+			<div className='container h-screen'>Welcom to Home</div>
 			{state?.message !== undefined ? <span className='bg-green-600 text-white'>{state?.message}</span> : null}
 		</>
 	);

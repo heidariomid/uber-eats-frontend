@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
+
+
+.input{
+  @apply text-center rounded-md bg-gray-200 shadow-inner focus:outline-none hover:bg-white hover:ring hover:ring-black hover:ring-opacity-50;
+  
+}
+.span{
+  @apply rounded-md text-white p-1 m-1 text-sm
+}
+.btn{
+  @apply text-white mt-3 p-1 py-1 rounded-md
+}
 @tailwind utilities;
