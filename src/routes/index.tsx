@@ -7,6 +7,7 @@ import NewUser from '../components/user/NewUser';
 import User from '../components/user/User';
 import {useReactiveVar} from '@apollo/client';
 import {isLoginVar} from '../apollo';
+import Signup from '../pages/Signup';
 
 const Router = () => {
 	const isLoggedIn = useReactiveVar(isLoginVar);
@@ -15,6 +16,7 @@ const Router = () => {
 		<Routes>
 			<Route path='/' element={isLoggedIn ? <Home /> : <Navigate to={'/auth/login'} />} />
 			<Route path='/auth/login' element={<Login />} />
+			<Route path='/auth/signup' element={<Signup />} />
 			<Route path='users' element={<Users />}>
 				<Route path='new' element={<NewUser />} />
 				<Route path='user' element={<User />} />

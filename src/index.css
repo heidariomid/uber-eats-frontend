@@ -3,13 +3,13 @@
 
 
 .input{
-  @apply text-center rounded-md bg-gray-200 shadow-inner focus:outline-none hover:bg-white hover:ring hover:ring-black hover:ring-opacity-50;
+  @apply p-2 border-2 border-gray-200 text-lg font-light focus:outline-none hover:border-gray-400 hover:transition-colors 
   
 }
 .span{
-  @apply rounded-md text-white p-1 m-1 text-sm
+  @apply  text-white p-1 m-1 text-sm
 }
 .btn{
-  @apply text-white mt-3 p-1 py-1 rounded-md
+  @apply text-white mt-3 p-1 py-1 
 }
 @tailwind utilities;

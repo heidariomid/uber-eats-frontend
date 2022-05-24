@@ -5,7 +5,7 @@
     "node_modules": true,
     "yarn.lock": true,
     "package-lock.json": true,
-    "tsconfig.json": true,
+    // "tsconfig.json": true,
     "README.md": true,
     // ".babelrc": true,
     // "index.html": true,

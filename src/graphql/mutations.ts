@@ -9,20 +9,14 @@ export const LOGIN_MUTATION = gql`
 		}
 	}
 `;
-// export const SIGN_UP_MUTATION = gql`
-// 	mutation ($firstName: String!, $lastName: String, $userName: String!, $email: String!, $password: String!) {
-// 		createAccount(firstName: $firstName, lastName: $lastName, userName: $userName, email: $email, password: $password) {
-// 			isSignUpSuccess
-// 			user {
-// 				id
-// 				email
-// 				avatar
-// 			}
-// 			message
-// 			error
-// 		}
-// 	}
-// `;
+export const SIGN_UP_MUTATION = gql`
+	mutation createAccount($data: createAccountInput!) {
+		createAccount(data: $data) {
+			ok
+			message
+		}
+	}
+`;
 
 // export const LIKE_PHOTO = gql`
 // 	mutation ($likePhotoId: Int!) {
