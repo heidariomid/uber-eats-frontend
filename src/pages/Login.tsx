@@ -2,7 +2,9 @@ import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {useLocation, useNavigate} from 'react-router-dom';
 import {isLoginVar} from '../apollo';
+import ErrorSpan from '../components/user/errors/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
+import {LoginInput, LoginOutput, MutationLoginArgs} from '../graphql/generated';
 interface ILoginForm {
 	email: string;
 	password: string;
@@ -27,7 +29,7 @@ const Login = () => {
 	});
 
 	const onCompleted = (data: any) => {
-		const {ok, message, token} = data.login;
+		const {ok, message, token}: LoginOutput = data?.login;
 		if (!ok) {
 			setError('email', {message});
 		}
@@ -37,19 +39,12 @@ const Login = () => {
 			navigate('/', {replace: true, state: {message}});
 		}
 	};
-	const [loginHandler, {loading}] = useMutation(LOGIN_MUTATION, {onCompleted});
+	const [loginHandler, {loading}] = useMutation<LoginInput, MutationLoginArgs>(LOGIN_MUTATION, {onCompleted});
 
 	const onValidSubmit = () => {
 		if (loading) return;
 		const {email, password} = getValues();
-		loginHandler({
-			variables: {
-				data: {
-					email,
-					password,
-				},
-			},
-		});
+		loginHandler({variables: {data: {email, password}}});
 	};
 
 	const emailRegister = {required: {value: true, message: 'email is required'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}, validate: (current: any) => current.includes('@')};
@@ -62,10 +57,10 @@ const Login = () => {
 				<h3 className=' font-bold text-lg text-gray-800'>Login</h3>
 				<div className='flex flex-col mt-5 px-20 '>
 					{state?.message !== undefined ? <span className='bg-green-600 span'>{state?.message}</span> : null}
-					{state?.error !== undefined ? <span className='bg-red-600 span'>{state?.error}</span> : null}
-					{errors.email?.type === 'validate' && <span className='bg-red-600 span'>email must include @</span>}
-					{errors?.email?.message && <span className='bg-red-600 span'>{errors?.email?.message}</span>}
-					{errors?.password?.message && <span className='bg-red-600 span'>{errors?.password?.message}</span>}
+					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
+					{errors.email?.type === 'validate' && <ErrorSpan message={'email must include @'} />}
+					{errors?.email?.message && <ErrorSpan message={errors?.email?.message} />}
+					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
 					<input className='input mb-3 p-1' {...register('email', emailRegister)} type='text' placeholder='email' onKeyDown={clearEmailErrors} />
