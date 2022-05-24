@@ -73,3 +73,5 @@
 // 	${PHOTO_FEAGMENT}
 // 	${COMMENT_FRAGMENT}
 // `;
+
+export {};

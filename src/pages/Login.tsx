@@ -4,7 +4,7 @@ import {useLocation, useNavigate} from 'react-router-dom';
 import {isLoginVar} from '../apollo';
 import ErrorSpan from '../components/user/errors/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
-import {LoginInput, LoginOutput, MutationLoginArgs} from '../graphql/generated';
+import {LoginMutation, LoginMutationVariables} from '../graphql/schemaTypes';
 interface ILoginForm {
 	email: string;
 	password: string;
@@ -28,8 +28,8 @@ const Login = () => {
 		},
 	});
 
-	const onCompleted = (data: any) => {
-		const {ok, message, token}: LoginOutput = data?.login;
+	const onCompleted = (data: LoginMutation) => {
+		const {ok, message, token} = data?.login;
 		if (!ok) {
 			setError('email', {message});
 		}
@@ -39,7 +39,7 @@ const Login = () => {
 			navigate('/', {replace: true, state: {message}});
 		}
 	};
-	const [loginHandler, {loading}] = useMutation<LoginInput, MutationLoginArgs>(LOGIN_MUTATION, {onCompleted});
+	const [loginHandler, {loading}] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN_MUTATION, {onCompleted});
 
 	const onValidSubmit = () => {
 		if (loading) return;
