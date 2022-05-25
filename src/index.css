@@ -7,9 +7,9 @@
   
 }
 .span{
-  @apply  text-white p-1 m-1 text-sm
+  @apply  p-1 m-1 text-sm
 }
 .btn{
-  @apply text-white mt-3 p-1 py-1 
+  @apply text-white mt-3 p-1 bg-black
 }
 @tailwind utilities;

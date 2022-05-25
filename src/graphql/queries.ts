@@ -1,19 +1,16 @@
-// import {gql} from '@apollo/client';
+import {gql} from '@apollo/client';
 // import {COMMENT_FRAGMENT, PHOTO_FEAGMENT} from './sharedQuery';
 
-// export const USER_QUERY = gql`
-// 	query {
-// 		userInfo {
-// 			id
-// 			userName
-// 			email
-// 			avatar
-// 			totalFollowers
-// 			totalFollowing
-// 			isFollowing
-// 		}
-// 	}
-// `;
+export const LOGGED_IN_USER = gql`
+	query loggedInUser {
+		loggedInUser {
+			id
+			email
+			role
+			verified
+		}
+	}
+`;
 // export const USERS_QUERY = gql`
 // 	query {
 // 		users {

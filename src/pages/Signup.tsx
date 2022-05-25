@@ -1,11 +1,11 @@
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import ErrorSpan from '../components/user/errors/ErrorSpan';
+
 import {SIGN_UP_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
 import {CreateAccountInput, CreateAccountMutation, CreateAccountMutationVariables, UserRole} from '../graphql/schemaTypes';
-
+import ErrorSpan from '../components/custom/ErrorSpan';
 const Signup = () => {
 	const {state}: {state: any} = useLocation();
 	let navigate = useNavigate();
@@ -38,10 +38,11 @@ const Signup = () => {
 	const onValidSubmit = () => {
 		if (loading) return;
 		const {email, password, role} = getValues();
+
 		signupHandler({variables: {data: {email, password, role}}});
 	};
-
-	const emailRegister = {required: {value: true, message: 'email is required'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}, validate: (current: any) => current.includes('@')};
+	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	const emailRegister = {required: {value: true, message: 'email is required'}, pattern: {value: emailPattern, message: 'email format is incorrect'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}};
 	const passwordRegister = {required: {value: true, message: 'password could not be empty'}, minLength: {value: 4, message: 'password should be greater than 4'}};
 	const roleRegister = {required: {value: true, message: 'role could not be empty'}};
 	const clearEmailErrors = () => clearErrors('email');
@@ -56,7 +57,6 @@ const Signup = () => {
 				<div className='flex flex-col mt-5 px-20 '>
 					{state?.message !== undefined ? <span className='bg-green-600 span'>{state?.message}</span> : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
-					{errors.email?.type === 'validate' && <ErrorSpan message={'email must include @'} />}
 					{errors?.email?.message && <ErrorSpan message={errors?.email?.message} />}
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
@@ -70,7 +70,7 @@ const Signup = () => {
 							</option>
 						))}
 					</select>
-					<button className={!isValid ? 'bg-gray-500 btn' : ' bg-black btn'} type='submit' disabled={!isValid || loading}>
+					<button className={!isValid ? 'bg-gray-300 btn' : 'btn'} type='submit' disabled={!isValid || loading}>
 						{loading ? 'Loading...' : 'Sign Up'}
 					</button>
 				</form>

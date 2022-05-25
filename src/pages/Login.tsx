@@ -1,14 +1,16 @@
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {isLoginVar} from '../apollo';
-import ErrorSpan from '../components/user/errors/ErrorSpan';
+import {isLoginVar} from '../apollo/GlobalVar';
+import ErrorSpan from '../components/custom/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
 import {LoginInput, LoginMutation, LoginMutationVariables} from '../graphql/schemaTypes';
+import useUser from '../hooks/useUser';
 
 const Login = () => {
 	const {state}: {state: any} = useLocation();
+	const {data: result} = useUser();
 	let navigate = useNavigate();
 
 	const {
@@ -31,9 +33,17 @@ const Login = () => {
 		if (!ok) {
 			setError('email', {message});
 		}
-		if (token) {
+		if (ok && token) {
 			localStorage.setItem('token', token);
 			isLoginVar(true);
+
+			if (result?.loggedInUser?.role === 'Client') {
+				navigate('/client');
+			}
+			if (result?.loggedInUser?.role === 'Owner') {
+				navigate('/owner');
+			}
+
 			navigate('/', {replace: true, state: {message}});
 		}
 	};
@@ -44,8 +54,8 @@ const Login = () => {
 		const {email, password} = getValues();
 		loginHandler({variables: {data: {email, password}}});
 	};
-
-	const emailRegister = {required: {value: true, message: 'email is required'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}, validate: (current: any) => current.includes('@')};
+	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	const emailRegister = {required: {value: true, message: 'email is required'}, pattern: {value: emailPattern, message: 'email format is incorrect'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}, validate: (current: any) => current.includes('@')};
 	const passwordRegister = {required: {value: true, message: 'password could not be empty'}, minLength: {value: 4, message: 'password should be greater than 4'}};
 	const clearEmailErrors = () => clearErrors('email');
 	const clearLoginErrors = () => clearErrors('password');
@@ -54,7 +64,7 @@ const Login = () => {
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 				<img src={Logo} alt='logo' className='w-48 mb-10' />
 				<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10'>Welcome Back</h3>
-				<span className=' text-gray-600 text-left w-full pl-10'>Sign in with your email address or mobile number.</span>
+				<span className=' text-gray-600 text-left w-full pl-10'>Sign in with your email address and password.</span>
 				<div className='flex flex-col mt-5 px-20 '>
 					{state?.message !== undefined ? <span className='bg-green-600 span'>{state?.message}</span> : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
@@ -65,7 +75,7 @@ const Login = () => {
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
 					<input className='input mb-3' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
 					<input className='input mb-3' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
-					<button className={!isValid ? 'bg-gray-300 btn' : ' bg-black btn'} type='submit' disabled={!isValid || loading}>
+					<button className={!isValid ? 'bg-gray-300 btn' : 'btn'} type='submit' disabled={!isValid || loading}>
 						{loading ? 'Loading...' : 'Login'}
 					</button>
 				</form>
