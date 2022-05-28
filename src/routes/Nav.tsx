@@ -7,12 +7,6 @@ const Nav = () => {
 				<li className='bg-gray-400 text-white p-4 m-1'>
 					<Link to='/auth/login'>Login </Link>
 				</li>
-				<li className='bg-blue-400 text-white p-4 m-1'>
-					<Link to='/client'>Client </Link>
-				</li>
-				<li className='bg-green-400 text-white p-4 m-1'>
-					<Link to='/owner'>Owner </Link>
-				</li>
 			</ul>
 		</nav>
 	);

@@ -6,11 +6,9 @@ import ErrorSpan from '../components/custom/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
 import {LoginInput, LoginMutation, LoginMutationVariables} from '../graphql/schemaTypes';
-import useUser from '../hooks/useUser';
 
 const Login = () => {
 	const {state}: {state: any} = useLocation();
-	const {data: result} = useUser();
 	let navigate = useNavigate();
 
 	const {
@@ -36,14 +34,6 @@ const Login = () => {
 		if (ok && token) {
 			localStorage.setItem('token', token);
 			isLoginVar(true);
-
-			if (result?.loggedInUser?.role === 'Client') {
-				navigate('/client');
-			}
-			if (result?.loggedInUser?.role === 'Owner') {
-				navigate('/owner');
-			}
-
 			navigate('/', {replace: true, state: {message}});
 		}
 	};

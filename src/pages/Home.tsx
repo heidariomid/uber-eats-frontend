@@ -1,28 +1,20 @@
-import {useReactiveVar} from '@apollo/client';
 import {userLoggedOut} from '../apollo';
-import {authToken} from '../apollo/GlobalVar';
-import Loading from '../components/custom/Loading';
 import {UserRole} from '../graphql/schemaTypes';
 import useUser from '../hooks/useUser';
-import Nav from '../routes/Nav';
+import Restaurants from './client/Restaurants';
+import Owner from './owner/Owner';
 
 const Home = () => {
-	const token = useReactiveVar(authToken);
-	const {data, error, loading} = useUser();
-
-	if (loading) return <Loading />;
-
-	return (
-		<>
-			<Nav />
-			<div className='container h-screen'>
-				{data?.loggedInUser && <span className='span'>{data?.loggedInUser.role}</span>}
-				<button className='btn' onClick={userLoggedOut}>
-					log out
-				</button>
-			</div>
-		</>
-	);
+	const {user} = useUser();
+	if (user) {
+		return <>{user?.role === UserRole.Owner ? <Owner user={user} /> : <Restaurants user={user} />}</>;
+	} else {
+		return (
+			<button className='btn' onClick={userLoggedOut}>
+				log out 🥱
+			</button>
+		);
+	}
 };
 
 export default Home;

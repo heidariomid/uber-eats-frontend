@@ -1,16 +1,12 @@
-import {makeVar, useQuery, useReactiveVar} from '@apollo/client';
-import {SetStateAction, useEffect, useState} from 'react';
-import {userLoggedOut} from '../apollo';
-import {isLoginVar} from '../apollo/GlobalVar';
+import {useQuery} from '@apollo/client';
 import {LOGGED_IN_USER} from '../graphql/queries';
 import {LoggedInUserQuery} from '../graphql/schemaTypes';
 
 const useUser = () => {
-	const isLoggedIn = useReactiveVar(isLoginVar);
+	const {data, error, loading} = useQuery<LoggedInUserQuery>(LOGGED_IN_USER);
+	if (!data || loading || error) return {data, loading, error};
 
-	const {data, error, loading} = useQuery<LoggedInUserQuery>(LOGGED_IN_USER, {skip: !isLoggedIn});
-
-	return {data, error, loading};
+	return {user: data.loggedInUser, error, loading};
 };
 
 export default useUser;

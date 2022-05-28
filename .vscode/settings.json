@@ -22,7 +22,7 @@
     ".env.test": true,
     ".env.dev": true,
     "package.json": true,
-    "tailwind.config.js": true,
+    // "tailwind.config.js": true,
     "postcss.config.js": true,
     "index.d.ts": true,
     "codegen.yml": true,
