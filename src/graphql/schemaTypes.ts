@@ -668,6 +668,20 @@ export type CreateAccountMutationVariables = Exact<{
 
 export type CreateAccountMutation = { __typename?: 'Mutation', createAccount: { __typename?: 'createAccountOutput', ok: boolean, message?: string } };
 
+export type ValidateEmailMutationVariables = Exact<{
+  data: ValidateEmailInput;
+}>;
+
+
+export type ValidateEmailMutation = { __typename?: 'Mutation', validateEmail: { __typename?: 'ValidateEmailOutput', message?: string, ok: boolean } };
+
+export type EditUserProfileMutationVariables = Exact<{
+  data: UpdateUserInput;
+}>;
+
+
+export type EditUserProfileMutation = { __typename?: 'Mutation', updateUser: { __typename?: 'UpdateUserOutput', ok: boolean, message?: string } };
+
 export type LoggedInUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -743,6 +757,74 @@ export function useCreateAccountMutation(baseOptions?: Apollo.MutationHookOption
 export type CreateAccountMutationHookResult = ReturnType<typeof useCreateAccountMutation>;
 export type CreateAccountMutationResult = Apollo.MutationResult<CreateAccountMutation>;
 export type CreateAccountMutationOptions = Apollo.BaseMutationOptions<CreateAccountMutation, CreateAccountMutationVariables>;
+export const ValidateEmailDocument = gql`
+    mutation validateEmail($data: ValidateEmailInput!) {
+  validateEmail(data: $data) {
+    message
+    ok
+  }
+}
+    `;
+export type ValidateEmailMutationFn = Apollo.MutationFunction<ValidateEmailMutation, ValidateEmailMutationVariables>;
+
+/**
+ * __useValidateEmailMutation__
+ *
+ * To run a mutation, you first call `useValidateEmailMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useValidateEmailMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [validateEmailMutation, { data, loading, error }] = useValidateEmailMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useValidateEmailMutation(baseOptions?: Apollo.MutationHookOptions<ValidateEmailMutation, ValidateEmailMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ValidateEmailMutation, ValidateEmailMutationVariables>(ValidateEmailDocument, options);
+      }
+export type ValidateEmailMutationHookResult = ReturnType<typeof useValidateEmailMutation>;
+export type ValidateEmailMutationResult = Apollo.MutationResult<ValidateEmailMutation>;
+export type ValidateEmailMutationOptions = Apollo.BaseMutationOptions<ValidateEmailMutation, ValidateEmailMutationVariables>;
+export const EditUserProfileDocument = gql`
+    mutation EditUserProfile($data: UpdateUserInput!) {
+  updateUser(data: $data) {
+    ok
+    message
+  }
+}
+    `;
+export type EditUserProfileMutationFn = Apollo.MutationFunction<EditUserProfileMutation, EditUserProfileMutationVariables>;
+
+/**
+ * __useEditUserProfileMutation__
+ *
+ * To run a mutation, you first call `useEditUserProfileMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useEditUserProfileMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [editUserProfileMutation, { data, loading, error }] = useEditUserProfileMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useEditUserProfileMutation(baseOptions?: Apollo.MutationHookOptions<EditUserProfileMutation, EditUserProfileMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditUserProfileMutation, EditUserProfileMutationVariables>(EditUserProfileDocument, options);
+      }
+export type EditUserProfileMutationHookResult = ReturnType<typeof useEditUserProfileMutation>;
+export type EditUserProfileMutationResult = Apollo.MutationResult<EditUserProfileMutation>;
+export type EditUserProfileMutationOptions = Apollo.BaseMutationOptions<EditUserProfileMutation, EditUserProfileMutationVariables>;
 export const LoggedInUserDocument = gql`
     query loggedInUser {
   loggedInUser {

@@ -1,7 +1,7 @@
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {isLoginVar} from '../apollo/GlobalVar';
+import {authToken, isLoginVar} from '../apollo/GlobalVar';
 import ErrorSpan from '../components/custom/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
@@ -34,6 +34,7 @@ const Login = () => {
 		if (ok && token) {
 			localStorage.setItem('token', token);
 			isLoginVar(true);
+			authToken(token);
 			navigate('/', {replace: true, state: {message}});
 		}
 	};

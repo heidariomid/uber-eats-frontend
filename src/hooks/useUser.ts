@@ -1,12 +1,17 @@
 import {useQuery} from '@apollo/client';
+import {authToken} from '../apollo/GlobalVar';
 import {LOGGED_IN_USER} from '../graphql/queries';
 import {LoggedInUserQuery} from '../graphql/schemaTypes';
 
 const useUser = () => {
-	const {data, error, loading} = useQuery<LoggedInUserQuery>(LOGGED_IN_USER);
-	if (!data || loading || error) return {data, loading, error};
+	const token = authToken();
 
-	return {user: data.loggedInUser, error, loading};
+	const {data, error, loading} = useQuery<LoggedInUserQuery>(LOGGED_IN_USER);
+	if (token && !error) {
+		return {user: data?.loggedInUser, error, loading};
+	} else {
+		return {user: null, error: null, loading: false};
+	}
 };
 
 export default useUser;

@@ -18,23 +18,23 @@ export const SIGN_UP_MUTATION = gql`
 	}
 `;
 
-// export const LIKE_PHOTO = gql`
-// 	mutation ($likePhotoId: Int!) {
-// 		likePhoto(id: $likePhotoId) {
-// 			isLikeSuccess
-// 		}
-// 	}
-// `;
+export const VALIDATE_EMAIL = gql`
+	mutation validateEmail($data: ValidateEmailInput!) {
+		validateEmail(data: $data) {
+			message
+			ok
+		}
+	}
+`;
 
-// export const CREATE_COMMENT = gql`
-// 	mutation CreateComment($photoId: Int!, $payload: String!) {
-// 		createComment(photoId: $photoId, payload: $payload) {
-// 			isCommentSuccess
-// 			id
-// 			error
-// 		}
-// 	}
-// `;
+export const EDIT_USER_PROFILE = gql`
+	mutation EditUserProfile($data: UpdateUserInput!) {
+		updateUser(data: $data) {
+			ok
+			message
+		}
+	}
+`;
 
 // export const DELETE_COMMENT = gql`
 // 	mutation ($id: Int!) {

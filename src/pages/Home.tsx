@@ -6,13 +6,20 @@ import Owner from './owner/Owner';
 
 const Home = () => {
 	const {user} = useUser();
+
 	if (user) {
-		return <>{user?.role === UserRole.Owner ? <Owner user={user} /> : <Restaurants user={user} />}</>;
+		return <>{user?.role === UserRole.Owner ? <Owner /> : <Restaurants />}</>;
 	} else {
 		return (
-			<button className='btn' onClick={userLoggedOut}>
-				log out 🥱
-			</button>
+			<>
+				<button className='btn' onClick={userLoggedOut}>
+					log out 🥱
+				</button>
+				<br />
+				<button className='btn' onClick={() => window.location.reload()}>
+					refresh page 🔄
+				</button>
+			</>
 		);
 	}
 };
