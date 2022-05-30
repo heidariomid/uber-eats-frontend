@@ -3,11 +3,9 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faUser} from '@fortawesome/free-solid-svg-icons';
 import useUser from '../../hooks/useUser';
 import Banner from '../banner/Banner';
-import {useNavigate} from 'react-router-dom';
 
 const Header = () => {
 	const {user} = useUser();
-	let navigate=useNavigate()
 	return (
 		<>
 			{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
