@@ -602,6 +602,7 @@ export interface UserProfileOutput {
 }
 
 export enum UserRole {
+  Admin = 'Admin',
   Client = 'Client',
   Delivery = 'Delivery',
   Owner = 'Owner'

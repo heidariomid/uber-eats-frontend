@@ -1,4 +1,4 @@
-import {gql, useApolloClient, useMutation} from '@apollo/client';
+import {gql, useMutation} from '@apollo/client';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {VALIDATE_EMAIL} from '../../graphql/mutations';
@@ -6,34 +6,40 @@ import {ValidateEmailMutation, ValidateEmailMutationVariables} from '../../graph
 import useUser from '../../hooks/useUser';
 import Spinner from '../../images/Spinner-s.svg';
 const Confirm = () => {
-	const [isMessage, setIsMessage] = useState('');
 	const [isLoading, setIsLoading] = useState(true);
-	const {user} = useUser();
-	const client = useApolloClient();
-	let navigate = useNavigate();
-	const onCompleted = (data: ValidateEmailMutation) => {
-		const {ok, message} = data?.validateEmail;
+	const [serverMessage, setServerMessage] = useState('');
 
-		if (ok) {
-			setIsLoading(true);
-			client.writeFragment({
-				id: `User:${user?.id}`,
-				fragment: gql`
-					fragment BSName on User {
-						verified
-					}
-				`,
-				data: {verified: true},
+	const {user} = useUser();
+
+	const update = (cache, result) => {
+		const {ok, message} = result.data?.validateEmail;
+		console.log(user);
+		if (!ok) {
+			setServerMessage(message);
+			setIsLoading(false);
+		}
+		if (ok && user) {
+			console.log({ok, message});
+			console.log(user.id);
+			cache.modify({
+				id: `User:${user.id}`,
+				fields: {
+					verified() {
+						return true;
+					},
+				},
 			});
+
 			navigate('/');
 		} else {
-			if (message) {
-				setIsMessage(message);
-				setIsLoading(false);
-			}
+			setIsLoading(false);
+			setServerMessage('Something went wrong');
 		}
 	};
-	const [validateEmailHandler, {loading}] = useMutation<ValidateEmailMutation, ValidateEmailMutationVariables>(VALIDATE_EMAIL, {onCompleted});
+
+	let navigate = useNavigate();
+
+	const [validateEmailHandler] = useMutation<ValidateEmailMutation, ValidateEmailMutationVariables>(VALIDATE_EMAIL, {update});
 	useEffect(() => {
 		const [_, code] = window.location.href.split('code=');
 		validateEmailHandler({variables: {data: {code}}});
@@ -48,7 +54,7 @@ const Confirm = () => {
 					<h6 className='font-bold'>please do not close this page</h6>
 				</>
 			)}
-			{isMessage && <h6 className='font-bold bg-red-600 text-white p-4'>{isMessage}</h6>}
+			{serverMessage && <span className='bg-red-600 text-white px-4 span'>{serverMessage}</span>}
 		</div>
 	);
 };

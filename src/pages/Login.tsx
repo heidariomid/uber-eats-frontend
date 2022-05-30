@@ -10,7 +10,6 @@ import {LoginInput, LoginMutation, LoginMutationVariables} from '../graphql/sche
 const Login = () => {
 	const {state}: {state: any} = useLocation();
 	let navigate = useNavigate();
-
 	const {
 		register,
 		getValues,
