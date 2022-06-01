@@ -27,15 +27,15 @@ const EditProfile = () => {
 		mode: 'onChange',
 		defaultValues: {
 			email: user?.email,
-			// role: user?.role,
 		},
 	});
 
 	const update = (cache, result) => {
 		const {ok, message} = result.data?.updateUser;
-
+		const newEmail = getValues().email;
+		const newPassword = getValues().password;
 		if (!ok) {
-			setError('email', {message});
+			setError('password', {message});
 		}
 		if (ok) {
 			setServerMessage(message);
@@ -43,18 +43,21 @@ const EditProfile = () => {
 				id: `User:${user?.id}`,
 				fields: {
 					email() {
-						return getValues().email;
+						return newEmail;
+					},
+					password() {
+						return newPassword;
 					},
 					verified() {
-						return false;
+						if (newEmail !== user?.email && inputEmail) return false;
 					},
 				},
 			});
 			setTimeout(() => {
-				setServerMessage('');
+				setServerMessage(message);
 				clearErrors();
+				navigate('/');
 			}, 3000);
-			navigate('/');
 		}
 	};
 	const [loginHandler, {loading}] = useMutation<EditUserProfileMutation, EditUserProfileMutationVariables>(EDIT_USER_PROFILE, {update});
@@ -62,7 +65,9 @@ const EditProfile = () => {
 	const onValidSubmit = () => {
 		if (loading) return;
 		const {email, password, role} = getValues();
-		loginHandler({variables: {data: {email, ...(password !== '' && {password}), role}}});
+
+		inputEmail && loginHandler({variables: {data: {email}}});
+		inputPassword && loginHandler({variables: {data: {...(password !== '' && {password})}}});
 	};
 	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	const emailRegister = {pattern: {value: emailPattern, message: 'email format is incorrect'}};
@@ -78,7 +83,7 @@ const EditProfile = () => {
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10'>Update Your Profile</h3>
 					<div className='w-full text-left pl-10 mt-10'>
-						change your{' '}
+						change your
 						<span
 							onClick={() => {
 								setInputEmail(true);

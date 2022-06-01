@@ -6,10 +6,12 @@ import ErrorSpan from '../components/custom/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
 import {LoginInput, LoginMutation, LoginMutationVariables} from '../graphql/schemaTypes';
+import useUser from '../hooks/useUser';
 
 const Login = () => {
 	const {state}: {state: any} = useLocation();
 	let navigate = useNavigate();
+	const {refetch} = useUser();
 	const {
 		register,
 		getValues,

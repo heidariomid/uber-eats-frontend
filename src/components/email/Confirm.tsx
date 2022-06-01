@@ -9,31 +9,45 @@ const Confirm = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [serverMessage, setServerMessage] = useState('');
 
-	const {user} = useUser();
+	const {user, refetch} = useUser();
 
 	const update = (cache, result) => {
-		const {ok, message} = result.data?.validateEmail;
-		console.log(user);
-		if (!ok) {
-			setServerMessage(message);
-			setIsLoading(false);
-		}
-		if (ok && user) {
-			console.log({ok, message});
-			console.log(user.id);
-			cache.modify({
-				id: `User:${user.id}`,
-				fields: {
-					verified() {
-						return true;
-					},
-				},
-			});
+		try {
+			const {ok, message} = result.data?.validateEmail;
 
-			navigate('/');
-		} else {
+			if (!ok) {
+				setServerMessage(message);
+				setIsLoading(false);
+			}
+			if (ok && user) {
+				console.log({ok, message});
+				console.log(user?.id);
+				cache.modify({
+					id: `User:${user?.id}`,
+					fields: {
+						verified() {
+							return true;
+						},
+					},
+				});
+				navigate('/');
+			} else {
+				setServerMessage(message);
+				setIsLoading(false);
+				cache.modify({
+					id: `User:${user?.id}`,
+					fields: {
+						verified() {
+							return true;
+						},
+					},
+				});
+				console.log(user?.id);
+				navigate('/');
+			}
+		} catch (err: any) {
 			setIsLoading(false);
-			setServerMessage('Something went wrong');
+			setServerMessage(err?.message);
 		}
 	};
 

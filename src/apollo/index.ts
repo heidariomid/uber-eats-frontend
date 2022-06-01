@@ -2,14 +2,13 @@ import {ApolloClient, createHttpLink, InMemoryCache, makeVar} from '@apollo/clie
 import {setContext} from '@apollo/client/link/context';
 import {isDarkVar, isLoginVar} from './GlobalVar';
 
-const token = localStorage.getItem('token');
-
 // const uri=process.env.NODE_ENV==='development'?'http://localhost:4000/graphql':'https://apollo-server-graphql.herokuapp.com/graphql';
 const httpLink = createHttpLink({
 	// uri: 'https://aqueous-reef-59013.herokuapp.com/graphql',
 	uri: 'http://localhost:4000/graphql',
 });
 const authLink = setContext((_, {headers}) => {
+	const token = localStorage.getItem('token');
 	return {
 		headers: {
 			...headers,
