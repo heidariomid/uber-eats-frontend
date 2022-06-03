@@ -1,6 +1,5 @@
 import {useNavigate} from 'react-router-dom';
 import {userLoggedOut} from '../../apollo';
-import Header from '../../components/header/Header';
 import useUser from '../../hooks/useUser';
 
 const Owner = () => {
