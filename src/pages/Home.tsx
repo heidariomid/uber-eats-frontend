@@ -1,4 +1,4 @@
-import {userLoggedOut} from '../apollo';
+import Header from '../components/header/Header';
 import {UserRole} from '../graphql/schemaTypes';
 import useUser from '../hooks/useUser';
 import Restaurants from './client/Restaurants';
@@ -18,21 +18,10 @@ const Home = () => {
 	};
 
 	return (
-		<>
-			{user ? (
-				homeHandler()
-			) : (
-				<>
-					<button className='btn' onClick={userLoggedOut}>
-						log out 🥱
-					</button>
-					<br />
-					<button className='btn' onClick={() => window.location.reload()}>
-						refresh page 🔄
-					</button>
-				</>
-			)}
-		</>
+		<div className='px-5'>
+			<Header />
+			{homeHandler()}
+		</div>
 	);
 };
 

@@ -1,26 +1,36 @@
-import {Navigate, useNavigate} from 'react-router-dom';
-import {userLoggedOut} from '../../apollo';
-import Header from '../../components/header/Header';
-import useUser from '../../hooks/useUser';
-
+import {useQuery} from '@apollo/client';
+import {useState} from 'react';
+import {RESTAURANTS} from '../../graphql/queries';
+import {RestaurantsQuery, RestaurantsQueryVariables} from '../../graphql/schemaTypes';
+import Restaurant from './Restaurant';
+interface IRestaurant {
+	id: number;
+	name: string;
+	isPromoted: boolean;
+}
 const Restaurants = () => {
-	const {user} = useUser();
-	let navigate = useNavigate();
+	const [serverMessage, setServerMessage] = useState('');
+	const [restaurants, setRestaurants] = useState<IRestaurant[]>();
+
+	const onCompleted = (data: RestaurantsQuery) => {
+		const {ok, message, restaurants} = data?.getRestaurants;
+		if (!ok && message) {
+			setServerMessage(message);
+		}
+		if (ok && restaurants) {
+			setRestaurants(restaurants);
+		}
+	};
+	useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RESTAURANTS, {onCompleted, variables: {data: {page: 2}}});
+
 	return (
-		<>
-			<Header />
-			<div>
-				<h1>{user?.role}</h1>
-				<h2>{user?.email}</h2>
-				<button className='btn' onClick={() => navigate('/user/edit')}>
-					update profile 😎
-				</button>
-				<br />
-				<button className='btn' onClick={userLoggedOut}>
-					log out
-				</button>
-			</div>
-		</>
+		<div>
+			{serverMessage && <span className='bg-red-600 text-white px-4 span'>{serverMessage}</span>}
+			<form className='w-full flex items-center justify-center font-bold text-lg bg-black text-center py-14 my-4'>
+				<input className='input rounded-md border-0 w-3/12' type='search' placeholder='Search Restaurants...' />
+			</form>
+			{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}
+		</div>
 	);
 };
 
