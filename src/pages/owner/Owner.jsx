@@ -8,7 +8,6 @@ const Owner = () => {
 	let navigate = useNavigate();
 	return (
 		<>
-			<Header />
 			<div>
 				<h1>{user.role}</h1>
 				<h2>{user.email}</h2>

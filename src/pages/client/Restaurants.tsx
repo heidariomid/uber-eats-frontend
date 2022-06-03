@@ -1,5 +1,6 @@
 import {useQuery} from '@apollo/client';
 import {useState} from 'react';
+import Loading from '../../components/loading/Loading';
 import {RESTAURANTS} from '../../graphql/queries';
 import {RestaurantsQuery, RestaurantsQueryVariables} from '../../graphql/schemaTypes';
 import Restaurant from './Restaurant';
@@ -21,15 +22,16 @@ const Restaurants = () => {
 			setRestaurants(restaurants);
 		}
 	};
-	useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RESTAURANTS, {onCompleted, variables: {data: {page: 2}}});
+	const {loading} = useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RESTAURANTS, {onCompleted, variables: {data: {page: 2}}});
 
 	return (
 		<div>
 			{serverMessage && <span className='bg-red-600 text-white px-4 span'>{serverMessage}</span>}
 			<form className='w-full flex items-center justify-center font-bold text-lg bg-black text-center py-14 my-4'>
-				<input className='input rounded-md border-0 w-3/12' type='search' placeholder='Search Restaurants...' />
+				<input className='input rounded-md border-0 w-3/6' type='search' placeholder='Search Restaurants...' />
 			</form>
-			{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}
+			{loading && <Loading />}
+			{!loading && restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}
 		</div>
 	);
 };

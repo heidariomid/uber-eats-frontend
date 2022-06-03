@@ -1,11 +1,14 @@
+import {Navigate} from 'react-router-dom';
+import Banner from '../components/banner/Banner';
 import Header from '../components/header/Header';
+import Loading from '../components/loading/Loading';
 import {UserRole} from '../graphql/schemaTypes';
 import useUser from '../hooks/useUser';
 import Restaurants from './client/Restaurants';
 import Owner from './owner/Owner';
 
 const Home = () => {
-	const {user} = useUser();
+	const {user, loading} = useUser();
 	const homeHandler = () => {
 		if (user) {
 			if (user.role === UserRole.Client) {
@@ -16,12 +19,18 @@ const Home = () => {
 			}
 		}
 	};
-
 	return (
-		<div className='px-5'>
-			<Header />
-			{homeHandler()}
-		</div>
+		<>
+			{!loading && user && (
+				<div className='px-5'>
+					{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
+					<Header />
+					{homeHandler()}
+				</div>
+			)}
+			{loading && <Loading />}
+			{!loading && !user && <Navigate to={'/auth/login'} />}
+		</>
 	);
 };
 

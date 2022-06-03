@@ -5,6 +5,7 @@ import {VALIDATE_EMAIL} from '../../graphql/mutations';
 import {ValidateEmailMutation, ValidateEmailMutationVariables} from '../../graphql/schemaTypes';
 import useUser from '../../hooks/useUser';
 import Spinner from '../../images/Spinner-s.svg';
+import Loading from '../loading/Loading';
 const Confirm = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [serverMessage, setServerMessage] = useState('');
@@ -64,7 +65,7 @@ const Confirm = () => {
 			{isLoading && (
 				<>
 					<h1 className='text-3xl font-bold'>Verifiying</h1>
-					<img className='m-4' src={Spinner} alt='spinner' />
+					<Loading />
 					<h6 className='font-bold'>please do not close this page</h6>
 				</>
 			)}

@@ -2,7 +2,6 @@ import Logo from '../../images/uber-eats.svg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEdit, faSignOut} from '@fortawesome/free-solid-svg-icons';
 import useUser from '../../hooks/useUser';
-import Banner from '../banner/Banner';
 import {Link} from 'react-router-dom';
 import {userLoggedOut} from '../../apollo';
 
@@ -10,7 +9,6 @@ const Header = () => {
 	const {user} = useUser();
 	return (
 		<>
-			{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
 			<header className='py-4 px-2'>
 				<div className='flex flex-row px-5 md:px-0 w-full max-w-screen-2xl max-auto justify-between items-center xl:px-0'>
 					<Link to={'/'}>
