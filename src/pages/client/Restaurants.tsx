@@ -48,7 +48,10 @@ const Restaurants = () => {
 			) : (
 				<div>
 					<RestaurantsSearch />
-					<div className='flex flex-row justify-around'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					<div className='flex flex-row justify-between max-w-screen-md mx-auto'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					<div className='w-full flex items-center justify-center font-bold text-lg bg-black text-white text-center py-4 my-4'>
+						<h1 className='w-3/6'>Restaurants</h1>
+					</div>
 					<div>{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}</div>
 				</div>
 			)}

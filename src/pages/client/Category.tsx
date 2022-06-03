@@ -1,11 +1,9 @@
-import Spinner from '../../images/Spinner-s.svg';
 const Category = ({category}) => {
-	console.log(category);
 	return (
-		<>
-			{!category?.iconImg && <img className='w-14 h-14 rounded-full' src={Spinner} alt='spinner' key={category.id} />}
-			{category?.iconImg && <img className='w-14 h-14 rounded-full' src={category?.iconImg} alt='spinner' key={category.id} />}
-		</>
+		<div key={category?.id} className='flex flex-col  items-center cursor-pointer group'>
+			<div className='rounded-full w-14 h-14 bg-cover group-hover:bg-gray-200 ' style={{backgroundImage: `url(${category?.iconImg})`}}></div>
+			<span className='mt-2 font-medium'>{category?.name}</span>
+		</div>
 	);
 };
 
