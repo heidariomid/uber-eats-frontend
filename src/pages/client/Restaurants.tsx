@@ -46,11 +46,11 @@ const Restaurants = () => {
 			{loading ? (
 				<Loading />
 			) : (
-				<>
+				<div>
 					<RestaurantsSearch />
-					{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}
-					{categories && categories.map((category) => <Category key={category.id} category={category} />)}
-				</>
+					<div className='flex flex-row justify-around'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					<div>{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}</div>
+				</div>
 			)}
 		</>
 	);

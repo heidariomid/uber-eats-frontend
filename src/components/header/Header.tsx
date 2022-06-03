@@ -9,8 +9,8 @@ const Header = () => {
 	const {user} = useUser();
 	return (
 		<>
-			<header className='py-4 px-2'>
-				<div className='flex flex-row px-5 md:px-0 w-full max-w-screen-2xl max-auto justify-between items-center xl:px-0'>
+			<header className='py-4'>
+				<div className='w-full px-5 xl:-x-0 max-w-screen-2xl mx-auto flex justify-between items-center'>
 					<Link to={'/'}>
 						<img className='w-40  cursor-pointer' src={Logo} alt='logo' />
 					</Link>

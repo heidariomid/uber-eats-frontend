@@ -22,7 +22,7 @@ const Home = () => {
 	return (
 		<>
 			{!loading && user && (
-				<div className='px-5'>
+				<div>
 					{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
 					<Header />
 					{homeHandler()}

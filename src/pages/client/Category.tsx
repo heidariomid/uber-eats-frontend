@@ -1,9 +1,11 @@
+import Spinner from '../../images/Spinner-s.svg';
 const Category = ({category}) => {
+	console.log(category);
 	return (
-		<div className='bg-red-300' key={category.id}>
-			<h3>{category.name}</h3>
-			<h3>{category.slug}</h3>
-		</div>
+		<>
+			{!category?.iconImg && <img className='w-14 h-14 rounded-full' src={Spinner} alt='spinner' key={category.id} />}
+			{category?.iconImg && <img className='w-14 h-14 rounded-full' src={category?.iconImg} alt='spinner' key={category.id} />}
+		</>
 	);
 };
 

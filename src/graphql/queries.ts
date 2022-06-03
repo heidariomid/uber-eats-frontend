@@ -40,6 +40,7 @@ export const CATEGORIES = gql`
 				name
 				slug
 				restaurantCount
+				iconImg
 			}
 		}
 	}
