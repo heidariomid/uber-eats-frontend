@@ -693,12 +693,12 @@ export type RestaurantsQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantsQuery = { __typename?: 'Query', getRestaurants: { __typename?: 'RestaurantsOutput', ok: boolean, message?: string, totalPages?: number, totalRestaurants?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string }> } };
+export type RestaurantsQuery = { __typename?: 'Query', getRestaurants: { __typename?: 'RestaurantsOutput', ok: boolean, message?: string, totalPages?: number, totalRestaurants?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesQuery = { __typename?: 'Query', getCategories: { __typename?: 'CategoriesOutput', message?: string, ok: boolean, categories?: Array<{ __typename?: 'Category', id: number, name: string, slug: string, restaurantCount: number }> } };
+export type CategoriesQuery = { __typename?: 'Query', getCategories: { __typename?: 'CategoriesOutput', message?: string, ok: boolean, categories?: Array<{ __typename?: 'Category', id: number, name: string, slug: string, restaurantCount: number, iconImg?: string }> } };
 
 
 export const LoginDocument = gql`
@@ -888,6 +888,9 @@ export const RestaurantsDocument = gql`
       isPromoted
       address
       coverImg
+      category {
+        name
+      }
     }
   }
 }
@@ -930,6 +933,7 @@ export const CategoriesDocument = gql`
       name
       slug
       restaurantCount
+      iconImg
     }
   }
 }

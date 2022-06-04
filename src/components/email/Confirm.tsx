@@ -1,16 +1,15 @@
-import {gql, useMutation} from '@apollo/client';
+import {useMutation} from '@apollo/client';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {VALIDATE_EMAIL} from '../../graphql/mutations';
 import {ValidateEmailMutation, ValidateEmailMutationVariables} from '../../graphql/schemaTypes';
 import useUser from '../../hooks/useUser';
-import Spinner from '../../images/Spinner-s.svg';
 import Loading from '../loading/Loading';
 const Confirm = () => {
 	const [isLoading, setIsLoading] = useState(true);
 	const [serverMessage, setServerMessage] = useState('');
 
-	const {user, refetch} = useUser();
+	const {user} = useUser();
 
 	const update = (cache, result) => {
 		try {

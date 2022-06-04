@@ -1,4 +1,4 @@
-import Spinner from '../../images/Spinner-s.svg';
+import Spinner from '../../images/Spinner-sm.svg';
 
 const Loading = () => {
 	return (

@@ -4,9 +4,9 @@ import ErrorSpan from '../../components/custom/ErrorSpan';
 import Loading from '../../components/loading/Loading';
 import {CATEGORIES, RESTAURANTS} from '../../graphql/queries';
 import {CategoriesQuery, CategoriesQueryVariables, RestaurantsQuery, RestaurantsQueryVariables} from '../../graphql/schemaTypes';
-import Category from './Category';
-import Restaurant from './Restaurant';
-import RestaurantsSearch from './RestaurantsSearch';
+import Category from '../../components/restaurant/Category';
+import Restaurant from '../../components/restaurant/Restaurant';
+import RestaurantsSearch from '../../components/restaurant/RestaurantsSearch';
 interface IRestaurant {
 	id: number;
 	name: string;
@@ -34,7 +34,7 @@ const Restaurants = () => {
 			setCategories(categories);
 		}
 	};
-	const {loading, error} = useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RESTAURANTS, {onCompleted: onCompletedRestaurants, variables: {data: {page: 2}}});
+	const {loading, error} = useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RESTAURANTS, {onCompleted: onCompletedRestaurants, variables: {data: {page: 1}}});
 	const {loading: categoriesLoading, error: categoriesError} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
 
 	return (
@@ -48,11 +48,11 @@ const Restaurants = () => {
 			) : (
 				<div>
 					<RestaurantsSearch />
-					<div className='flex flex-row justify-between max-w-screen-md mx-auto'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
-					<div className='w-full flex items-center justify-center font-bold text-lg bg-black text-white text-center py-4 my-4'>
+					<div className='flex flex-row justify-between max-w-screen-sm mx-auto'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					<div className='w-full flex items-center justify-center font-bold text-lg bg-black text-white text-center py-2 my-4'>
 						<h1 className='w-3/6'>Restaurants</h1>
 					</div>
-					<div>{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}</div>
+					<div className='grid grid-cols-3 gap-x-5 gap-y-10 max-w-screen-sm mx-auto '>{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}</div>
 				</div>
 			)}
 		</>

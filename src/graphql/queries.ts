@@ -25,6 +25,9 @@ export const RESTAURANTS = gql`
 				isPromoted
 				address
 				coverImg
+				category {
+					name
+				}
 			}
 		}
 	}
