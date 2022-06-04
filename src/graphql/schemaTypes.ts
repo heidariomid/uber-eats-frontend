@@ -700,6 +700,20 @@ export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type CategoriesQuery = { __typename?: 'Query', getCategories: { __typename?: 'CategoriesOutput', message?: string, ok: boolean, categories?: Array<{ __typename?: 'Category', id: number, name: string, slug: string, restaurantCount: number, iconImg?: string }> } };
 
+export type RestaurantQueryVariables = Exact<{
+  data: RestaurantInputType;
+}>;
+
+
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', name: string, isPromoted: boolean, coverImg: string, category?: { __typename?: 'Category', name: string }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> } } };
+
+export type SearchRestaurantsQueryVariables = Exact<{
+  data: SearchRestaurantInput;
+}>;
+
+
+export type SearchRestaurantsQuery = { __typename?: 'Query', searchRestaurants: { __typename?: 'SearchRestaurantOutput', ok: boolean, message?: string, totalRestaurants?: number, totalPages?: number, restaurants?: Array<{ __typename?: 'Restaurant', name: string, id: number, isPromoted: boolean, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
+
 
 export const LoginDocument = gql`
     mutation login($data: loginInput!) {
@@ -965,3 +979,105 @@ export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
 export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
 export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
+export const RestaurantDocument = gql`
+    query Restaurant($data: RestaurantInputType!) {
+  getRestaurant(data: $data) {
+    ok
+    message
+    restaurant {
+      name
+      isPromoted
+      coverImg
+      category {
+        name
+      }
+      orders {
+        id
+      }
+      menu {
+        name
+        price
+        options {
+          name
+          extra
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useRestaurantQuery__
+ *
+ * To run a query within a React component, call `useRestaurantQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRestaurantQuery(baseOptions: Apollo.QueryHookOptions<RestaurantQuery, RestaurantQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantQuery, RestaurantQueryVariables>(RestaurantDocument, options);
+      }
+export function useRestaurantLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantQuery, RestaurantQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantQuery, RestaurantQueryVariables>(RestaurantDocument, options);
+        }
+export type RestaurantQueryHookResult = ReturnType<typeof useRestaurantQuery>;
+export type RestaurantLazyQueryHookResult = ReturnType<typeof useRestaurantLazyQuery>;
+export type RestaurantQueryResult = Apollo.QueryResult<RestaurantQuery, RestaurantQueryVariables>;
+export const SearchRestaurantsDocument = gql`
+    query SearchRestaurants($data: SearchRestaurantInput!) {
+  searchRestaurants(data: $data) {
+    ok
+    message
+    totalRestaurants
+    totalPages
+    restaurants {
+      name
+      id
+      isPromoted
+      coverImg
+      category {
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useSearchRestaurantsQuery__
+ *
+ * To run a query within a React component, call `useSearchRestaurantsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchRestaurantsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchRestaurantsQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useSearchRestaurantsQuery(baseOptions: Apollo.QueryHookOptions<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SearchRestaurantsDocument, options);
+      }
+export function useSearchRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SearchRestaurantsDocument, options);
+        }
+export type SearchRestaurantsQueryHookResult = ReturnType<typeof useSearchRestaurantsQuery>;
+export type SearchRestaurantsLazyQueryHookResult = ReturnType<typeof useSearchRestaurantsLazyQuery>;
+export type SearchRestaurantsQueryResult = Apollo.QueryResult<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>;

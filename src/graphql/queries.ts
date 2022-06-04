@@ -49,29 +49,50 @@ export const CATEGORIES = gql`
 	}
 `;
 
-// export const SEE_FEED = gql`
-// 	query {
-// 		seeFeed {
-// 			...PhotoFragment
-// 			comments {
-// 				...CommentFragment
-// 			}
+export const RESTAURANT = gql`
+	query Restaurant($data: RestaurantInputType!) {
+		getRestaurant(data: $data) {
+			ok
+			message
+			restaurant {
+				name
+				isPromoted
+				coverImg
+				category {
+					name
+				}
+				orders {
+					id
+				}
+				menu {
+					name
+					price
+					options {
+						name
+						extra
+					}
+				}
+			}
+		}
+	}
+`;
 
-// 			user {
-// 				avatar
-// 				userName
-// 				id
-// 				photos {
-// 					...PhotoFragment
-// 					user {
-// 						id
-// 					}
-// 				}
-// 			}
-// 		}
-// 	}
-// 	${PHOTO_FEAGMENT}
-// 	${COMMENT_FRAGMENT}
-// `;
-
-export {};
+export const SEARCH_RESTAURANT = gql`
+	query SearchRestaurants($data: SearchRestaurantInput!) {
+		searchRestaurants(data: $data) {
+			ok
+			message
+			totalRestaurants
+			totalPages
+			restaurants {
+				name
+				id
+				isPromoted
+				coverImg
+				category {
+					name
+				}
+			}
+		}
+	}
+`;
