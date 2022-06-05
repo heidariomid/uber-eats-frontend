@@ -13,3 +13,17 @@
   @apply text-white mt-3 p-1 bg-black
 }
 @tailwind utilities;
+
+@font-face {
+  font-family: "Tangerine";
+  src: url("../public/fonts/Tangerine-Regular.ttf");
+
+}
+@font-face {
+  font-family: "Josefin";
+  src: url("../public/fonts/JosefinSans-VariableFont_wght.ttf");
+}
+@font-face {
+  font-family: "Rubik";
+  src: url("../public/fonts//Rubik-Regular.ttf");
+}

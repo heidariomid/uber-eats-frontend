@@ -8,6 +8,7 @@ import Category from '../../components/restaurant/Category';
 import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import RestaurantsSearch from '../../components/restaurant/RestaurantsSearch';
 import Pagination from '../../components/pagination/Pagination';
+import PgTailwind from '../../components/pagination/PgTailwind';
 interface IRestaurant {
 	id: number;
 	name: string;
@@ -49,14 +50,14 @@ const Restaurants = () => {
 				<Loading />
 			) : (
 				<>
-					{/* search restaurants */}
 					<RestaurantsSearch />
-					{/* categories */}
-					<div className='flex flex-row justify-between max-w-screen-md  mx-auto mb-16 mt-5'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
-					{/* restaurants */}
-					<div className='grid md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto my-5'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
-					{/* pagination */}
-					<Pagination data={data} currentPage={page} setCurrentPage={setPage} />
+
+					<div className='flex flex-row justify-between max-w-screen-md  mx-auto mb-5 mt-5'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					<div className='my-10'></div>
+					<div className='grid md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto my-5 '>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
+
+					<Pagination totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
+					<PgTailwind totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
 				</>
 			)}
 		</>
