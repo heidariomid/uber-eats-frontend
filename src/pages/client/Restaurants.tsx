@@ -56,7 +56,7 @@ const Restaurants = () => {
 					{/* restaurants */}
 					<div className='grid md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto my-5'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
 					{/* pagination */}
-					<Pagination data={data} page={page} setPage={setPage} />
+					<Pagination data={data} currentPage={page} setCurrentPage={setPage} />
 				</>
 			)}
 		</>
