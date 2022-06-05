@@ -96,3 +96,77 @@ export const SEARCH_RESTAURANT = gql`
 		}
 	}
 `;
+
+export const USER_PROFILE = gql`
+	query userProfile($userId: Float!) {
+		userProfile(userId: $userId) {
+			user {
+				email
+			}
+			ok
+			message
+		}
+	}
+`;
+export const USERS = gql`
+	query Users {
+		users {
+			id
+			email
+			role
+		}
+	}
+`;
+export const CATEGORY = gql`
+	query Category($data: CategoryInputType!) {
+		getCategory(data: $data) {
+			category {
+				name
+				restaurants {
+					id
+				}
+			}
+			ok
+			message
+			totalPages
+		}
+	}
+`;
+export const DISH = gql`
+	query Dish($dishId: Int!) {
+		getDish(dishId: $dishId) {
+			ok
+			message
+			dish {
+				id
+				name
+				price
+				description
+				restaurant {
+					id
+					name
+				}
+				options {
+					name
+					extra
+
+					choices {
+						name
+						extra
+					}
+				}
+			}
+		}
+	}
+`;
+export const PAYMENTS = gql`
+	query Payments {
+		Payments {
+			ok
+			message
+			payments {
+				transactionId
+			}
+		}
+	}
+`;

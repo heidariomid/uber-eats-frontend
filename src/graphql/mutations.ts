@@ -36,38 +36,113 @@ export const EDIT_USER_PROFILE = gql`
 	}
 `;
 
-// export const DELETE_COMMENT = gql`
-// 	mutation ($id: Int!) {
-// 		deleteComment(id: $id) {
-// 			isCommentDeleted
-// 			error
-// 		}
-// 	}
-// `;
-
-// export const TOGGLE_FOLLOW_STATUS = gql`
-// 	mutation ($userName: String!) {
-// 		toggleFollowStatus(userName: $userName) {
-// 			isToggleSuccess
-// 			message
-// 			error
-// 		}
-// 	}
-// `;
-
-// export const UPLOAD_PHOTO = gql`
-// 	mutation ($file: String!, $caption: String) {
-// 		uploadPhoto(file: $file, caption: $caption) {
-// 			file
-// 		}
-// 	}
-// `;
-
-// export const DELETE_PHOTO = gql`
-// 	mutation DeletePhoto($photoId: Int!) {
-// 		deletePhoto(id: $photoId) {
-// 			isPhotoDeleted
-// 			error
-// 		}
-// 	}
-// `;
+export const CREATE_RESTAURANT = gql`
+	mutation CreateRestaurant($data: CreateRestaurantInput!) {
+		createRestaurant(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const EDIT_RESTAURANT = gql`
+	mutation editRestaurant($data: EditRestaurantInput!) {
+		editRestaurant(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const DELETE_RESTAURANT = gql`
+	mutation DeleteRestaurant($data: DeleteRestaurantInput!) {
+		deleteRestaurant(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const CREATE_DISH = gql`
+	mutation createDish($data: CreateDishInput!) {
+		createDishe(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const DELETE_DISH = gql`
+	mutation DeleteDish($dishId: Float!) {
+		deleteDish(dishId: $dishId) {
+			ok
+			message
+		}
+	}
+`;
+export const EDIT_DISH = gql`
+	mutation editDish($data: EditDishInput!) {
+		editDish(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const CREATE_ORDER = gql`
+	mutation createOrder($data: CreateOrderInput!) {
+		createOrder(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const ORDERS = gql`
+	mutation Orders($data: OrdersInputFilter!) {
+		getOrders(data: $data) {
+			ok
+			message
+			orders {
+				id
+			}
+		}
+	}
+`;
+export const ORDER = gql`
+	mutation Order($data: OrderInputType!) {
+		getOrderById(data: $data) {
+			ok
+			message
+			order {
+				id
+				status
+				restaurant {
+					id
+					name
+				}
+			}
+		}
+	}
+`;
+export const EDIT_ORDER = gql`
+	mutation editOrder($data: EditOrderInput!) {
+		editOrder(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+export const TAKE_ORDER = gql`
+	mutation TakeOrder($data: OrderInputType!) {
+		takeOrder(data: $data) {
+			ok
+			message
+			order {
+				id
+			}
+		}
+	}
+`;
+export const CREATE_PAYMENT = gql`
+	mutation Createpayment($data: CreatePaymentInputType!) {
+		createPayment(data: $data) {
+			ok
+			message
+		}
+	}
+`;
