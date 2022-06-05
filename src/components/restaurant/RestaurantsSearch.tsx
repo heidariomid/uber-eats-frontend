@@ -1,7 +1,7 @@
 import {useForm} from 'react-hook-form';
 import {useNavigate} from 'react-router-dom';
-
 import restaurantBg from '../../images/restaurants-bg.png';
+
 const RestaurantsSearch = () => {
 	let navigate = useNavigate();
 	const {register, getValues, handleSubmit, clearErrors} = useForm({
@@ -10,6 +10,7 @@ const RestaurantsSearch = () => {
 
 	const onValidSubmit = () => {
 		const {restaurantName} = getValues();
+
 		navigate(`/restaurants/${restaurantName}`, {replace: true, state: {restaurantName}});
 	};
 

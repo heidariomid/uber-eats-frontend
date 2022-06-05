@@ -7,7 +7,8 @@ import {useReactiveVar} from '@apollo/client';
 import {isLoginVar} from '../apollo/GlobalVar';
 import Confirm from '../components/email/Confirm';
 import EditProfile from '../components/user/EditProfile';
-import Restaurant from '../pages/client/Restaurant';
+import RestaurantFind from '../pages/client/RestaurantFind';
+import SingleRestaurant from '../pages/client/SingleRestaurant';
 
 const Router = () => {
 	const isLoggedIn = useReactiveVar(isLoginVar);
@@ -15,7 +16,8 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/' element={isLoggedIn ? <Home /> : <Navigate to={'/auth/login'} />} />
-			<Route path='restaurants/:query' element={<Restaurant />} />
+			<Route path='restaurants/:query' element={<RestaurantFind />} />
+			<Route path='restaurant/:query' element={<SingleRestaurant />} />
 			<Route path='/auth/login' element={<Login />} />
 			<Route path='/auth/signup' element={<Signup />} />
 			<Route path='/confirm' element={<Confirm />} />

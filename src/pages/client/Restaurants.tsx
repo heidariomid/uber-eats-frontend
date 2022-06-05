@@ -5,10 +5,9 @@ import Loading from '../../components/loading/Loading';
 import {CATEGORIES, RESTAURANTS} from '../../graphql/queries';
 import {CategoriesQuery, CategoriesQueryVariables, RestaurantsQuery, RestaurantsQueryVariables} from '../../graphql/schemaTypes';
 import Category from '../../components/restaurant/Category';
-import Restaurant from '../../components/restaurant/Restaurant';
+import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import RestaurantsSearch from '../../components/restaurant/RestaurantsSearch';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faArrowCircleLeft, faArrowCircleRight} from '@fortawesome/free-solid-svg-icons';
+import Pagination from '../../components/pagination/Pagination';
 interface IRestaurant {
 	id: number;
 	name: string;
@@ -50,36 +49,14 @@ const Restaurants = () => {
 				<Loading />
 			) : (
 				<>
+					{/* search restaurants */}
 					<RestaurantsSearch />
-					<div className='mb-10'>
-						<div className='flex flex-row justify-between max-w-screen-md  mx-auto'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
-						<div className='w-full flex items-center justify-center font-bold text-lg bg-black text-white text-center py-2 my-4'>
-							<h1 className='w-3/6'>Restaurants</h1>
-						</div>
-						<div className='grid md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto '>{restaurants && restaurants.map((restaurant) => <Restaurant key={restaurant.id} restaurant={restaurant} />)}</div>
-						<div className='flex flex-row justify-center items-center mt-14'>
-							{data?.getRestaurants?.totalPages === page && (
-								<span className='mx-5'>
-									{page} of {data?.getRestaurants.totalPages}
-								</span>
-							)}
-							{data?.getRestaurants?.totalPages !== page && (
-								<button className=' px-5 mx-1' onClick={() => setPage((page) => page + 1)}>
-									<FontAwesomeIcon className='text-2xl text-green-600 px-1' icon={faArrowCircleLeft} />
-								</button>
-							)}
-							{data?.getRestaurants?.totalPages === page && (
-								<button className=' px-5 mx-1' onClick={() => setPage((page) => page - 1)}>
-									<FontAwesomeIcon className='text-2xl text-green-600 px-1' icon={faArrowCircleRight} />
-								</button>
-							)}
-							{data?.getRestaurants?.totalPages !== page && (
-								<span className='mx-5'>
-									{page} of {data?.getRestaurants.totalPages}
-								</span>
-							)}
-						</div>
-					</div>
+					{/* categories */}
+					<div className='flex flex-row justify-between max-w-screen-md  mx-auto mb-16 mt-5'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					{/* restaurants */}
+					<div className='grid md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto my-5'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
+					{/* pagination */}
+					<Pagination data={data} page={page} setPage={setPage} />
 				</>
 			)}
 		</>

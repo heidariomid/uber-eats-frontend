@@ -2,14 +2,13 @@ import {useParams} from 'react-router-dom';
 import {SEARCH_RESTAURANT} from '../../graphql/queries';
 import {SearchRestaurantsQuery, SearchRestaurantsQueryVariables} from '../../graphql/schemaTypes';
 import {useQuery} from '@apollo/client';
-import RestaurantCo from '../../components/restaurant/Restaurant';
+import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import Loading from '../../components/loading/Loading';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 
-const Restaurant = () => {
+const RestaurantFind = () => {
 	let {query} = useParams();
 	const {data, loading, error} = useQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT, {variables: {data: {query}}});
-	console.log(data?.searchRestaurants.ok);
 	return (
 		<>
 			{!loading && (
@@ -23,9 +22,9 @@ const Restaurant = () => {
 							<h1 className='w-3/6'>{data?.searchRestaurants?.message}</h1>
 						</div>
 					)}
-					<div className='mx-auto max-w-screen-md py-10'>
+					<div className='grid md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto'>
 						{data?.searchRestaurants?.restaurants?.map((restaurant) => (
-							<RestaurantCo key={restaurant.id} restaurant={restaurant} />
+							<RestaurantCover key={restaurant.id} restaurant={restaurant} />
 						))}
 					</div>
 				</>
@@ -36,4 +35,4 @@ const Restaurant = () => {
 	);
 };
 
-export default Restaurant;
+export default RestaurantFind;

@@ -22,7 +22,7 @@ const Header = () => {
 								<FontAwesomeIcon className=' text-white text-xl px-1' icon={faEdit} />
 							</Link>
 						</span>
-						<span className='bg-black text-white py-1 px-2 mx-0.5' onClick={userLoggedOut}>
+						<span className='bg-black text-white py-1 px-2 mx-0.5 cursor-pointer' onClick={userLoggedOut}>
 							<FontAwesomeIcon className=' text-white text-xl px-2' icon={faSignOut} />
 						</span>
 					</div>
