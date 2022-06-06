@@ -14,7 +14,7 @@ module.exports = {
 				lime: colors.lime,
 			},
 			animation: {
-				wiggle: 'wiggle 5s cubic-bezier(0.5, 2, 0.2, 3)  infinite',
+				wiggle: 'wiggle 1s ease-in-out  infinite',
 			},
 			keyframes: {
 				wiggle: {

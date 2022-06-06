@@ -1,6 +1,6 @@
 {
   "files.exclude": {
-    // "public": true,
+    "public": true,
     ".gitignore": true,
     "node_modules": true,
     "yarn.lock": true,
@@ -26,8 +26,8 @@
     "postcss.config.js": true,
     "index.d.ts": true,
     "codegen.yml": true,
-    // "src/images": true,
-    // "*/index.tsx": true,
-    // "*/index.css": true,
+    "src/images": true,
+    "*/index.tsx": true,
+    "*/index.css": true,
   }
 }

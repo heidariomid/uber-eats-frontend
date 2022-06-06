@@ -10,8 +10,9 @@ const RestaurantsSearch = () => {
 
 	const onValidSubmit = () => {
 		const {restaurantName} = getValues();
-
-		navigate(`/restaurants/${restaurantName}`, {replace: true, state: {restaurantName}});
+		navigate({
+			pathname: `/search/${restaurantName}`,
+		});
 	};
 
 	const clearSearchErrors = () => clearErrors('name');

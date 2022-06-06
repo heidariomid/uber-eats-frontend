@@ -16,7 +16,7 @@ const Router = () => {
 	return (
 		<Routes>
 			<Route path='/' element={isLoggedIn ? <Home /> : <Navigate to={'/auth/login'} />} />
-			<Route path='restaurants/:query' element={<RestaurantFind />} />
+			<Route path='search/:query' element={<RestaurantFind />} />
 			<Route path='restaurant/:query' element={<SingleRestaurant />} />
 			<Route path='/auth/login' element={<Login />} />
 			<Route path='/auth/signup' element={<Signup />} />

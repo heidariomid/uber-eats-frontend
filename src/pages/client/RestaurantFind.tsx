@@ -5,14 +5,17 @@ import {useQuery} from '@apollo/client';
 import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import Loading from '../../components/loading/Loading';
 import ErrorSpan from '../../components/custom/ErrorSpan';
+import Header from '../../components/header/Header';
 
 const RestaurantFind = () => {
 	let {query} = useParams();
 	const {data, loading, error} = useQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT, {variables: {data: {query}}});
+
 	return (
 		<>
 			{!loading && (
 				<>
+					<Header />
 					{data?.searchRestaurants.ok ? (
 						<div className='w-full flex items-center justify-center font-bold text-lg bg-black text-white text-center py-2 my-4'>
 							<h1 className='w-3/6'>Founded Restaurants</h1>
