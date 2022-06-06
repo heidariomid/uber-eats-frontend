@@ -23,7 +23,7 @@ const RestaurantsSearch = () => {
 			<div className='flex px-4 mt-4 items-center text-center border-t-2 border-white  text-white h-8 justify-center  text-2xl'>
 				<span className='mt-2'>Get the food you want</span>
 			</div>
-			<form onSubmit={handleSubmit(onValidSubmit)} className='w-full flex items-center justify-center font-bold text-lg  text-center py-14 my-4'>
+			<form onSubmit={handleSubmit(onValidSubmit)} className='w-full max-w-screen- flex items-center justify-center font-bold text-lg  text-center py-14 my-4'>
 				<input className='input border-0 w-3/6' type='search' {...register('restaurantName', {})} placeholder='Search Restaurants...' onKeyDown={clearSearchErrors} />
 				<button className='bg-black border-0 text-white py-2 px-4 '>Find</button>
 			</form>

@@ -63,9 +63,6 @@ const Pagination = ({totalPages, currentPage, setCurrentPage}) => {
 					</button>
 				)}
 			</div>
-			<span className='mx-5'>
-				{currentPage} of {totalPages}
-			</span>
 		</div>
 	);
 };
