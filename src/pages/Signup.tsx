@@ -70,7 +70,7 @@ const Signup = () => {
 							</option>
 						))}
 					</select>
-					<button className={!isValid ? 'bg-gray-300 btn' : 'btn'} type='submit' disabled={!isValid || loading}>
+					<button className={!isValid ? 'bg-gray-300 btn mt-5' : 'btn mt-5'} type='submit' disabled={!isValid || loading}>
 						{loading ? 'Loading...' : 'Sign Up'}
 					</button>
 				</form>

@@ -1,4 +1,4 @@
-import {faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight, faArrowRight} from '@fortawesome/free-solid-svg-icons';
+import {faAngleLeft, faAngleRight, faAnglesLeft, faAnglesRight} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 
 const Pagination = ({totalPages, currentPage, setCurrentPage}) => {

@@ -13,6 +13,15 @@ module.exports = {
 			colors: {
 				lime: colors.lime,
 			},
+			animation: {
+				wiggle: 'wiggle 5s cubic-bezier(0.5, 2, 0.2, 3)  infinite',
+			},
+			keyframes: {
+				wiggle: {
+					'0%, 100%': {transform: 'scale(0);opacity: 0'},
+					'50%': {transform: 'scale(0.5);opacity: 1'},
+				},
+			},
 		},
 	},
 	plugins: [],
