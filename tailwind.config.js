@@ -14,12 +14,12 @@ module.exports = {
 				lime: colors.lime,
 			},
 			animation: {
-				wiggle: 'wiggle 3s ease-in-out  infinite',
+				wiggle: 'wiggle 2s ease-in infinite',
 			},
 			keyframes: {
 				wiggle: {
-					'0%, 100%': {transform: 'scale(1);opacity: 1'},
-					'50%': {transform: 'scale(0.9);opacity: 0.6'},
+					'0%, 100%': {transform: 'scale(1)'},
+					'50%': {transform: 'scale(1.1)'},
 				},
 			},
 		},

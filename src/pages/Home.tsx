@@ -10,6 +10,7 @@ import Owner from './owner/Owner';
 
 const Home = () => {
 	const {user, loading} = useUser();
+
 	const homeHandler = () => {
 		if (user) {
 			if (user.role === UserRole.Client) {
@@ -21,7 +22,7 @@ const Home = () => {
 		}
 	};
 	return (
-		<>
+		<div>
 			{!loading && user && (
 				<div className='font-[Rubik]'>
 					{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
@@ -32,7 +33,7 @@ const Home = () => {
 			)}
 			{loading && <Loading />}
 			{!loading && !user && <Navigate to={'/auth/login'} />}
-		</>
+		</div>
 	);
 };
 

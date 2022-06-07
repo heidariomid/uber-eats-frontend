@@ -15,7 +15,7 @@ const SingleRestaurant = () => {
 			{!loading && (
 				<>
 					<Header />
-					<div className='mt-10 max-w-screen-md mx-auto'>
+					<div className='mt-10 h-screen max-w-screen-md mx-auto'>
 						{data?.searchRestaurants?.restaurants?.map((restaurant) => (
 							<Restaurant restaurant={restaurant} />
 						))}

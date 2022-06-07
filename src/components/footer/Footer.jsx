@@ -1,6 +1,11 @@
+import {useReactiveVar} from '@apollo/client';
+import {isDarkVar} from '../../apollo/GlobalVar';
+
 const Footer = () => {
+	const isDark = useReactiveVar(isDarkVar);
+
 	return (
-		<div className='w-full p-24 bg-black text-white grid grid-cols-3 gap-7 items-center justify-between text-center  py-16'>
+		<div className={`w-full p-24 bg-black text-white grid grid-cols-3 gap-7 items-center justify-between text-center  py-16 ${isDark && 'border-t-2 border-green-500'}`}>
 			<div>
 				<span className='text-sm'>About Us</span>
 			</div>

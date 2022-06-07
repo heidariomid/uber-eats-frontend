@@ -1,4 +1,4 @@
-import {useQuery} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
 import {useState} from 'react';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import Loading from '../../components/loading/Loading';
@@ -8,13 +8,14 @@ import Category from '../../components/restaurant/Category';
 import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import RestaurantsSearch from '../../components/restaurant/RestaurantsSearch';
 import Pagination from '../../components/pagination/Pagination';
-import Checkout from '../../components/payment/Checkout';
+import {isDarkVar} from '../../apollo/GlobalVar';
 interface IRestaurant {
 	id: number;
 	name: string;
 	isPromoted: boolean;
 }
 const Restaurants = () => {
+	const isDark = useReactiveVar(isDarkVar);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [page, setPage] = useState(1);
 	const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
@@ -52,9 +53,9 @@ const Restaurants = () => {
 				<div className='min-h-screen'>
 					<RestaurantsSearch />
 
-					<div className='flex flex-row justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg  mx-auto mb-5 mt-5 px-5'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
-
-					<div className='h-24'></div>
+					<div className='flex flex-row justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg  mx-auto mb-8 mt-5 px-5'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
+					<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-500'}`}></div>
+					<div className='h-12'></div>
 					<section className='h-128'>
 						<div className='grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-lg'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
 					</section>

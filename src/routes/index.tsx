@@ -9,7 +9,6 @@ import EditProfile from '../components/user/EditProfile';
 import RestaurantFind from '../pages/client/RestaurantFind';
 import SingleRestaurant from '../pages/client/SingleRestaurant';
 import ErrorPage from '../components/custom/ErrorPage';
-import Construction from '../components/custom/Construction ';
 
 const Router = () => {
 	const isLoggedIn = useReactiveVar(isLoginVar);
@@ -23,8 +22,7 @@ const Router = () => {
 			<Route path='/auth/signup' element={<Signup />} />
 			<Route path='/confirm' element={<Confirm />} />
 			<Route path='/user/edit' element={<EditProfile />} />
-			{/* <Route path='*' element={<ErrorPage title='404' message='Nothing Found' />} /> */}
-			<Route path='*' element={<Construction />} />
+			<Route path='*' element={<ErrorPage title='404' message='Nothing Found' />} />
 		</Routes>
 	);
 };
