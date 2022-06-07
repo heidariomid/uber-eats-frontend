@@ -1,27 +1,15 @@
-// import {gql} from '@apollo/client';
+import {gql} from '@apollo/client';
 
-// export const PHOTO_FEAGMENT = gql`
-// 	fragment PhotoFragment on Photo {
-// 		file
-// 		id
-// 		caption
-// 		commentsNumber
-// 		likes
-// 		isLiked
-// 		createdAt
-// 	}
-// `;
-// export const COMMENT_FRAGMENT = gql`
-// 	fragment CommentFragment on Comment {
-// 		id
-// 		payload
-// 		createdAt
-// 		isMine
-// 		user {
-// 			userName
-// 			avatar
-// 		}
-// 	}
-// `;
-
-export {};
+export const RESTAURANT_FEAGMENT = gql`
+	fragment RestaurantFragment on Restaurant {
+		id
+		name
+		isPromoted
+		address
+		coverImg
+		category {
+			name
+		}
+		coverImg
+	}
+`;

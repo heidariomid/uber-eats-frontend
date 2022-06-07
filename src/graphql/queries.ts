@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-// import {COMMENT_FRAGMENT, PHOTO_FEAGMENT} from './sharedQuery';
+import {RESTAURANT_FEAGMENT} from './sharedQuery';
 
 export const LOGGED_IN_USER = gql`
 	query loggedInUser {
@@ -20,17 +20,11 @@ export const RESTAURANTS = gql`
 			totalPages
 			totalRestaurants
 			restaurants {
-				id
-				name
-				isPromoted
-				address
-				coverImg
-				category {
-					name
-				}
+				...RestaurantFragment
 			}
 		}
 	}
+	${RESTAURANT_FEAGMENT}
 `;
 
 export const CATEGORIES = gql`
@@ -55,26 +49,11 @@ export const RESTAURANT = gql`
 			ok
 			message
 			restaurant {
-				name
-				isPromoted
-				coverImg
-				category {
-					name
-				}
-				orders {
-					id
-				}
-				menu {
-					name
-					price
-					options {
-						name
-						extra
-					}
-				}
+				...RestaurantFragment
 			}
 		}
 	}
+	${RESTAURANT_FEAGMENT}
 `;
 
 export const SEARCH_RESTAURANT = gql`
@@ -85,16 +64,11 @@ export const SEARCH_RESTAURANT = gql`
 			totalRestaurants
 			totalPages
 			restaurants {
-				name
-				id
-				isPromoted
-				coverImg
-				category {
-					name
-				}
+				...RestaurantFragment
 			}
 		}
 	}
+	${RESTAURANT_FEAGMENT}
 `;
 
 export const USER_PROFILE = gql`

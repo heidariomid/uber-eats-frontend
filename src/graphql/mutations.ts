@@ -1,4 +1,5 @@
 import {gql} from '@apollo/client';
+import {RESTAURANT_FEAGMENT} from './sharedQuery';
 
 export const LOGIN_MUTATION = gql`
 	mutation login($data: loginInput!) {
@@ -112,12 +113,12 @@ export const ORDER = gql`
 				id
 				status
 				restaurant {
-					id
-					name
+					...RestaurantFragment
 				}
 			}
 		}
 	}
+	${RESTAURANT_FEAGMENT}
 `;
 export const EDIT_ORDER = gql`
 	mutation editOrder($data: EditOrderInput!) {
