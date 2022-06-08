@@ -50,18 +50,18 @@ const Restaurants = () => {
 			{loading ? (
 				<Loading />
 			) : (
-				<div className='min-h-screen'>
+				<>
 					<RestaurantsSearch />
 
 					<div className='flex flex-row justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-lg  mx-auto mb-8 mt-5 px-5'>{categories && categories.map((category) => <Category key={category.id} category={category} />)}</div>
 					<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-500'}`}></div>
 					<div className='h-12'></div>
-					<section className='h-128'>
-						<div className='grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-lg'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
+					<section className='md:h-128 px-10'>
+						<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-lg'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
 					</section>
-					<div className='h-24'></div>
+					<div className='h-24 '></div>
 					<Pagination totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
-				</div>
+				</>
 			)}
 		</>
 	);

@@ -42,7 +42,7 @@ const Pagination = ({totalPages, currentPage, setCurrentPage}) => {
 	}
 	return (
 		<div className='text-center justify-center'>
-			<div className='flex flex-row justify-center items-center my-14 '>
+			<div className='flex flex-row justify-center items-center mb-20 '>
 				{currentPage !== 1 && (
 					<button onClick={() => setCurrentPage(1)} className='relative inline-flex items-center px-4  text-sm font-medium rounded-l-full text-gray-400  hover:text-green-500'>
 						<FontAwesomeIcon icon={faAnglesLeft} />
