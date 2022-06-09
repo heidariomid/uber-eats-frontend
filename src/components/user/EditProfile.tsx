@@ -78,6 +78,7 @@ const EditProfile = () => {
 	const clearRoleErrors = () => clearErrors('role');
 	return (
 		<>
+			<Header />
 			<div className='container flex flex-col h-screen items-center justify-center '>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10'>Update Your Profile</h3>
@@ -88,7 +89,7 @@ const EditProfile = () => {
 								setInputEmail(true);
 								setInputPassword(false);
 							}}
-							className={` text-white text-lg cursor-pointer mx-2 px-2 py-1  ${inputEmail ? 'bg-black' : 'bg-gray-500'}  `}
+							className={` text-white text-lg cursor-pointer mx-2 px-2 py-1  ${inputEmail ? 'bg-black' : 'bg-gray-400'}  `}
 						>
 							Email
 						</span>
@@ -98,7 +99,7 @@ const EditProfile = () => {
 								setInputPassword(true);
 								setInputEmail(false);
 							}}
-							className={` text-white text-lg cursor-pointer  mx-2 px-2 py-1   ${inputPassword ? 'bg-black' : 'bg-gray-500'} `}
+							className={` text-white text-lg cursor-pointer  mx-2 px-2 py-1   ${inputPassword ? 'bg-black' : 'bg-gray-400'} `}
 						>
 							Password
 						</span>
@@ -122,7 +123,9 @@ const EditProfile = () => {
 							</select>
 						)}
 						<button className={loading ? 'bg-gray-300 btn' : 'btn'} type='submit' disabled={loading}>
-							{loading ? 'Loading...' : 'Update Profile'}
+							{loading && 'Loading...'}
+							{inputEmail && 'Update Email'}
+							{inputPassword && 'Update Password'}
 						</button>
 					</form>
 					<div className='mt-5'>

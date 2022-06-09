@@ -94,17 +94,22 @@ export const USERS = gql`
 export const CATEGORY = gql`
 	query Category($data: CategoryInputType!) {
 		getCategory(data: $data) {
-			category {
-				name
-				restaurants {
-					id
-				}
-			}
 			ok
 			message
 			totalPages
+			category {
+				name
+				id
+				iconImg
+				restaurantCount
+				slug
+			}
+			restaurants {
+				...RestaurantFragment
+			}
 		}
 	}
+	${RESTAURANT_FEAGMENT}
 `;
 export const DISH = gql`
 	query Dish($dishId: Int!) {

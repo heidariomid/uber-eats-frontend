@@ -53,6 +53,7 @@ export interface CategoryOutput {
   category?: Maybe<Category>;
   message?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
+  restaurants?: Maybe<Array<Restaurant>>;
   totalPages?: Maybe<Scalars['Int']>;
 }
 
@@ -744,7 +745,7 @@ export type OrderMutationVariables = Exact<{
 }>;
 
 
-export type OrderMutation = { __typename?: 'Mutation', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, status: OrderStatus, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> } } } };
+export type OrderMutation = { __typename?: 'Mutation', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, status: OrderStatus, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
 
 export type EditOrderMutationVariables = Exact<{
   data: EditOrderInput;
@@ -777,7 +778,7 @@ export type RestaurantsQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantsQuery = { __typename?: 'Query', getRestaurants: { __typename?: 'RestaurantsOutput', ok: boolean, message?: string, totalPages?: number, totalRestaurants?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> }> } };
+export type RestaurantsQuery = { __typename?: 'Query', getRestaurants: { __typename?: 'RestaurantsOutput', ok: boolean, message?: string, totalPages?: number, totalRestaurants?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -789,14 +790,14 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> } } };
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } };
 
 export type SearchRestaurantsQueryVariables = Exact<{
   data: SearchRestaurantInput;
 }>;
 
 
-export type SearchRestaurantsQuery = { __typename?: 'Query', searchRestaurants: { __typename?: 'SearchRestaurantOutput', ok: boolean, message?: string, totalRestaurants?: number, totalPages?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> }> } };
+export type SearchRestaurantsQuery = { __typename?: 'Query', searchRestaurants: { __typename?: 'SearchRestaurantOutput', ok: boolean, message?: string, totalRestaurants?: number, totalPages?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
 export type UserProfileQueryVariables = Exact<{
   userId: Scalars['Float'];
@@ -815,7 +816,7 @@ export type CategoryQueryVariables = Exact<{
 }>;
 
 
-export type CategoryQuery = { __typename?: 'Query', getCategory: { __typename?: 'CategoryOutput', ok: boolean, message?: string, totalPages?: number, category?: { __typename?: 'Category', name: string, restaurants: Array<{ __typename?: 'Restaurant', id: number }> } } };
+export type CategoryQuery = { __typename?: 'Query', getCategory: { __typename?: 'CategoryOutput', ok: boolean, message?: string, totalPages?: number, category?: { __typename?: 'Category', name: string, id: number, iconImg?: string, restaurantCount: number, slug: string }, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
 export type DishQueryVariables = Exact<{
   dishId: Scalars['Int'];
@@ -829,7 +830,7 @@ export type PaymentsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type PaymentsQuery = { __typename?: 'Query', Payments: { __typename?: 'PaymentsOutput', ok: boolean, message?: string, payments?: Array<{ __typename?: 'Payment', transactionId: string }> } };
 
-export type RestaurantFragmentFragment = { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> };
+export type RestaurantFragmentFragment = { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } };
 
 export const RestaurantFragmentFragmentDoc = gql`
     fragment RestaurantFragment on Restaurant {
@@ -842,17 +843,6 @@ export const RestaurantFragmentFragmentDoc = gql`
     name
   }
   coverImg
-  orders {
-    id
-  }
-  menu {
-    name
-    price
-    options {
-      name
-      extra
-    }
-  }
 }
     `;
 export const LoginDocument = gql`
@@ -1691,18 +1681,22 @@ export type UsersQueryResult = Apollo.QueryResult<UsersQuery, UsersQueryVariable
 export const CategoryDocument = gql`
     query Category($data: CategoryInputType!) {
   getCategory(data: $data) {
-    category {
-      name
-      restaurants {
-        id
-      }
-    }
     ok
     message
     totalPages
+    category {
+      name
+      id
+      iconImg
+      restaurantCount
+      slug
+    }
+    restaurants {
+      ...RestaurantFragment
+    }
   }
 }
-    `;
+    ${RestaurantFragmentFragmentDoc}`;
 
 /**
  * __useCategoryQuery__
