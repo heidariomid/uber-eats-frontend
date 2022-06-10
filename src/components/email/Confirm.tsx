@@ -20,8 +20,6 @@ const Confirm = () => {
 				setIsLoading(false);
 			}
 			if (ok && user) {
-				console.log({ok, message});
-				console.log(user?.id);
 				cache.modify({
 					id: `User:${user?.id}`,
 					fields: {
@@ -42,7 +40,6 @@ const Confirm = () => {
 						},
 					},
 				});
-				console.log(user?.id);
 				navigate('/');
 			}
 		} catch (err: any) {

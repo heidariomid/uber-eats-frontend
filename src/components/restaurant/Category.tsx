@@ -9,7 +9,7 @@ const Category = ({category}) => {
 		<Link to={`/category/${category.slug}`}>
 			<div key={category?.id} className='flex flex-col  items-center cursor-pointer group'>
 				<div className='rounded-full w-14 h-14 bg-cover group-hover:animate-wiggle ' style={{backgroundImage: `url(${category?.iconImg})`}}></div>
-				<span className='mt-2 font-medium'>{category?.name}</span>
+				<span className='mt-2 text-xs md:text-sm md:px-10 md:font-medium'>{category?.name}</span>
 			</div>
 		</Link>
 	);

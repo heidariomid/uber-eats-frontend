@@ -48,6 +48,7 @@ export const RESTAURANT = gql`
 		getRestaurant(data: $data) {
 			ok
 			message
+
 			restaurant {
 				...RestaurantFragment
 			}

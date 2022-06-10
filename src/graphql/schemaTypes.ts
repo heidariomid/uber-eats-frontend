@@ -790,7 +790,7 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', id: number, name: string, slug: string, restaurants: Array<{ __typename?: 'Restaurant', id: number }> }, owner: { __typename?: 'User', id: number }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> } } };
 
 export type SearchRestaurantsQueryVariables = Exact<{
   data: SearchRestaurantInput;
@@ -1529,6 +1529,28 @@ export const RestaurantDocument = gql`
     ok
     message
     restaurant {
+      category {
+        id
+        name
+        slug
+        restaurants {
+          id
+        }
+      }
+      owner {
+        id
+      }
+      orders {
+        id
+      }
+      menu {
+        name
+        price
+        options {
+          name
+          extra
+        }
+      }
       ...RestaurantFragment
     }
   }

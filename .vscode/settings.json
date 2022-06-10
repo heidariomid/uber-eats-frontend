@@ -11,7 +11,7 @@
     "index.html": true,
     ".env": true,
     ".eslintrc.json": true,
-    "test": true,
+    // "test": true,
     "tsconfig.build.json": true,
     "nest-cli.json": true,
     ".prettierrc": true,

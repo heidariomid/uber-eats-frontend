@@ -35,7 +35,6 @@ export const userLoggedOut = () => {
 	return isLoginVar(false);
 };
 export const themeHandler = (currentTheme: any) => {
-	console.log(currentTheme);
 	if (!currentTheme) {
 		localStorage.setItem('dark', 'true');
 	}
