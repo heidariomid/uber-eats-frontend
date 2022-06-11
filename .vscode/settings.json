@@ -27,7 +27,7 @@
     "index.d.ts": true,
     "codegen.yml": true,
     "src/images": true,
-    "*/index.tsx": true,
+    // "*/index.tsx": true,
     "*/index.css": true,
   }
 }

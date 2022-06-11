@@ -3,7 +3,11 @@ interface IErrorSpan {
 }
 const ErrorSpan: React.FC<IErrorSpan> = ({message}) => {
 	if (message) {
-		return <span className='bg-red-600 text-white px-4 span'>{message}</span>;
+		return (
+			<span role={'alert'} className='bg-red-600 text-white px-4 span'>
+				{message}
+			</span>
+		);
 	}
 	return <span className='bg-red-600 text-white px-4 span'>Something went wrong</span>;
 };
