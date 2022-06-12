@@ -10,6 +10,7 @@ import RestaurantFind from '../pages/client/RestaurantFind';
 import SingleRestaurant from '../pages/client/SingleRestaurant';
 import ErrorPage from '../components/custom/ErrorPage';
 import SingleCategory from '../pages/client/SingleCategory';
+import AddRestaurant from '../pages/owner/AddRestaurant';
 
 const Router = () => {
 	const isLoggedIn = useReactiveVar(isLoginVar);
@@ -19,6 +20,7 @@ const Router = () => {
 			<Route path='/' element={isLoggedIn ? <Home /> : <Navigate to={'/auth/login'} />} />
 			<Route path='search/:query' element={<RestaurantFind />} />
 			<Route path='restaurant/:id' element={<SingleRestaurant />} />
+			<Route path='restaurant/add' element={<AddRestaurant />} />
 			<Route path='category/:slug' element={<SingleCategory />} />
 			<Route path='/auth/login' element={<Login />} />
 			<Route path='/auth/signup' element={<Signup />} />

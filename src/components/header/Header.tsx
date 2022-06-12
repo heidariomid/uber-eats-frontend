@@ -20,7 +20,12 @@ const Header = () => {
 						{!isDark && <img className='w-40 p-1  cursor-pointer' src={Logo} alt='logo' />}
 						{isDark && <img className='w-40 p-1   cursor-pointer' src={LogoWhite} alt='logo' />}
 					</Link>
-					<div className='flex flex-row space-x-1 '>
+					<div className='flex flex-row  '>
+						<div className='mr-5'>
+							<Link to={'/restaurant/add'}>
+								<span className={` py-1 h-full w-full flex bg-green-500 text-white px-4 mx-0.5`}>Add Restaurant</span>
+							</Link>
+						</div>
 						<div className='mr-5'>
 							<Link to={'/user/edit'}>
 								<span className={` py-1 h-full w-full flex bg-black text-white ${isDark && 'bg-white  text-black'} px-4 mx-0.5`}>{user?.role}</span>
@@ -37,6 +42,7 @@ const Header = () => {
 								<FontAwesomeIcon className='  text-xl px-2' icon={faSun} />
 							</button>
 						)}
+
 						<span className=' py-1  mx-0.5 cursor-pointer' onClick={userLoggedOut}>
 							<FontAwesomeIcon className='  text-xl px-2' icon={faSignOut} />
 						</span>

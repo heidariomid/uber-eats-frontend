@@ -5,7 +5,7 @@ import Header from '../components/header/Header';
 import Loading from '../components/loading/Loading';
 import {UserRole} from '../graphql/schemaTypes';
 import useUser from '../hooks/useUser';
-import Restaurants from './client/Restaurants';
+import Client from './client/Client';
 import Owner from './owner/Owner';
 
 const Home = () => {
@@ -14,7 +14,7 @@ const Home = () => {
 	const homeHandler = () => {
 		if (user) {
 			if (user.role === UserRole.Client) {
-				return <Restaurants />;
+				return <Client />;
 			}
 			if (user.role === UserRole.Owner) {
 				return <Owner />;

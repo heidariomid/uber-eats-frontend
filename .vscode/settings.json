@@ -1,7 +1,6 @@
 {
   "files.exclude": {
     "public": true,
-    ".gitignore": true,
     "node_modules": true,
     "yarn.lock": true,
     "package-lock.json": true,
@@ -12,6 +11,9 @@
     ".env": true,
     ".eslintrc.json": true,
     "test": true,
+    "cypress": true,
+    "cypress.config.ts": true,
+    ".gitignore": true,
     "tsconfig.build.json": true,
     "nest-cli.json": true,
     ".prettierrc": true,
@@ -21,13 +23,13 @@
     ".env.prod": true,
     ".env.test": true,
     ".env.dev": true,
-    // "package.json": true,
+    "package.json": true,
     // "tailwind.config.js": true,
     "postcss.config.js": true,
     "index.d.ts": true,
     "codegen.yml": true,
-    "src/images": true,
-    // "*/index.tsx": true,
+    // "src/images": true,
+    "*/index.tsx": true,
     "*/index.css": true,
   }
 }

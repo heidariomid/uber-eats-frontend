@@ -100,7 +100,7 @@ export interface CreatePaymentOutput {
 
 export interface CreateRestaurantInput {
   address: Scalars['String'];
-  categoryName: Scalars['String'];
+  categoryId: Scalars['Float'];
   coverImg: Scalars['String'];
   name: Scalars['String'];
 }
@@ -119,7 +119,7 @@ export interface DeleteDishOutput {
 
 export interface DeleteRestaurantInput {
   address?: InputMaybe<Scalars['String']>;
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryId?: InputMaybe<Scalars['Float']>;
   coverImg?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   restaurantId: Scalars['Float'];
@@ -213,7 +213,7 @@ export interface EditOrderOutput {
 
 export interface EditRestaurantInput {
   address?: InputMaybe<Scalars['String']>;
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryId?: InputMaybe<Scalars['Float']>;
   coverImg?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
   restaurantId: Scalars['Float'];
@@ -440,6 +440,7 @@ export interface Query {
   getCategories: CategoriesOutput;
   getCategory: CategoryOutput;
   getDish: DishOutput;
+  getOwnerRestaurants: RestaurantsOutput;
   getRestaurant: RestaurantOutput;
   getRestaurants: RestaurantsOutput;
   loggedInUser: User;
@@ -456,6 +457,11 @@ export interface QueryGetCategoryArgs {
 
 export interface QueryGetDishArgs {
   dishId: Scalars['Int'];
+}
+
+
+export interface QueryGetOwnerRestaurantsArgs {
+  data: RestaurantsInput;
 }
 
 
@@ -780,6 +786,13 @@ export type RestaurantsQueryVariables = Exact<{
 
 export type RestaurantsQuery = { __typename?: 'Query', getRestaurants: { __typename?: 'RestaurantsOutput', ok: boolean, message?: string, totalPages?: number, totalRestaurants?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
+export type RestaurantsOwnerQueryVariables = Exact<{
+  data: RestaurantsInput;
+}>;
+
+
+export type RestaurantsOwnerQuery = { __typename?: 'Query', getOwnerRestaurants: { __typename?: 'RestaurantsOutput', ok: boolean, message?: string, totalPages?: number, totalRestaurants?: number, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
+
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -790,7 +803,7 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', id: number, name: string, slug: string, restaurants: Array<{ __typename?: 'Restaurant', id: number }> }, owner: { __typename?: 'User', id: number }, orders: Array<{ __typename?: 'Order', id: number }>, menu: Array<{ __typename?: 'Dish', name: string, price: number, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number }> }> } } };
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } };
 
 export type SearchRestaurantsQueryVariables = Exact<{
   data: SearchRestaurantInput;
@@ -1481,6 +1494,47 @@ export function useRestaurantsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type RestaurantsQueryHookResult = ReturnType<typeof useRestaurantsQuery>;
 export type RestaurantsLazyQueryHookResult = ReturnType<typeof useRestaurantsLazyQuery>;
 export type RestaurantsQueryResult = Apollo.QueryResult<RestaurantsQuery, RestaurantsQueryVariables>;
+export const RestaurantsOwnerDocument = gql`
+    query restaurantsOwner($data: RestaurantsInput!) {
+  getOwnerRestaurants(data: $data) {
+    ok
+    message
+    totalPages
+    totalRestaurants
+    restaurants {
+      ...RestaurantFragment
+    }
+  }
+}
+    ${RestaurantFragmentFragmentDoc}`;
+
+/**
+ * __useRestaurantsOwnerQuery__
+ *
+ * To run a query within a React component, call `useRestaurantsOwnerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useRestaurantsOwnerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useRestaurantsOwnerQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useRestaurantsOwnerQuery(baseOptions: Apollo.QueryHookOptions<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>(RestaurantsOwnerDocument, options);
+      }
+export function useRestaurantsOwnerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>(RestaurantsOwnerDocument, options);
+        }
+export type RestaurantsOwnerQueryHookResult = ReturnType<typeof useRestaurantsOwnerQuery>;
+export type RestaurantsOwnerLazyQueryHookResult = ReturnType<typeof useRestaurantsOwnerLazyQuery>;
+export type RestaurantsOwnerQueryResult = Apollo.QueryResult<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>;
 export const CategoriesDocument = gql`
     query categories {
   getCategories {
@@ -1529,28 +1583,6 @@ export const RestaurantDocument = gql`
     ok
     message
     restaurant {
-      category {
-        id
-        name
-        slug
-        restaurants {
-          id
-        }
-      }
-      owner {
-        id
-      }
-      orders {
-        id
-      }
-      menu {
-        name
-        price
-        options {
-          name
-          extra
-        }
-      }
       ...RestaurantFragment
     }
   }

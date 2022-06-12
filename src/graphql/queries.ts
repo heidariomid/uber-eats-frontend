@@ -26,6 +26,20 @@ export const RESTAURANTS = gql`
 	}
 	${RESTAURANT_FEAGMENT}
 `;
+export const RESTAURANTS_OWNER = gql`
+	query restaurantsOwner($data: RestaurantsInput!) {
+		getOwnerRestaurants(data: $data) {
+			ok
+			message
+			totalPages
+			totalRestaurants
+			restaurants {
+				...RestaurantFragment
+			}
+		}
+	}
+	${RESTAURANT_FEAGMENT}
+`;
 
 export const CATEGORIES = gql`
 	query categories {
