@@ -1,18 +1,22 @@
 import {useMutation, useQuery} from '@apollo/client';
 import {useForm} from 'react-hook-form';
-import {Link, useLocation, useNavigate} from 'react-router-dom';
-// import Logo from '../images/uber-eats.svg';
+import {Link, useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faSpinner} from '@fortawesome/free-solid-svg-icons';
+import {faCircleCheck, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import Header from '../../components/header/Header';
 import {CREATE_RESTAURANT} from '../../graphql/mutations';
-import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, CreateRestaurantMutationVariables, RestaurantInput} from '../../graphql/schemaTypes';
+import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, CreateRestaurantMutationVariables} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import {CATEGORIES} from '../../graphql/queries';
 import {useState} from 'react';
+import * as filestack from 'filestack-js';
+
+export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
+
 const AddRestaurant = () => {
 	let navigate = useNavigate();
 	const [categories, setCategories] = useState<any>([]);
+	const [photoUrl, setPhotoUrl] = useState<string>('');
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
 
 	const {
@@ -33,6 +37,7 @@ const AddRestaurant = () => {
 		}
 		if (ok) {
 			setServerMessage(message);
+			navigate('/');
 		}
 	};
 	const onCompletedCategories = (data: CategoriesQuery) => {
@@ -42,33 +47,53 @@ const AddRestaurant = () => {
 		}
 		if (ok && categories) {
 			setCategories(categories);
-			setServerMessage(message);
 		}
 	};
 	const [dispatch, {loading}] = useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CREATE_RESTAURANT, {onCompleted});
 	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
 
-	const onValidSubmit = () => {
-		if (loading) return;
-		const {name, address, coverImg, categoryId} = getValues();
-		console.log(categoryId);
-		dispatch({variables: {data: {name, coverImg: 'https://cdn.snappfood.ir/600x400/uploads/images/vendors/covers/5e01b92bcbb88.jpg', address, categoryId: Number(categoryId)}}});
+	const uploadPhotoHandler = async () => {
+		const options = {
+			maxFiles: 5,
+			uploadInBackground: false,
+			onUploadDone: async (res) => {
+				const file = await res?.filesUploaded[0]?.url;
+				if (file) {
+					setPhotoUrl(file);
+				}
+			},
+		};
+		await client.picker(options).open();
 	};
+
+	const onValidSubmit = async () => {
+		if (loading) return;
+		const {name, address, categoryId} = getValues();
+		dispatch({variables: {data: {name, coverImg: photoUrl, address, categoryId: Number(categoryId)}}});
+	};
+
 	const restaurantNameRegister = {required: {value: true, message: 'restaurant name is required'}};
 	const addressRegister = {required: {value: true, message: 'address could not be empty'}};
 	const categoryRegister = {required: {value: true, message: 'category could not be empty'}};
-	const fileRegister = {required: {value: true, message: 'file could not be empty'}};
 	const clearNameErrors = () => clearErrors('name');
 	const clearAddressErrors = () => clearErrors('address');
 	const clearCategoryErrors = () => clearErrors("category['name']");
-	const clearFileErrors = () => clearErrors('coverImg');
 	return (
 		<>
 			<Header />
 			<div className='container flex flex-col h-screen items-center justify-center  '>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Restaurant</h3>
-					<span className=' text-gray-600 text-left w-full pl-10'>by adding restaurant,you agree to our policy and rules</span>
+					<span className=' text-gray-600 text-left w-full pl-10'>
+						by adding restaurant,you agree to our{' '}
+						<Link className='text-blue-400 pr-1' to='/'>
+							policy
+						</Link>
+						and
+						<Link className='text-blue-400 pl-1' to='/'>
+							rules
+						</Link>
+					</span>
 					<div className='flex flex-col mt-5 px-20 '>
 						{errors?.name?.message && <ErrorSpan message={errors?.name?.message} />}
 						{errors?.address?.message && <ErrorSpan message={errors?.address?.message} />}
@@ -87,7 +112,20 @@ const AddRestaurant = () => {
 									</option>
 								))}
 						</select>
-						<input {...register('coverImg', fileRegister)} className=' my-6 text-black' type={'file'} placeholder='Cover Image' onKeyDown={clearFileErrors} />
+						{!photoUrl ? (
+							<button onClick={uploadPhotoHandler} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
+								Upload Photo
+							</button>
+						) : (
+							<div className='flex flex-row w-full'>
+								<span className='border-2 border-green-500 w-full  text-center flex justify-center px-20 py-5 my-6 text-green-600'>
+									Photo Uploaded
+									<span className='pl-5 '>
+										<FontAwesomeIcon icon={faCircleCheck} />
+									</span>
+								</span>
+							</div>
+						)}
 
 						<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
 							{!loading && 'Add Restaurant'}
