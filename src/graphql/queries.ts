@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {RESTAURANT_FEAGMENT} from './sharedQuery';
+import {DISH_FEAGMENT, RESTAURANT_FEAGMENT} from './sharedQuery';
 
 export const LOGGED_IN_USER = gql`
 	query loggedInUser {
@@ -40,6 +40,39 @@ export const RESTAURANTS_OWNER = gql`
 	}
 	${RESTAURANT_FEAGMENT}
 `;
+export const RESTAURANT = gql`
+	query Restaurant($data: RestaurantInputType!) {
+		getRestaurant(data: $data) {
+			ok
+			message
+			restaurant {
+				...RestaurantFragment
+				menu {
+					...DishFragment
+				}
+			}
+		}
+	}
+	${RESTAURANT_FEAGMENT}
+	${DISH_FEAGMENT}
+`;
+
+export const RESTAURANT_OWNER = gql`
+	query restaurantOwner($data: RestaurantInputType!) {
+		getOwnerRestaurant(data: $data) {
+			ok
+			message
+			restaurant {
+				...RestaurantFragment
+				menu {
+					...DishFragment
+				}
+			}
+		}
+	}
+	${RESTAURANT_FEAGMENT}
+	${DISH_FEAGMENT}
+`;
 
 export const CATEGORIES = gql`
 	query categories {
@@ -55,20 +88,6 @@ export const CATEGORIES = gql`
 			}
 		}
 	}
-`;
-
-export const RESTAURANT = gql`
-	query Restaurant($data: RestaurantInputType!) {
-		getRestaurant(data: $data) {
-			ok
-			message
-
-			restaurant {
-				...RestaurantFragment
-			}
-		}
-	}
-	${RESTAURANT_FEAGMENT}
 `;
 
 export const SEARCH_RESTAURANT = gql`

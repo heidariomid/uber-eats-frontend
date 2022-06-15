@@ -8,6 +8,7 @@ import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import Pagination from '../../components/pagination/Pagination';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import restaurantBg from '../../images/dining.svg';
+import RestaurantOwnerCover from '../../components/restaurant/RestaurantOwnerCover';
 
 interface IRestaurant {
 	id: number;
@@ -47,7 +48,7 @@ const Restaurants = () => {
 					<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-500'}`}></div>
 					<div className='h-12'></div>
 					<section className='md:h-128 px-10'>
-						<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-lg'>{restaurants && restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
+						<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-lg'>{restaurants && restaurants.map((restaurant) => <RestaurantOwnerCover key={restaurant.id} restaurant={restaurant} />)}</div>
 					</section>
 					<div className='h-24 '></div>
 					<Pagination totalPages={data?.getOwnerRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />

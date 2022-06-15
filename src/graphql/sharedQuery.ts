@@ -13,3 +13,19 @@ export const RESTAURANT_FEAGMENT = gql`
 		coverImg
 	}
 `;
+export const DISH_FEAGMENT = gql`
+	fragment DishFragment on Dish {
+		name
+		price
+		description
+		photo
+		options {
+			name
+			extra
+			choices {
+				name
+				extra
+			}
+		}
+	}
+`;

@@ -7,7 +7,7 @@ import Header from '../../components/header/Header';
 import {CREATE_RESTAURANT} from '../../graphql/mutations';
 import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, CreateRestaurantMutationVariables} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
-import {CATEGORIES} from '../../graphql/queries';
+import {CATEGORIES, RESTAURANTS_OWNER} from '../../graphql/queries';
 import {useState} from 'react';
 import * as filestack from 'filestack-js';
 
@@ -49,7 +49,7 @@ const AddRestaurant = () => {
 			setCategories(categories);
 		}
 	};
-	const [dispatch, {loading}] = useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CREATE_RESTAURANT, {onCompleted});
+	const [dispatch, {loading}] = useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CREATE_RESTAURANT, {onCompleted, refetchQueries: [{query: RESTAURANTS_OWNER}]});
 	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
 
 	const uploadPhotoHandler = async () => {
@@ -85,7 +85,7 @@ const AddRestaurant = () => {
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Restaurant</h3>
 					<span className=' text-gray-600 text-left w-full pl-10'>
-						by adding restaurant,you agree to our{' '}
+						by adding restaurant,you agree to our
 						<Link className='text-blue-400 pr-1' to='/'>
 							policy
 						</Link>
