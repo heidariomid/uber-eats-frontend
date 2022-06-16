@@ -78,7 +78,6 @@ const EditProfile = () => {
 	const clearRoleErrors = () => clearErrors('role');
 	return (
 		<>
-			<Header />
 			<div className='container flex flex-col h-screen items-center justify-center '>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10'>Update Your Profile</h3>

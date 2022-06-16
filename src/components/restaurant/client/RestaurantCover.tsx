@@ -1,6 +1,6 @@
 import {useReactiveVar} from '@apollo/client';
 import {Link} from 'react-router-dom';
-import {isDarkVar} from '../../apollo/GlobalVar';
+import {isDarkVar} from '../../../apollo/GlobalVar';
 
 const Restaurant = ({restaurant}) => {
 	const isDark = useReactiveVar(isDarkVar);

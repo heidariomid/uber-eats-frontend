@@ -5,7 +5,7 @@ import Loading from '../../components/loading/Loading';
 import {CATEGORIES, RESTAURANTS} from '../../graphql/queries';
 import {CategoriesQuery, CategoriesQueryVariables, RestaurantsQuery, RestaurantsQueryVariables} from '../../graphql/schemaTypes';
 import Category from '../../components/restaurant/Category';
-import RestaurantCover from '../../components/restaurant/RestaurantCover';
+import RestaurantCover from '../../components/restaurant/client/RestaurantCover';
 import RestaurantsSearch from '../../components/restaurant/RestaurantsSearch';
 import Pagination from '../../components/pagination/Pagination';
 import {isDarkVar} from '../../apollo/GlobalVar';

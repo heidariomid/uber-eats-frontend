@@ -4,11 +4,10 @@ import ErrorSpan from '../../components/custom/ErrorSpan';
 import Loading from '../../components/loading/Loading';
 import {RESTAURANTS_OWNER} from '../../graphql/queries';
 import {RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables} from '../../graphql/schemaTypes';
-import RestaurantCover from '../../components/restaurant/RestaurantCover';
 import Pagination from '../../components/pagination/Pagination';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import restaurantBg from '../../images/dining.svg';
-import RestaurantOwnerCover from '../../components/restaurant/RestaurantOwnerCover';
+import RestaurantOwnerCover from '../../components/restaurant/owner/RestaurantOwnerCover';
 
 interface IRestaurant {
 	id: number;

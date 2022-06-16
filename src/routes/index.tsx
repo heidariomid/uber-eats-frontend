@@ -16,10 +16,12 @@ import AddDish from '../pages/owner/AddDish';
 
 const Router = () => {
 	const isLoggedIn = useReactiveVar(isLoginVar);
-
 	return (
 		<Routes>
 			<Route path='/' element={isLoggedIn ? <Home /> : <Navigate to={'/auth/login'} />} />
+			<Route path='/auth/login' element={<Login />} />
+			<Route path='/auth/signup' element={<Signup />} />
+			<Route path='*' element={<ErrorPage title='404' message='Nothing Found' />} />
 			<Route path='search/:query' element={<RestaurantFind />} />
 			<Route path='restaurant/:id' element={<ClientRestaurant />} />
 			<Route path='restaurant/owner/:id' element={<OwnerRestaurant />} />
@@ -34,5 +36,4 @@ const Router = () => {
 		</Routes>
 	);
 };
-
 export default Router;

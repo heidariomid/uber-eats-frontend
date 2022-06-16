@@ -1,7 +1,6 @@
 import {Navigate} from 'react-router-dom';
 import Banner from '../components/banner/Banner';
 import Footer from '../components/footer/Footer';
-import Header from '../components/header/Header';
 import Loading from '../components/loading/Loading';
 import {UserRole} from '../graphql/schemaTypes';
 import useUser from '../hooks/useUser';
@@ -26,7 +25,6 @@ const Home = () => {
 			{!loading && user && (
 				<div className='font-[Rubik]'>
 					{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
-					<Header />
 					{homeHandler()}
 					<Footer />
 				</div>

@@ -2,7 +2,7 @@ import {useParams} from 'react-router-dom';
 import {SEARCH_RESTAURANT} from '../../graphql/queries';
 import {SearchRestaurantsQuery, SearchRestaurantsQueryVariables} from '../../graphql/schemaTypes';
 import {useLazyQuery} from '@apollo/client';
-import RestaurantCover from '../../components/restaurant/RestaurantCover';
+import RestaurantCover from '../../components/restaurant/client/RestaurantCover';
 import Loading from '../../components/loading/Loading';
 import Header from '../../components/header/Header';
 import ErrorPage from '../../components/custom/ErrorPage';
@@ -25,7 +25,6 @@ const RestaurantFind = () => {
 		<>
 			{!loading && (
 				<>
-					<Header />
 					{!data?.searchRestaurants.ok && <div className='w-full flex flex-col h-screen items-center justify-center font-bold text-lg space-y-10 text-black text-center py-2 my-4'>{data?.searchRestaurants?.message ? <ErrorPage message={data?.searchRestaurants?.message} /> : <ErrorPage message={'SomeThing Goes Wrong!'} />}</div>}
 					{data?.searchRestaurants.ok && (
 						<div className='min-h-screen'>

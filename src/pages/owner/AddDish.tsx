@@ -1,9 +1,8 @@
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
-import {Link, useNavigate, useParams} from 'react-router-dom';
+import {Link, useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
-import Header from '../../components/header/Header';
 import {CREATE_DISH} from '../../graphql/mutations';
 import {CreateDishInput, CreateDishMutation, CreateDishMutationVariables} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
@@ -13,7 +12,6 @@ import * as filestack from 'filestack-js';
 export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
 
 const AddRestaurant = () => {
-	let navigate = useNavigate();
 	let {id} = useParams();
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
 
@@ -54,7 +52,6 @@ const AddRestaurant = () => {
 	const clearDescriptionErrors = () => clearErrors('description');
 	return (
 		<>
-			<Header />
 			<div className='container flex flex-col h-screen items-center justify-center  '>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Dish</h3>

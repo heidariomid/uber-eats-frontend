@@ -3,7 +3,6 @@ import {useForm} from 'react-hook-form';
 import {Link, useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleCheck, faSpinner} from '@fortawesome/free-solid-svg-icons';
-import Header from '../../components/header/Header';
 import {CREATE_RESTAURANT} from '../../graphql/mutations';
 import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, CreateRestaurantMutationVariables} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
@@ -80,7 +79,6 @@ const AddRestaurant = () => {
 	const clearCategoryErrors = () => clearErrors("category['name']");
 	return (
 		<>
-			<Header />
 			<div className='container flex flex-col h-screen items-center justify-center  '>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Restaurant</h3>

@@ -4,7 +4,7 @@ import {RestaurantQuery, RestaurantQueryVariables} from '../../graphql/schemaTyp
 import {useQuery} from '@apollo/client';
 import Loading from '../../components/loading/Loading';
 import Header from '../../components/header/Header';
-import Restaurant from '../../components/restaurant/Restaurant';
+import Restaurant from '../../components/restaurant/client/Restaurant';
 import ErrorPage from '../../components/custom/ErrorPage';
 
 const SingleRestaurant = () => {
@@ -14,7 +14,6 @@ const SingleRestaurant = () => {
 		<>
 			{!loading && data?.getRestaurant.ok && data?.getRestaurant?.restaurant && (
 				<>
-					<Header />
 					<Restaurant restaurant={data?.getRestaurant?.restaurant} />
 				</>
 			)}
