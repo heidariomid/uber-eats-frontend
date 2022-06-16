@@ -1,5 +1,4 @@
 import {useReactiveVar} from '@apollo/client';
-import {Navigate} from 'react-router-dom';
 import {isDarkVar, isLoginVar} from './apollo/GlobalVar';
 import Header from './components/header/Header';
 import Routes from './routes';
