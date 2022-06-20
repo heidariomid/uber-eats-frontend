@@ -64,7 +64,7 @@ const EditProfile = () => {
 
 	const onValidSubmit = () => {
 		if (loading) return;
-		const {email, password, role} = getValues();
+		const {email, password} = getValues();
 
 		inputEmail && loginHandler({variables: {data: {email}}});
 		inputPassword && loginHandler({variables: {data: {...(password !== '' && {password})}}});

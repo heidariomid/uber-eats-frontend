@@ -1,4 +1,5 @@
 import {useReactiveVar} from '@apollo/client';
+import {divide} from 'cypress/types/lodash';
 import {Link} from 'react-router-dom';
 import {isDarkVar} from '../../../apollo/GlobalVar';
 
@@ -31,6 +32,13 @@ const RestaurantOwner = ({restaurant}) => {
 								<div>{dish?.name}</div>
 								<div>{dish?.price}</div>
 								<div>{dish?.description}</div>
+								{dish?.options &&
+									dish?.options.map((item) => (
+										<>
+											<div>{item.name}</div>
+											<div>{item.extra}$</div>
+										</>
+									))}
 							</div>
 						);
 					})}

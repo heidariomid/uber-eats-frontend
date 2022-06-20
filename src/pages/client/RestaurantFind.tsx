@@ -4,7 +4,6 @@ import {SearchRestaurantsQuery, SearchRestaurantsQueryVariables} from '../../gra
 import {useLazyQuery} from '@apollo/client';
 import RestaurantCover from '../../components/restaurant/client/RestaurantCover';
 import Loading from '../../components/loading/Loading';
-import Header from '../../components/header/Header';
 import ErrorPage from '../../components/custom/ErrorPage';
 import {useEffect} from 'react';
 
