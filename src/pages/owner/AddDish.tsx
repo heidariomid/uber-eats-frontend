@@ -2,18 +2,20 @@ import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faAdd, faSpinner} from '@fortawesome/free-solid-svg-icons';
+import {faAdd, faCircleCheck, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {CREATE_DISH} from '../../graphql/mutations';
 import {CreateDishInput, CreateDishMutation, CreateDishMutationVariables} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import {useState} from 'react';
 import * as filestack from 'filestack-js';
 import {v4 as uuidv4} from 'uuid';
+import {uploadPhotoHandler} from '../../services/UploadPhoto';
 export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
 
 const AddRestaurant = () => {
 	let {id} = useParams();
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
+	const [photoUrl, setPhotoUrl] = useState<string>('');
 
 	const {
 		register,
@@ -45,7 +47,7 @@ const AddRestaurant = () => {
 		const {name, price, description, ...rest} = getValues();
 
 		const options = optionNumber.map((id) => ({name: rest[`dishOptionName-${id}`], extra: +rest[`dishOptionExtra-${id}`]}));
-		dispatch({variables: {data: {restaurantId: Number(id), name, price: Number(price), description, options}}});
+		dispatch({variables: {data: {restaurantId: Number(id), name, price: Number(price), description, options, photo: photoUrl}}});
 	};
 	const randomId = uuidv4();
 	const restaurantNameRegister = {required: {value: true, message: 'restaurant name is required'}};
@@ -111,6 +113,20 @@ const AddRestaurant = () => {
 									</div>
 								);
 							})}
+						{!photoUrl ? (
+							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
+								Upload Photo
+							</button>
+						) : (
+							<div className='flex flex-row w-full'>
+								<span className='border-2 border-green-500 w-full  text-center flex justify-center px-20 py-5 my-6 text-green-600'>
+									Photo Uploaded
+									<span className='pl-5 '>
+										<FontAwesomeIcon icon={faCircleCheck} />
+									</span>
+								</span>
+							</div>
+						)}
 						<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
 							{!loading && 'Submit'}
 							{loading && (

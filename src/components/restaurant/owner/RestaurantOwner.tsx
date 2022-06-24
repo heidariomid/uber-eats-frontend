@@ -1,10 +1,17 @@
 import {useReactiveVar} from '@apollo/client';
-import {divide} from 'cypress/types/lodash';
 import {Link} from 'react-router-dom';
 import {isDarkVar} from '../../../apollo/GlobalVar';
-
-const RestaurantOwner = ({restaurant}) => {
+import {Restaurant} from '../../../graphql/schemaTypes';
+import Dish from '../Dish';
+import DishChart from '../DishChart';
+const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 	let isDark = useReactiveVar(isDarkVar);
+	// @ts-ignore
+	const Paddle = window.Paddle;
+	const openCheckout = () => {
+		Paddle.Setup({vendor: 150347});
+		Paddle.Checkout.open({product: 777063});
+	};
 
 	return (
 		<>
@@ -18,31 +25,27 @@ const RestaurantOwner = ({restaurant}) => {
 								<Link to={'add-dish'} className='py-2 text-white bg-black mr-4 px-4'>
 									Add Dish
 								</Link>
-								<Link to={'promotion'} className='py-2 text-white bg-black mr-4 px-4'>
-									Buy Promotion
-								</Link>
+								<span className='cursor-pointer py-2 text-white bg-green-500 mr-4 px-4' onClick={openCheckout}>
+									Subscribe
+								</span>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div className='h-96 items-center justify-center text-4xl flex'>
-					{restaurant?.menu?.map((dish) => {
-						return (
-							<div>
-								<div>{dish?.name}</div>
-								<div>{dish?.price}</div>
-								<div>{dish?.description}</div>
-								{dish?.options &&
-									dish?.options.map((item) => (
-										<>
-											<div>{item.name}</div>
-											<div>{item.extra}$</div>
-										</>
-									))}
-							</div>
-						);
-					})}
+				<h1 className='w-full bg-black text-white text-2xl text-center py-6 '>Dishes</h1>
+				<div>
+					<div className='grid mt-16 md:grid-cols-3 gap-x-3 gap-y-10 mx-10'>
+						{restaurant?.menu?.length === 0 ? (
+							<h1 className='text-xl mb-5'>please upload a dish!</h1>
+						) : (
+							restaurant?.menu?.map((dish, i) => {
+								// @ts-ignore
+								return <Dish key={i} dish={dish} />;
+							})
+						)}
+					</div>
 				</div>
+				<DishChart orders={restaurant?.orders} />
 			</div>
 		</>
 	);

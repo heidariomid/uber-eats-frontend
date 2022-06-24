@@ -5,7 +5,6 @@ import {useQuery} from '@apollo/client';
 import Loading from '../../components/loading/Loading';
 import ErrorPage from '../../components/custom/ErrorPage';
 import RestaurantOwner from '../../components/restaurant/owner/RestaurantOwner';
-import Header from '../../components/header/Header';
 
 const SingleRestaurant = () => {
 	let {id} = useParams();
@@ -14,6 +13,7 @@ const SingleRestaurant = () => {
 		<>
 			{!loading && data?.getOwnerRestaurant.ok && data?.getOwnerRestaurant?.restaurant && (
 				<>
+					{/* @ts-ignore */}
 					<RestaurantOwner restaurant={data?.getOwnerRestaurant?.restaurant} />
 				</>
 			)}

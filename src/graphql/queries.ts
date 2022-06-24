@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {DISH_FEAGMENT, RESTAURANT_FEAGMENT} from './sharedQuery';
+import {DISH_FEAGMENT, ORDER_FEAGMENT, RESTAURANT_FEAGMENT} from './sharedQuery';
 
 export const LOGGED_IN_USER = gql`
 	query loggedInUser {
@@ -67,11 +67,15 @@ export const RESTAURANT_OWNER = gql`
 				menu {
 					...DishFragment
 				}
+				orders {
+					...OrderFragment
+				}
 			}
 		}
 	}
 	${RESTAURANT_FEAGMENT}
 	${DISH_FEAGMENT}
+	${ORDER_FEAGMENT}
 `;
 
 export const CATEGORIES = gql`
@@ -148,26 +152,28 @@ export const CATEGORY = gql`
 export const DISH = gql`
 	query Dish($dishId: Int!) {
 		getDish(dishId: $dishId) {
-			ok
 			message
+			ok
+			totalPages
 			dish {
 				id
 				name
-				price
 				description
+				price
 				restaurant {
 					id
-					name
 				}
 				options {
 					name
 					extra
-
 					choices {
 						name
 						extra
 					}
 				}
+				photo
+				createdAt
+				updatedAt
 			}
 		}
 	}

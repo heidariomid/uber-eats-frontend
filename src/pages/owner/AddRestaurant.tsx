@@ -8,9 +8,7 @@ import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, Cre
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import {CATEGORIES, RESTAURANTS_OWNER} from '../../graphql/queries';
 import {useState} from 'react';
-import * as filestack from 'filestack-js';
-
-export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
+import {uploadPhotoHandler} from '../../services/UploadPhoto';
 
 const AddRestaurant = () => {
 	let navigate = useNavigate();
@@ -50,20 +48,6 @@ const AddRestaurant = () => {
 	};
 	const [dispatch, {loading}] = useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CREATE_RESTAURANT, {onCompleted, refetchQueries: [{query: RESTAURANTS_OWNER}]});
 	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
-
-	const uploadPhotoHandler = async () => {
-		const options = {
-			maxFiles: 5,
-			uploadInBackground: false,
-			onUploadDone: async (res) => {
-				const file = await res?.filesUploaded[0]?.url;
-				if (file) {
-					setPhotoUrl(file);
-				}
-			},
-		};
-		await client.picker(options).open();
-	};
 
 	const onValidSubmit = async () => {
 		if (loading) return;
@@ -111,7 +95,7 @@ const AddRestaurant = () => {
 								))}
 						</select>
 						{!photoUrl ? (
-							<button onClick={uploadPhotoHandler} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
+							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
 								Upload Photo
 							</button>
 						) : (

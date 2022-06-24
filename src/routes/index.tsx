@@ -11,6 +11,7 @@ import ErrorPage from '../components/custom/ErrorPage';
 import SingleCategory from '../pages/client/SingleCategory';
 import AddRestaurant from '../pages/owner/AddRestaurant';
 import AddDish from '../pages/owner/AddDish';
+import Basket from '../components/restaurant/Basket';
 
 const Router = () => {
 	return (
@@ -25,6 +26,7 @@ const Router = () => {
 			<Route path='restaurant/add' element={<AddRestaurant />} />
 			<Route path='category/:slug' element={<SingleCategory />} />
 			<Route path='/confirm' element={<Confirm />} />
+			<Route path='/basket' element={<Basket />} />
 			<Route path='/user/edit' element={<EditProfile />} />
 			<Route path='*' element={<ErrorPage title='404' message='Nothing Found' />} />
 		</Routes>

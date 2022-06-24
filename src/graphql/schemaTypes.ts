@@ -61,6 +61,7 @@ export interface CreateDishInput {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   options?: InputMaybe<Array<DishOptionInput>>;
+  photo?: InputMaybe<Scalars['String']>;
   price: Scalars['Int'];
   restaurantId: Scalars['Int'];
 }
@@ -190,6 +191,7 @@ export interface EditDishInput {
   dishId: Scalars['Float'];
   name?: InputMaybe<Scalars['String']>;
   options?: InputMaybe<Array<DishOptionInput>>;
+  photo?: InputMaybe<Scalars['String']>;
   price?: InputMaybe<Scalars['Int']>;
   restaurantId?: InputMaybe<Scalars['Int']>;
 }
@@ -849,7 +851,7 @@ export type DishQueryVariables = Exact<{
 }>;
 
 
-export type DishQuery = { __typename?: 'Query', getDish: { __typename?: 'DishOutput', ok: boolean, message?: string, dish?: { __typename?: 'Dish', id: number, name: string, price: number, description?: string, restaurant: { __typename?: 'Restaurant', id: number, name: string }, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> } } };
+export type DishQuery = { __typename?: 'Query', getDish: { __typename?: 'DishOutput', message?: string, ok: boolean, totalPages?: number, dish?: { __typename?: 'Dish', id: number, name: string, description?: string, price: number, photo?: string, createdAt?: any, updatedAt?: any, restaurant: { __typename?: 'Restaurant', id: number }, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> } } };
 
 export type PaymentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1860,16 +1862,16 @@ export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQuer
 export const DishDocument = gql`
     query Dish($dishId: Int!) {
   getDish(dishId: $dishId) {
-    ok
     message
+    ok
+    totalPages
     dish {
       id
       name
-      price
       description
+      price
       restaurant {
         id
-        name
       }
       options {
         name
@@ -1879,6 +1881,9 @@ export const DishDocument = gql`
           extra
         }
       }
+      photo
+      createdAt
+      updatedAt
     }
   }
 }
