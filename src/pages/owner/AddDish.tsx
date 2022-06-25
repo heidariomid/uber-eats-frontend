@@ -52,7 +52,7 @@ const AddRestaurant = () => {
 	const randomId = uuidv4();
 	const restaurantNameRegister = {required: {value: true, message: 'restaurant name is required'}};
 	const priceRegister = {required: {value: true, message: 'category could not be empty'}};
-	const descriptionRegister = {required: {value: true, message: 'category could not be empty'}};
+	const descriptionRegister = {required: {value: true, message: 'description could not be empty'}};
 	const clearNameErrors = () => clearErrors('name');
 	const clearPriceErrors = () => clearErrors('price');
 	const clearDescriptionErrors = () => clearErrors('description');

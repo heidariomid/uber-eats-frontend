@@ -6,11 +6,11 @@ const reducer = (userState, action) => {
 	let result = userState;
 	switch (action.type) {
 		case actions.ADD_TO_BASKET:
-			console.log(action);
-			// result = {...userState, items: action.payload.data.user, isLogin: action.payload.data.isLogin};
+			result = {...userState, items: [...userState.items, action.payload.items]};
 			break;
-		case actions.ADD_TO_BASKET_FAILED:
-			result = {...userState, hasError: true, errorMessages: action.payload.messages};
+		case actions.BASKET_STATUS:
+			console.log(action.payload.status);
+			result = {...userState, status: action.payload.status};
 			break;
 		default:
 			result = userState;

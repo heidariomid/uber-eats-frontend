@@ -1,16 +1,23 @@
 import Logo from '../../images/uber-eats.svg';
 import LogoWhite from '../../images/uber-eats-white.svg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faMoon, faSignOut, faSun} from '@fortawesome/free-solid-svg-icons';
-import useUser from '../../hooks/useUser';
+import {faBasketShopping, faMoon, faSignOut, faSun} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 import {themeHandler, userLoggedOut} from '../../apollo';
 import {useReactiveVar} from '@apollo/client';
 import {isDarkVar} from '../../apollo/GlobalVar';
+import {useStateValue} from '../../store/context/ContextManager';
+import {actions} from '../../store/actions';
 
 const Header = () => {
-	const {user} = useUser();
 	const isDark = useReactiveVar(isDarkVar);
+	const [state, dispatch] = useStateValue();
+	const basketHandler = () => {
+		dispatch({
+			type: actions.BASKET_STATUS,
+			payload: {status: true},
+		});
+	};
 
 	return (
 		<div className='flex flex-row content-center items-center justify-start text-center  w-full '>
@@ -22,16 +29,11 @@ const Header = () => {
 					</Link>
 					<div className='flex flex-row  '>
 						<div className='mr-5'>
-							<Link to={'/restaurant/add'}>
-								<span className={` py-1 h-full w-full flex bg-green-500 text-white px-4 mx-0.5`}>Add Restaurant</span>
-							</Link>
+							<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${state.basket.items.length > 0 && 'text-green-500'} `}>
+								<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
+								{state.basket.items.length > 0 && <span className='text-lg px-2 text-green-500'>{state.basket.items.length}</span>}
+							</div>
 						</div>
-						<div className='mr-5'>
-							<Link to={'/user/edit'}>
-								<span className={` py-1 h-full w-full flex bg-black text-white ${isDark && 'bg-white  text-black'} px-4 mx-0.5`}>{user?.role}</span>
-							</Link>
-						</div>
-
 						{!isDark && (
 							<button className=' py-1 mx-0.5 cursor-pointer' onClick={() => themeHandler(false)}>
 								<FontAwesomeIcon className='  text-xl px-2' icon={faMoon} />
