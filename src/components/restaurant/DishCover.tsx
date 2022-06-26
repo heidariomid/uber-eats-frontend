@@ -35,6 +35,7 @@ function classNames(...classes) {
 
 const DishCover = ({isSelected, setIsSelected, dish}) => {
 	const [_, dispatch] = useStateValue();
+	const [open, setOpen] = useState(isSelected);
 	const [selectedSize, setSelectedSize] = useState(dish?.options[0]);
 	const addToBasketHandler = () => {
 		dispatch({
@@ -43,13 +44,13 @@ const DishCover = ({isSelected, setIsSelected, dish}) => {
 		});
 	};
 	return (
-		<Transition.Root show={isSelected} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={setIsSelected}>
+		<Transition.Root show={open} as={Fragment} appear={true}>
+			<Dialog as='div' className='relative z-10' onClose={setOpen}>
 				<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0' enterTo='opacity-100' leave='ease-in duration-200' leaveFrom='opacity-100' leaveTo='opacity-0'>
 					<div className='hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block' />
 				</Transition.Child>
 
-				<div className='fixed z-10 inset-0 overflow-y-auto'>
+				<div className='fixed z-10 inset-0 overflow-y-auto transition-all'>
 					<div className='flex items-stretch md:items-center justify-center min-h-full text-center md:px-2 lg:px-4'>
 						<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0 translate-y-4 md:translate-y-0 md:scale-95' enterTo='opacity-100 translate-y-0 md:scale-100' leave='ease-in duration-200' leaveFrom='opacity-100 translate-y-0 md:scale-100' leaveTo='opacity-0 translate-y-4 md:translate-y-0 md:scale-95'>
 							<Dialog.Panel className='flex text-base text-left transform transition w-full md:max-w-2xl md:px-4 md:my-8 lg:max-w-4xl'>

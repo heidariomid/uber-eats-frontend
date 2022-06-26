@@ -15,7 +15,7 @@ const Header = () => {
 	const basketHandler = () => {
 		dispatch({
 			type: actions.BASKET_STATUS,
-			payload: {status: true},
+			payload: {status: state.basket.status ? false : true},
 		});
 	};
 

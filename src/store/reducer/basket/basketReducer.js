@@ -9,7 +9,6 @@ const reducer = (userState, action) => {
 			result = {...userState, items: [...userState.items, action.payload.items]};
 			break;
 		case actions.BASKET_STATUS:
-			console.log(action.payload.status);
 			result = {...userState, status: action.payload.status};
 			break;
 		default:

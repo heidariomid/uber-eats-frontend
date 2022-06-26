@@ -6,15 +6,13 @@ import {Link} from 'react-router-dom';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 
-export default function Example() {
-	const [open, setOpen] = useState(true);
+const Basket = () => {
 	const [state, dispatch] = useStateValue();
+	const [open, setOpen] = useState(true);
 	const totalPrice = state.basket.items.reduce((total: number, item) => {
 		return total + item.price;
 	}, 0);
-
 	const basketHandler = () => {
-		setOpen(false);
 		dispatch({
 			type: actions.BASKET_STATUS,
 			payload: {status: false},
@@ -22,8 +20,17 @@ export default function Example() {
 	};
 
 	return (
-		<Transition.Root show={open} as={Fragment}>
-			<Dialog as='div' className='relative z-10' onClose={basketHandler}>
+		<Transition.Root show={open} as={Fragment} appear={true}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={setOpen}
+				onClick={() =>
+					setTimeout(() => {
+						basketHandler();
+					}, 500)
+				}
+			>
 				<Transition.Child as={Fragment} enter='ease-in-out duration-500' enterFrom='opacity-0' enterTo='opacity-100' leave='ease-in-out duration-500' leaveFrom='opacity-100' leaveTo='opacity-0'>
 					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
 				</Transition.Child>
@@ -31,14 +38,23 @@ export default function Example() {
 				<div className='fixed inset-0 overflow-hidden'>
 					<div className='absolute inset-0 overflow-hidden'>
 						<div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10'>
-							<Transition.Child as={Fragment} enter='transform transition ease-in-out duration-500 sm:duration-700' enterFrom='translate-x-full' enterTo='translate-x-0' leave='transform transition ease-in-out duration-500 sm:duration-700' leaveFrom='translate-x-0' leaveTo='translate-x-full'>
+							<Transition.Child as={Fragment} enter='transform transition ease-in-out duration-500 sm:duration-500' enterFrom='translate-x-full' enterTo='translate-x-0' leave='transform transition ease-in-out duration-500 sm:duration-500' leaveFrom='translate-x-0' leaveTo='translate-x-full'>
 								<Dialog.Panel className='pointer-events-auto w-screen max-w-md'>
 									<div className='flex h-full flex-col overflow-y-scroll bg-white shadow-xl'>
 										<div className='flex-1 overflow-y-auto py-6 px-4 sm:px-6'>
 											<div className='flex items-start justify-between'>
 												<Dialog.Title className='text-lg font-medium text-gray-900'> Orders </Dialog.Title>
-												<div className='ml-3 flex h-7 items-center'>
-													<button type='button' className='-m-2 p-2 text-gray-400 hover:text-gray-500' onClick={basketHandler}>
+												<div className='ml-3 flex h-7 items-center transition-all'>
+													<button
+														type='button'
+														className='-m-2 p-2  text-gray-400 hover:text-gray-500'
+														onClick={() => {
+															setOpen(false);
+															setTimeout(() => {
+																basketHandler();
+															}, 500);
+														}}
+													>
 														<span className='sr-only'>Close panel</span>
 														<XIcon className='h-6 w-6' aria-hidden='true' />
 													</button>
@@ -109,4 +125,6 @@ export default function Example() {
 			</Dialog>
 		</Transition.Root>
 	);
-}
+};
+
+export default Basket;

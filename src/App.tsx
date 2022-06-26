@@ -13,7 +13,6 @@ const App = () => {
 		<div className={` ${isDark && 'bg-black text-white'}`}>
 			{isLoggedIn && <Header />}
 			{isLoggedIn && state.basket.status && <Basket />}
-
 			<Routes />
 		</div>
 	);
