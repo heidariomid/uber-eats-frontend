@@ -1,13 +1,24 @@
 import {useReactiveVar} from '@apollo/client';
 import {isDarkVar} from '../../../apollo/GlobalVar';
+import {useStateValue} from '../../../store/context/ContextManager';
+import Notification from '../../Notification/Notification';
 import Dish from '../Dish';
 
 const Restaurant = ({restaurant}) => {
 	let isDark = useReactiveVar(isDarkVar);
+	const [state] = useStateValue();
+	const showNotificationBasket = () => {
+		return (
+			<div className='absolute z-50 bg-red-500'>
+				<Notification message={state.basket.message} />
+			</div>
+		);
+	};
 
 	return (
 		<>
 			<div className='h-screen mx-auto w-full'>
+				{state.basket.message && showNotificationBasket()}
 				<div className='bg-gray-500 bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
 					<div className={`${isDark ? 'bg-black' : 'bg-white'}  h-52 w-1/3  flex flex-col`}>
 						<div className='pl-14 py-2 '>

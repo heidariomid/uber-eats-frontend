@@ -30,6 +30,6 @@
     "codegen.yml": true,
     // "src/images": true,
     // "*/index.tsx": true,
-    "*/index.css": true,
+    // "*/index.css": true,
   }
 }

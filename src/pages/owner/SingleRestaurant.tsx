@@ -8,6 +8,7 @@ import RestaurantOwner from '../../components/restaurant/owner/RestaurantOwner';
 
 const SingleRestaurant = () => {
 	let {id} = useParams();
+
 	const {data, loading, error} = useQuery<RestaurantOwnerQuery, RestaurantOwnerQueryVariables>(RESTAURANT_OWNER, {variables: {data: {restaurantId: Number(id)}}});
 	return (
 		<>

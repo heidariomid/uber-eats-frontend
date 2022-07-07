@@ -8,10 +8,13 @@ import {useReactiveVar} from '@apollo/client';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
+import useUser from '../../hooks/useUser';
+import {UserRole} from '../../graphql/schemaTypes';
 
 const Header = () => {
 	const isDark = useReactiveVar(isDarkVar);
 	const [state, dispatch] = useStateValue();
+	const {user} = useUser();
 	const basketHandler = () => {
 		dispatch({
 			type: actions.BASKET_STATUS,
@@ -28,12 +31,14 @@ const Header = () => {
 						{isDark && <img className='w-40 p-1   cursor-pointer' src={LogoWhite} alt='logo' />}
 					</Link>
 					<div className='flex flex-row  '>
-						<div className='mr-5'>
-							<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${state.basket.items.length > 0 && 'text-green-500'} `}>
-								<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
-								{state.basket.items.length > 0 && <span className='text-lg px-2 text-green-500'>{state.basket.items.length}</span>}
+						{user?.role === UserRole.Client && (
+							<div className='mr-5'>
+								<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${state.basket.items.length > 0 && 'text-green-500'} `}>
+									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
+									{state.basket.items.length > 0 && <span className='text-lg px-2 text-green-500'>{state.basket.items.length}</span>}
+								</div>
 							</div>
-						</div>
+						)}
 						{!isDark && (
 							<button className=' py-1 mx-0.5 cursor-pointer' onClick={() => themeHandler(false)}>
 								<FontAwesomeIcon className='  text-xl px-2' icon={faMoon} />

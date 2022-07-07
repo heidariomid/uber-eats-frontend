@@ -15,6 +15,7 @@ export const RESTAURANT_FEAGMENT = gql`
 `;
 export const DISH_FEAGMENT = gql`
 	fragment DishFragment on Dish {
+		id
 		name
 		price
 		description

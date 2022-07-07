@@ -1,26 +1,3 @@
-// name: 'Basic Tee 6-Pack ',
-// price: '$192',
-// rating: 3.9,
-// reviewCount: 117,
-// href: '#',
-// imageSrc: 'https://tailwindui.com/img/ecommerce-images/product-quick-preview-02-detail.jpg',
-// imageAlt: 'Two each of gray, white, and black shirts arranged on table.',
-// colors: [
-//   { name: 'White', class: 'bg-white', selectedClass: 'ring-gray-400' },
-//   { name: 'Gray', class: 'bg-gray-200', selectedClass: 'ring-gray-400' },
-//   { name: 'Black', class: 'bg-gray-900', selectedClass: 'ring-gray-900' },
-// ],
-// sizes: [
-//   { name: 'XXS', inStock: true },
-//   { name: 'XS', inStock: true },
-//   { name: 'S', inStock: true },
-//   { name: 'M', inStock: true },
-//   { name: 'L', inStock: true },
-//   { name: 'XL', inStock: true },
-//   { name: 'XXL', inStock: true },
-//   { name: 'XXXL', inStock: false },
-// ]
-
 import {Fragment, useState} from 'react';
 import {Dialog, RadioGroup, Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/outline';
@@ -28,38 +5,66 @@ import {StarIcon} from '@heroicons/react/solid';
 import {Link} from 'react-router-dom';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
+import useUser from '../../hooks/useUser';
+import {UserRole} from '../../graphql/schemaTypes';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faAdd, faEdit} from '@fortawesome/free-solid-svg-icons';
+import Notification from '../Notification/Notification';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
-const DishCover = ({isSelected, setIsSelected, dish}) => {
+const DishCover = ({setIsSelected, dish}) => {
+	const [state] = useStateValue();
 	const [_, dispatch] = useStateValue();
-	const [open, setOpen] = useState(isSelected);
+	const [open, setOpen] = useState(true);
+	const {user} = useUser();
 	const [selectedSize, setSelectedSize] = useState(dish?.options[0]);
+
 	const addToBasketHandler = () => {
 		dispatch({
 			type: actions.ADD_TO_BASKET,
-			payload: {items: dish},
+			payload: {items: dish, message: 'Added to basket'},
 		});
 	};
+
 	return (
 		<Transition.Root show={open} as={Fragment} appear={true}>
-			<Dialog as='div' className='relative z-10' onClose={setOpen}>
+			<Dialog
+				as='div'
+				className='relative z-10'
+				onClose={setOpen}
+				onClick={() =>
+					setTimeout(() => {
+						setIsSelected(false);
+					}, 500)
+				}
+			>
 				<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0' enterTo='opacity-100' leave='ease-in duration-200' leaveFrom='opacity-100' leaveTo='opacity-0'>
 					<div className='hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block' />
 				</Transition.Child>
-
 				<div className='fixed z-10 inset-0 overflow-y-auto transition-all'>
 					<div className='flex items-stretch md:items-center justify-center min-h-full text-center md:px-2 lg:px-4'>
 						<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0 translate-y-4 md:translate-y-0 md:scale-95' enterTo='opacity-100 translate-y-0 md:scale-100' leave='ease-in duration-200' leaveFrom='opacity-100 translate-y-0 md:scale-100' leaveTo='opacity-0 translate-y-4 md:translate-y-0 md:scale-95'>
 							<Dialog.Panel className='flex text-base text-left transform transition w-full md:max-w-2xl md:px-4 md:my-8 lg:max-w-4xl'>
 								<div className='w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8'>
-									<button type='button' className='absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8' onClick={() => setIsSelected(false)}>
+									<button
+										type='button'
+										className='absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8'
+										onClick={() => {
+											setOpen(false);
+											setIsSelected(false);
+										}}
+									>
 										<span className='sr-only'>Close</span>
 										<XIcon className='h-6 w-6' aria-hidden='true' />
 									</button>
-
+									{/* {state.basket.message && (
+										// <div className='absolute z-50 top-0 left-0 px-10 py-5 w-1/3 h-11 bg-red-600'>
+										<Notification message={state.basket.message} />
+										// </div>
+									)} */}
 									<div className='w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8'>
 										<div className='aspect-w-2 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5'>
 											<img src={dish.photo} alt={dish.name} className='object-center object-cover' />
@@ -136,10 +141,22 @@ const DishCover = ({isSelected, setIsSelected, dish}) => {
 															</div>
 														</RadioGroup>
 													</div>
-
-													<button onClick={addToBasketHandler} type='submit' className='mt-16 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
-														Add to Order
-													</button>
+													{user?.role === UserRole.Client && (
+														<button onClick={addToBasketHandler} type='button' className='mt-16 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+															<span>
+																<FontAwesomeIcon icon={faAdd} />
+															</span>
+															<span className='pl-4'> Add to Order</span>
+														</button>
+													)}
+													{user?.role === UserRole.Owner && (
+														<button onClick={addToBasketHandler} type='button' className='mt-16 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+															<span>
+																<FontAwesomeIcon icon={faEdit} />
+															</span>
+															<span className='pl-4'> Edit Order</span>
+														</button>
+													)}
 												</form>
 											</section>
 										</div>

@@ -16,6 +16,7 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 	return (
 		<>
 			<div className='h-screen mx-auto w-full'>
+				<h1>dvdmspvdsmp</h1>
 				<div className='bg-gray-500 bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
 					<div className={`${isDark ? 'bg-black' : 'bg-white'}  h-52 w-2/4  flex flex-col`}>
 						<div className='pl-14 py-2 '>

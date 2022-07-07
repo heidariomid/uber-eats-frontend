@@ -12,7 +12,7 @@ const Dish = ({dish}: {dish: IDish}) => {
 
 	return (
 		<>
-			<div key={dish?.id} className={`cursor-pointer    text-center group p-4  `}>
+			<div key={dish?.id} className={`cursor-pointer text-center group p-4`}>
 				<div onClick={orderHandler}>
 					<div className={`py-36   bg-cover bg-center mb-2`} style={{backgroundImage: `url(${dish?.photo})`}}></div>
 					<div>
@@ -23,7 +23,7 @@ const Dish = ({dish}: {dish: IDish}) => {
 					<span className='text-lg'>$ {dish?.price}</span>
 					<div className='flex flex-row items-center justify-center bg-gray-200'></div>
 				</div>
-				{isOrderSelected && <DishCover dish={dish} isSelected={isOrderSelected} setIsSelected={setIsOrderSelected} />}
+				{isOrderSelected && <DishCover dish={dish} setIsSelected={setIsOrderSelected} />}
 			</div>
 		</>
 	);

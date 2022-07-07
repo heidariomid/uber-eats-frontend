@@ -3,7 +3,6 @@ import {RESTAURANT} from '../../graphql/queries';
 import {RestaurantQuery, RestaurantQueryVariables} from '../../graphql/schemaTypes';
 import {useQuery} from '@apollo/client';
 import Loading from '../../components/loading/Loading';
-import Header from '../../components/header/Header';
 import Restaurant from '../../components/restaurant/client/Restaurant';
 import ErrorPage from '../../components/custom/ErrorPage';
 

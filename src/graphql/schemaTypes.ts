@@ -806,14 +806,14 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> }>, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> }>, category?: { __typename?: 'Category', name: string } } } };
 
 export type RestaurantOwnerQueryVariables = Exact<{
   data: RestaurantInputType;
 }>;
 
 
-export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> }>, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> }>, orders: Array<{ __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any }>, category?: { __typename?: 'Category', name: string } } } };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -860,7 +860,9 @@ export type PaymentsQuery = { __typename?: 'Query', Payments: { __typename?: 'Pa
 
 export type RestaurantFragmentFragment = { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } };
 
-export type DishFragmentFragment = { __typename?: 'Dish', name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> };
+export type DishFragmentFragment = { __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> };
+
+export type OrderFragmentFragment = { __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any };
 
 export const RestaurantFragmentFragmentDoc = gql`
     fragment RestaurantFragment on Restaurant {
@@ -877,6 +879,7 @@ export const RestaurantFragmentFragmentDoc = gql`
     `;
 export const DishFragmentFragmentDoc = gql`
     fragment DishFragment on Dish {
+  id
   name
   price
   description
@@ -889,6 +892,14 @@ export const DishFragmentFragmentDoc = gql`
       extra
     }
   }
+}
+    `;
+export const OrderFragmentFragmentDoc = gql`
+    fragment OrderFragment on Order {
+  id
+  status
+  totalPrice
+  createdAt
 }
     `;
 export const LoginDocument = gql`
@@ -1621,11 +1632,15 @@ export const RestaurantOwnerDocument = gql`
       menu {
         ...DishFragment
       }
+      orders {
+        ...OrderFragment
+      }
     }
   }
 }
     ${RestaurantFragmentFragmentDoc}
-${DishFragmentFragmentDoc}`;
+${DishFragmentFragmentDoc}
+${OrderFragmentFragmentDoc}`;
 
 /**
  * __useRestaurantOwnerQuery__
