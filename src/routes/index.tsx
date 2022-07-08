@@ -12,6 +12,7 @@ import SingleCategory from '../pages/client/SingleCategory';
 import AddRestaurant from '../pages/owner/AddRestaurant';
 import AddDish from '../pages/owner/AddDish';
 import Basket from '../components/restaurant/Basket';
+import Checkout from '../components/shopping-cart/Checkout';
 
 const Router = () => {
 	return (
@@ -27,6 +28,7 @@ const Router = () => {
 			<Route path='category/:slug' element={<SingleCategory />} />
 			<Route path='/confirm' element={<Confirm />} />
 			<Route path='/basket' element={<Basket />} />
+			<Route path='/basket/checkout' element={<Checkout />} />
 			<Route path='/user/edit' element={<EditProfile />} />
 			<Route path='*' element={<ErrorPage title='404' message='Nothing Found' />} />
 		</Routes>

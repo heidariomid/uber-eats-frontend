@@ -10,7 +10,7 @@ const App = () => {
 	const isLoggedIn = useReactiveVar(isLoginVar);
 	const [state] = useStateValue();
 	return (
-		<div className={` ${isDark && 'bg-black text-white'}`}>
+		<div className={`h-full ${isDark && 'bg-black text-white'}`}>
 			{isLoggedIn && <Header />}
 			{isLoggedIn && state.basket.status && <Basket />}
 			<Routes />

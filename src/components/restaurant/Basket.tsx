@@ -9,28 +9,29 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import NumericInput from '../custom/NumericInput';
 
+export const totalAllDishPrice = (basket) => {
+	return basket.items
+		.filter((dish, i) => basket.items.indexOf(dish) === i)
+		.reduce((total: number, dish) => {
+			const quantity = basket.quantity[dish.id];
+			const totalDishes = total + dish.price * quantity;
+			return totalDishes;
+		}, 0);
+};
+export const totaldishPrice = (dish, basket) => {
+	const quantity = basket.quantity[dish.id];
+	const dishQuantity: any = [];
+	for (let i = 0; i < quantity; i++) {
+		dishQuantity.push(dish.price);
+	}
+	const totalPrice = dishQuantity.reduce((total: number, price) => {
+		return total + price;
+	}, 0);
+	return totalPrice;
+};
 const Basket = () => {
 	const [state, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
-
-	const totaldishPrice = (dish) => {
-		const quantity = state.basket.quantity[dish.id];
-		const dishQuantity: any = [];
-		for (let i = 0; i < quantity; i++) {
-			dishQuantity.push(dish.price);
-		}
-		const totalPrice = dishQuantity.reduce((total: number, price) => {
-			return total + price;
-		}, 0);
-		return totalPrice;
-	};
-
-	const totalAllDishPrice = state.basket.items
-		.filter((dish, i) => state.basket?.items.indexOf(dish) === i)
-		.reduce((total: number, dish) => {
-			const quantity = state.basket.quantity[dish.id];
-			return total + dish.price * quantity;
-		}, 0);
 
 	const changeBasketStatus = () => {
 		dispatch({
@@ -108,7 +109,7 @@ const Basket = () => {
 																						<Link to={dish?.name}> {dish?.name} </Link>
 																					</h3>
 
-																					<p className='ml-4'>$ {totaldishPrice(dish)}</p>
+																					<p className='ml-4'>$ {totaldishPrice(dish, state.basket)}</p>
 																				</div>
 																			</div>
 																			<div className='flex flex-1  items-end justify-between text-sm my-3'>
@@ -134,11 +135,11 @@ const Basket = () => {
 										<div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
 											<div className='flex justify-between text-base font-medium text-gray-900'>
 												<p>Subtotal</p>
-												<p>$ {totalAllDishPrice}</p>
+												<p>$ {totalAllDishPrice(state.basket)}</p>
 											</div>
 											<p className='mt-0.5 text-sm text-gray-500'>Shipping and taxes calculated at checkout.</p>
-											<div className='mt-6'>
-												<Link to='#' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
+											<div className='mt-6' onClick={() => setOpen(false)}>
+												<Link to='/basket/checkout' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
 													Checkout
 												</Link>
 											</div>

@@ -8,6 +8,7 @@
     margin: 0;
   }
 }
+
 .input{
   @apply p-2 border-2 border-gray-200 text-lg font-light focus:outline-none hover:border-gray-400 hover:transition-colors 
   
