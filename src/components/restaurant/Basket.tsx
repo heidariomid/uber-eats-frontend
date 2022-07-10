@@ -41,7 +41,6 @@ const Basket = () => {
 	};
 
 	const changeQuantity = (id, opration) => {
-		// const quantity = state.basket.quantity[id];
 		dispatch({
 			type: actions.BASKET_QUANTITY_CHANGE,
 			payload: {id, opration},
@@ -113,7 +112,7 @@ const Basket = () => {
 																				</div>
 																			</div>
 																			<div className='flex flex-1  items-end justify-between text-sm my-3'>
-																				<p className='text-gray-600'>Price ${dish.price}</p>
+																				<p className='text-gray-600'>each ${dish.price}</p>
 																			</div>
 																			<div className='flex flex-1 items-start justify-between text-sm'>
 																				<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
@@ -139,7 +138,7 @@ const Basket = () => {
 											</div>
 											<p className='mt-0.5 text-sm text-gray-500'>Shipping and taxes calculated at checkout.</p>
 											<div className='mt-6' onClick={() => setOpen(false)}>
-												<Link to='/basket/checkout' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
+												<Link to='/checkout' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
 													Checkout
 												</Link>
 											</div>

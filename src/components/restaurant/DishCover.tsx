@@ -1,5 +1,5 @@
 import {Fragment, useState} from 'react';
-import {Dialog, RadioGroup, Transition} from '@headlessui/react';
+import {Dialog, Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/outline';
 import {StarIcon} from '@heroicons/react/solid';
 import {Link} from 'react-router-dom';
@@ -9,18 +9,23 @@ import useUser from '../../hooks/useUser';
 import {UserRole} from '../../graphql/schemaTypes';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faAdd, faEdit} from '@fortawesome/free-solid-svg-icons';
-import Notification from '../Notification/Notification';
+import NumericOptions from '../custom/NumericOptions';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 
 const DishCover = ({setIsSelected, dish}) => {
-	const [state] = useStateValue();
-	const [_, dispatch] = useStateValue();
+	const [state, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
 	const {user} = useUser();
-	const [selectedSize, setSelectedSize] = useState(dish?.options[0]);
+
+	const changeDishOptionQuantity = (name, opration) => {
+		dispatch({
+			type: actions.DISH_OPTIONS_QUANTITY_CHANGE,
+			payload: {name, opration},
+		});
+	};
 
 	const addToBasketHandler = () => {
 		dispatch({
@@ -111,38 +116,26 @@ const DishCover = ({setIsSelected, dish}) => {
 
 													{/* Options */}
 													<div className='mt-10'>
-														<h4 className='text-sm text-gray-900 font-bold'>Options</h4>
-														<RadioGroup value={selectedSize} onChange={setSelectedSize} className='mt-4'>
-															<RadioGroup.Label className='sr-only'>Choose a size</RadioGroup.Label>
-															<div className='grid grid-cols-4 gap-2'>
-																{dish?.options?.map((item, i) => (
-																	<RadioGroup.Option key={item.name} value={item} disabled={!item?.inStock} className={({active}) => classNames(item?.inStock ? 'bg-white shadow-sm text-gray-900 cursor-pointer' : 'bg-gray-50 text-gray-200 cursor-not-allowed', active ? 'ring-2 ring-green-500' : '', 'group relative border rounded-md py-2 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1')}>
-																		{({active, checked}) => (
-																			<>
-																				<RadioGroup.Label as='span' className={'text-black text-sm px-1'}>
-																					{item.name}
-																				</RadioGroup.Label>
-																				<RadioGroup.Label as='span' className={'text-black text-sm px-1'}>
-																					${item.extra}
-																				</RadioGroup.Label>
-																				{true ? (
-																					<span className={classNames(active ? 'border' : 'border-2', checked ? 'border-green-500' : 'border-transparent', 'absolute -inset-px rounded-md pointer-events-none')} aria-hidden='true' />
-																				) : (
-																					<span aria-hidden='true' className='absolute -inset-px rounded-md border-2 border-gray-200 pointer-events-none'>
-																						<svg className='absolute inset-0 w-full h-full text-gray-200 stroke-2' viewBox='0 0 100 100' preserveAspectRatio='none' stroke='currentColor'>
-																							<line x1={0} y1={100} x2={100} y2={0} vectorEffect='non-scaling-stroke' />
-																						</svg>
-																					</span>
-																				)}
-																			</>
-																		)}
-																	</RadioGroup.Option>
-																))}
-															</div>
-														</RadioGroup>
+														<h4 className='text-sm text-gray-900 font-bold mb-5'>Options</h4>
+														<div className='grid grid-cols-2'>
+															{dish?.options?.map((item, i) => {
+																const quantity = state.basket.dishOption[item.name] || 0;
+																return (
+																	<div key={i} className='grid grid-cols-3 py-1 gap-x-4'>
+																		<div key={item.name} className=' group relative flex items-center justify-around text-sm font-medium uppercase  focus:outline-none sm:flex-1'>
+																			<span className={'text-sm w-full'}>{item.name}</span>
+
+																			<span className={'text-sm '}>${item.extra}</span>
+																		</div>
+
+																		<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionName={item.name} />
+																	</div>
+																);
+															})}
+														</div>
 													</div>
 													{user?.role === UserRole.Client && (
-														<button onClick={addToBasketHandler} type='button' className='mt-16 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+														<button onClick={addToBasketHandler} type='button' className='mt-12 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
 															<span>
 																<FontAwesomeIcon icon={faAdd} />
 															</span>
@@ -150,7 +143,7 @@ const DishCover = ({setIsSelected, dish}) => {
 														</button>
 													)}
 													{user?.role === UserRole.Owner && (
-														<button onClick={addToBasketHandler} type='button' className='mt-16 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+														<button onClick={addToBasketHandler} type='button' className='mt-12 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
 															<span>
 																<FontAwesomeIcon icon={faEdit} />
 															</span>

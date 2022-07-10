@@ -1,15 +1,31 @@
-import {Fragment} from 'react';
+import {Fragment, useState} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {ChevronUpIcon} from '@heroicons/react/solid';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLock} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 import {useStateValue} from '../../store/context/ContextManager';
-import {totalAllDishPrice, totaldishPrice} from '../restaurant/Basket';
+import {totalAllDishPrice, totaldishPrice} from '../../components/restaurant/Basket';
 
 const Checkout = () => {
 	const [state] = useStateValue();
+	let totalDishOptionsPrice = 0;
+	const totaldishOptionsPrice = (dishOptions) => {
+		const dishQuantity: any = [];
+		dishOptions?.map((option) => {
+			if (option.quantity) {
+				for (let i = 0; i < option.quantity; i++) {
+					dishQuantity.push(option.price);
+				}
+			}
+		});
 
+		const totalPrice = dishQuantity.reduce((total: number, price) => {
+			return total + price;
+		}, 0);
+		totalDishOptionsPrice = totalPrice;
+		return totalDishOptionsPrice;
+	};
 	return (
 		<>
 			<div>
@@ -31,7 +47,15 @@ const Checkout = () => {
 										{state.basket?.items
 											.filter((dish, i) => state.basket?.items.indexOf(dish) === i)
 											.map((dish, i) => {
+												const dishOptions = dish.options.map((option) => {
+													const quantity = state.basket.dishOption[option.name];
+													const newOption = {name: option.name, quantity, price: option.extra};
+
+													return newOption;
+												});
+
 												const quantity = state.basket.quantity[dish.id];
+
 												return (
 													<li key={i} className='flex py-6'>
 														<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
@@ -45,14 +69,37 @@ const Checkout = () => {
 																		<Link to={dish?.name}> {dish?.name} </Link>
 																	</h3>
 
-																	<p className='ml-4'>${totaldishPrice(dish, state.basket)}</p>
+																	<p className='ml-4'>${totaldishPrice(dish, state.basket) + totaldishOptionsPrice(dishOptions)}</p>
 																</div>
 															</div>
 															<div className='flex flex-1  items-end justify-between text-sm my-3'>
 																<p className='text-gray-600'>
 																	${dish.price} X {quantity}
 																</p>
+
+																<p className='ml-4'>${totaldishPrice(dish, state.basket)}</p>
 															</div>
+															{totalDishOptionsPrice > 0 && (
+																<div className='flex flex-1  items-end justify-between text-sm '>
+																	<h3 className='ml-2'>
+																		Options
+																		{dishOptions.map((option) => {
+																			if (option.quantity) {
+																				return (
+																					<div className='text-gray-600 flex justify-around '>
+																						<span className='px-4 flex-1'>{option?.name}</span>
+																						<span>
+																							${option?.price} X {option?.quantity}
+																						</span>
+																					</div>
+																				);
+																			}
+																		})}
+																	</h3>
+
+																	<p className='ml-4'>${totalDishOptionsPrice}</p>
+																</div>
+															)}
 														</div>
 													</li>
 												);
@@ -66,7 +113,7 @@ const Checkout = () => {
 							<dl className='hidden text-sm font-medium text-gray-900 space-y-6 border-t b border-gray-300 pt-6 lg:block'>
 								<div className='flex items-center justify-between'>
 									<dt className='text-gray-600'>Subtotal</dt>
-									<dd>${totalAllDishPrice(state.basket)}</dd>
+									<dd>${totalAllDishPrice(state.basket) + totalDishOptionsPrice}</dd>
 								</div>
 
 								<div className='flex items-center justify-between'>
@@ -92,7 +139,7 @@ const Checkout = () => {
 								</form> */}
 								<div className='flex items-center justify-between border-t border-gray-400 pt-6'>
 									<dt className='text-base'>Total</dt>
-									<dd className='text-base'>${(totalAllDishPrice(state.basket) + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}</dd>
+									<dd className='text-base'>${(totalAllDishPrice(state.basket) + totalDishOptionsPrice + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}</dd>
 								</div>
 							</dl>
 
@@ -248,7 +295,7 @@ const Checkout = () => {
 							</div>
 
 							<button type='submit' className='w-full mt-6 bg-green-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
-								Pay ${(totalAllDishPrice(state.basket) + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}
+								Pay ${(totalAllDishPrice(state.basket) + totalDishOptionsPrice + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}
 							</button>
 
 							<p className='flex justify-center text-sm font-medium text-gray-500 mt-6'>

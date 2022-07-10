@@ -1,7 +1,6 @@
 import {useQuery} from '@apollo/client';
 import {useParams} from 'react-router-dom';
 import ErrorPage from '../../components/custom/ErrorPage';
-import Header from '../../components/header/Header';
 import Loading from '../../components/loading/Loading';
 import RestaurantCover from '../../components/restaurant/client/RestaurantCover';
 import {CATEGORY} from '../../graphql/queries';
