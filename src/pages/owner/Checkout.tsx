@@ -1,11 +1,3 @@
-import {Fragment} from 'react';
-import {Popover, Transition} from '@headlessui/react';
-import {ChevronUpIcon} from '@heroicons/react/solid';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faLock} from '@fortawesome/free-solid-svg-icons';
-import {Link} from 'react-router-dom';
-import {useStateValue} from '../../store/context/ContextManager';
-import {totaldishPrice, totalAllDishPrice} from '../../components/restaurant/Basket';
 import OrderSummary from '../../components/shopping-cart/OrderSummary';
 import PaymentForm from '../../components/Payment/PaymentForm';
 
