@@ -21,12 +21,9 @@ export const DISH_FEAGMENT = gql`
 		description
 		photo
 		options {
+			id
 			name
 			extra
-			choices {
-				name
-				extra
-			}
 		}
 	}
 `;

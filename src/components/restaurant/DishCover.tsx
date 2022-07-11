@@ -20,10 +20,10 @@ const DishCover = ({setIsSelected, dish}) => {
 	const [open, setOpen] = useState(true);
 	const {user} = useUser();
 
-	const changeDishOptionQuantity = (name, opration) => {
+	const changeDishOptionQuantity = (id, opration) => {
 		dispatch({
 			type: actions.DISH_OPTIONS_QUANTITY_CHANGE,
-			payload: {name, opration},
+			payload: {id, opration},
 		});
 	};
 
@@ -119,16 +119,16 @@ const DishCover = ({setIsSelected, dish}) => {
 														<h4 className='text-sm text-gray-900 font-bold mb-5'>Options</h4>
 														<div className='grid grid-cols-2'>
 															{dish?.options?.map((item, i) => {
-																const quantity = state.basket.dishOption[item.name] || 0;
+																const quantity = state.basket.dishOption[item.id] || 0;
 																return (
-																	<div key={i} className='grid grid-cols-3 py-1 gap-x-4'>
+																	<div key={item.id} className='grid grid-cols-3 py-1 gap-x-4'>
 																		<div key={item.name} className=' group relative flex items-center justify-around text-sm font-medium uppercase  focus:outline-none sm:flex-1'>
 																			<span className={'text-sm w-full'}>{item.name}</span>
 
 																			<span className={'text-sm '}>${item.extra}</span>
 																		</div>
 
-																		<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionName={item.name} />
+																		<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} />
 																	</div>
 																);
 															})}

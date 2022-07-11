@@ -1,11 +1,11 @@
-const NumericOptions = ({quantity, changeDishOptionQuantity, optionName}) => {
+const NumericOptions = ({quantity, changeDishOptionQuantity, optionId}) => {
 	return (
 		<div className=' justify-center items-center custom-number-input '>
 			<div className='flex flex-row h-7 w-20  rounded-lg relative bg-transparent'>
 				<button
 					type='button'
 					onClick={() => {
-						changeDishOptionQuantity(optionName, 'decrease');
+						changeDishOptionQuantity(optionId, 'decrease');
 					}}
 					className=' bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none'
 				>
@@ -15,7 +15,7 @@ const NumericOptions = ({quantity, changeDishOptionQuantity, optionName}) => {
 				<button
 					type='button'
 					onClick={() => {
-						changeDishOptionQuantity(optionName, 'increase');
+						changeDishOptionQuantity(optionId, 'increase');
 					}}
 					className='bg-gray-100 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer'
 				>

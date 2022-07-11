@@ -32,10 +32,10 @@ const reducer = (userState, action) => {
 		case actions.DISH_OPTIONS_QUANTITY_CHANGE:
 			let newDishOption = {...userState.dishOption};
 			if (action.payload.opration === 'increase') {
-				newDishOption[action.payload.name] = (newDishOption[action.payload.name] || 0) + 1;
+				newDishOption[action.payload.id] = (newDishOption[action.payload.id] || 0) + 1;
 			}
-			if (action.payload.opration === 'decrease' && newDishOption[action.payload.name] > 0) {
-				newDishOption[action.payload.name] = newDishOption[action.payload.name] - 1;
+			if (action.payload.opration === 'decrease' && newDishOption[action.payload.id] > 0) {
+				newDishOption[action.payload.id] = newDishOption[action.payload.id] - 1;
 			}
 
 			result = {...userState, dishOption: newDishOption};
