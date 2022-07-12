@@ -4,6 +4,7 @@ const NumericInput = ({quantity, changeQuantity, dishId}) => {
 			<div className='flex justify-center items-center custom-number-input '>
 				<div className='flex flex-row h-7 w-20 rounded-lg relative bg-transparent'>
 					<button
+						type='button'
 						disabled={quantity === 1}
 						onClick={() => {
 							changeQuantity(dishId, 'decrease');
@@ -14,6 +15,7 @@ const NumericInput = ({quantity, changeQuantity, dishId}) => {
 					</button>
 					<input type='number' onChange={() => changeQuantity(dishId, quantity)} value={quantity} className='border-2 border-gray-100 focus:outline-none text-center w-full  font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none' name='custom-input-number' />
 					<button
+						type='button'
 						onClick={() => {
 							changeQuantity(dishId, 'increase');
 						}}

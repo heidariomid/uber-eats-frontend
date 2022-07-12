@@ -6,7 +6,7 @@ import {XIcon} from '@heroicons/react/solid';
 import {useStateValue} from '../../store/context/ContextManager';
 
 const Notification = ({message}) => {
-	const [show, setShow] = useState(true);
+	const [show, setShow] = useState(false);
 	const [state] = useStateValue();
 
 	useEffect(() => {

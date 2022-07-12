@@ -41,9 +41,9 @@ const OrderSummary = () => {
 						<ul className='-my-6 divide-y divide-gray-200'>
 							{state.basket?.items
 								.filter((dish, i) => state.basket?.items.indexOf(dish) === i)
-								.map((dish) => {
-									const dishOptions = dish.options.map((option) => {
-										const quantity = state.basket.dishOption[option.id];
+								.map((dish, i) => {
+									const dishOptions = dish?.options?.map((option) => {
+										const quantity = state.basket?.dishOption[option.id];
 										const newOption = {name: option.name, quantity, price: option.extra};
 										dishOptionsItem.push(newOption);
 										return newOption;
@@ -51,7 +51,7 @@ const OrderSummary = () => {
 									const quantity = state.basket.quantity[dish.id];
 
 									return (
-										<li key={uuidv4()} className='flex py-6'>
+										<li key={i} className='flex py-6'>
 											<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
 												<img src={dish?.photo} alt={dish?.name} className='h-full w-full object-cover object-center' />
 											</div>
