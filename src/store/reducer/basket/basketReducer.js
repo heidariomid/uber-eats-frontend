@@ -45,6 +45,12 @@ const reducer = (userState, action) => {
 		case actions.BASKET_STATUS:
 			result = {...userState, status: action.payload.status};
 			break;
+
+		case actions.REMOVE_FROM_BASKET:
+			const newItems = userState.items.filter((item) => item.id !== action.payload.id);
+			result = {...userState, items: newItems, message: 'removed from basket'};
+			break;
+
 		default:
 			result = userState;
 			break;

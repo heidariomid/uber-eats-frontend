@@ -33,6 +33,12 @@ const DishCover = ({setIsSelected, dish}) => {
 			payload: {id, opration},
 		});
 	};
+	const removeFromBasket = (id) => {
+		dispatch({
+			type: actions.REMOVE_FROM_BASKET,
+			payload: {id},
+		});
+	};
 
 	const addToBasketHandler = () => {
 		dispatch({
@@ -52,7 +58,7 @@ const DishCover = ({setIsSelected, dish}) => {
 					<div className='mt-12 w-full py-3 px-8 flex items-center justify-center text-base font-medium '>
 						<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
 					</div>
-					<button onClick={addToBasketHandler} type='button' className='text-red-500 mt-12 w-1/3  py-3 px-8 flex items-center justify-center text-base font-medium '>
+					<button onClick={() => removeFromBasket(dish.id)} type='button' className='text-red-500 mt-12 w-1/3  py-3 px-8 flex items-center justify-center text-base font-medium '>
 						<span>
 							<FontAwesomeIcon icon={faTrash} />
 						</span>
@@ -101,11 +107,7 @@ const DishCover = ({setIsSelected, dish}) => {
 										<span className='sr-only'>Close</span>
 										<XIcon className='h-6 w-6' aria-hidden='true' />
 									</button>
-									{/* {state.basket.message && (
-										// <div className='absolute z-50 top-0 left-0 px-10 py-5 w-1/3 h-11 bg-red-600'>
-										<Notification message={state.basket.message} />
-										// </div>
-									)} */}
+
 									<div className='w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8'>
 										<div className='aspect-w-3 aspect-h-4 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5'>
 											<img src={dish.photo} alt={dish.name} className='object-center object-cover' />

@@ -40,6 +40,13 @@ const Basket = () => {
 		});
 	};
 
+	const removeFromBasket = (id) => {
+		dispatch({
+			type: actions.REMOVE_FROM_BASKET,
+			payload: {id},
+		});
+	};
+
 	const changeQuantity = (id, opration) => {
 		dispatch({
 			type: actions.BASKET_QUANTITY_CHANGE,
@@ -117,7 +124,7 @@ const Basket = () => {
 																			<div className='flex flex-1 items-start justify-between text-sm'>
 																				<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
 																				<div className='flex'>
-																					<button type='button' className='font-medium text-red-600 hover:text-red-500'>
+																					<button type='button' onClick={() => removeFromBasket(dish.id)} className='font-medium text-red-600 hover:text-red-500'>
 																						<FontAwesomeIcon size='lg' icon={faTrash} />
 																					</button>
 																				</div>
