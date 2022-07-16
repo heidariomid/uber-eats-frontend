@@ -1,13 +1,13 @@
 import {actions} from '../../actions';
 
-// basket: {items: [], message: '',hasError: false, errorMessages: '',status:false,quantity: {},dishOption: {}}
+// basket: {items: [], message: '',hasError: false, errorMessages: '',status:false,quantity: {},dishOption: {},restaurantId: ''}
 
 const reducer = (userState, action) => {
 	let result = userState;
 	let newQuantity = {...userState.quantity};
 	switch (action.type) {
 		case actions.ADD_TO_BASKET:
-			const basket = {...userState, items: [...userState.items, action.payload.items], message: action.payload.message};
+			const basket = {...userState, items: [...userState.items, action.payload.items], message: action.payload.message, restaurantId: action.payload.restaurantId};
 			const quantity = {};
 
 			basket.items.forEach((item) => {

@@ -75,11 +75,16 @@ export interface CreateDishOutput {
 export interface CreateOrderInput {
   items: Array<CreateOrderItemInput>;
   restaurantId: Scalars['Int'];
+  totalPrice: Scalars['Float'];
 }
 
 export interface CreateOrderItemInput {
-  dishId: Scalars['Int'];
-  options?: InputMaybe<Array<OrderItemOptionInputType>>;
+  description?: InputMaybe<Scalars['String']>;
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  options?: InputMaybe<Array<DishOptionInput>>;
+  photo?: InputMaybe<Scalars['String']>;
+  price: Scalars['Int'];
 }
 
 export interface CreateOrderOutput {
@@ -145,17 +150,6 @@ export interface Dish {
   updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
-export interface DishChoice {
-  __typename?: 'DishChoice';
-  extra?: Maybe<Scalars['Int']>;
-  name: Scalars['String'];
-}
-
-export interface DishChoiceInput {
-  extra?: InputMaybe<Scalars['Int']>;
-  name: Scalars['String'];
-}
-
 export interface DishInput {
   description?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
@@ -167,14 +161,14 @@ export interface DishInput {
 
 export interface DishOption {
   __typename?: 'DishOption';
-  choices?: Maybe<Array<DishChoice>>;
-  extra?: Maybe<Scalars['Int']>;
+  extra: Scalars['Int'];
+  id: Scalars['Float'];
   name: Scalars['String'];
 }
 
 export interface DishOptionInput {
-  choices?: InputMaybe<Array<DishChoiceInput>>;
-  extra?: InputMaybe<Scalars['Int']>;
+  extra: Scalars['Int'];
+  id: Scalars['Float'];
   name: Scalars['String'];
 }
 
@@ -366,12 +360,14 @@ export interface OrderItemInputType {
 
 export interface OrderItemOption {
   __typename?: 'OrderItemOption';
-  choice?: Maybe<Scalars['String']>;
+  extra: Scalars['Float'];
+  id: Scalars['Float'];
   name: Scalars['String'];
 }
 
 export interface OrderItemOptionInputType {
-  choice?: InputMaybe<Scalars['String']>;
+  extra: Scalars['Float'];
+  id: Scalars['Float'];
   name: Scalars['String'];
 }
 
@@ -806,14 +802,14 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> }>, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: number, name: string, extra: number }> }>, category?: { __typename?: 'Category', name: string } } } };
 
 export type RestaurantOwnerQueryVariables = Exact<{
   data: RestaurantInputType;
 }>;
 
 
-export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> }>, orders: Array<{ __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any }>, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: number, name: string, extra: number }> }>, orders: Array<{ __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any }>, category?: { __typename?: 'Category', name: string } } } };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -851,7 +847,7 @@ export type DishQueryVariables = Exact<{
 }>;
 
 
-export type DishQuery = { __typename?: 'Query', getDish: { __typename?: 'DishOutput', message?: string, ok: boolean, totalPages?: number, dish?: { __typename?: 'Dish', id: number, name: string, description?: string, price: number, photo?: string, createdAt?: any, updatedAt?: any, restaurant: { __typename?: 'Restaurant', id: number }, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> } } };
+export type DishQuery = { __typename?: 'Query', getDish: { __typename?: 'DishOutput', message?: string, ok: boolean, totalPages?: number, dish?: { __typename?: 'Dish', id: number, name: string, description?: string, price: number, photo?: string, createdAt?: any, updatedAt?: any, restaurant: { __typename?: 'Restaurant', id: number }, options?: Array<{ __typename?: 'DishOption', name: string, extra: number }> } } };
 
 export type PaymentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -860,7 +856,7 @@ export type PaymentsQuery = { __typename?: 'Query', Payments: { __typename?: 'Pa
 
 export type RestaurantFragmentFragment = { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } };
 
-export type DishFragmentFragment = { __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', name: string, extra?: number, choices?: Array<{ __typename?: 'DishChoice', name: string, extra?: number }> }> };
+export type DishFragmentFragment = { __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: number, name: string, extra: number }> };
 
 export type OrderFragmentFragment = { __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any };
 
@@ -885,12 +881,9 @@ export const DishFragmentFragmentDoc = gql`
   description
   photo
   options {
+    id
     name
     extra
-    choices {
-      name
-      extra
-    }
   }
 }
     `;
@@ -1891,10 +1884,6 @@ export const DishDocument = gql`
       options {
         name
         extra
-        choices {
-          name
-          extra
-        }
       }
       photo
       createdAt

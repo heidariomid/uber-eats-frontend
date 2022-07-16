@@ -28,13 +28,13 @@ const Restaurant = ({restaurant}) => {
 						</div>
 					</div>
 				</div>
+
 				<div className=' flex flex-col'>
 					<div className='grid mt-16 md:grid-cols-3  gap-x-3 gap-y-10 mx-10'>
 						{restaurant?.menu?.length === 0 ? (
 							<h1 className='text-xl mb-5'>please upload a dish!</h1>
 						) : (
 							restaurant?.menu?.map((dish, i) => {
-								// @ts-ignore
 								return <Dish key={i} dish={dish} />;
 							})
 						)}

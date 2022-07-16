@@ -12,6 +12,7 @@ import {faAdd, faEdit, faTrash} from '@fortawesome/free-solid-svg-icons';
 import NumericOptions from '../custom/NumericOptions';
 import NumericInput from '../custom/NumericInput';
 import Reviews from '../reviews/Reviews';
+import useRestaurant from '../../hooks/useRestaurant';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -21,6 +22,7 @@ const DishCover = ({setIsSelected, dish}) => {
 	const [state, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
 	const {user} = useUser();
+	const restaurant = useRestaurant();
 	const changeQuantity = (id, opration) => {
 		dispatch({
 			type: actions.BASKET_QUANTITY_CHANGE,
@@ -41,10 +43,20 @@ const DishCover = ({setIsSelected, dish}) => {
 	};
 
 	const addToBasketHandler = () => {
-		dispatch({
-			type: actions.ADD_TO_BASKET,
-			payload: {items: dish, message: 'Added to basket'},
-		});
+		const items = {
+			id: dish.id,
+			name: dish.name,
+			price: dish.price,
+			description: dish.description,
+			photo: dish.photo,
+			options: dish.options,
+		};
+		if (restaurant) {
+			dispatch({
+				type: actions.ADD_TO_BASKET,
+				payload: {items, message: 'Added to basket', restaurantId: restaurant.id},
+			});
+		}
 	};
 	const addtoOrderButton = () => {
 		const isDishAlreadyAdded = state.basket.items.find((item) => item.id === dish.id);

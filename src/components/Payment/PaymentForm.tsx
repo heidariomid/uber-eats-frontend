@@ -3,9 +3,82 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useStateValue} from '../../store/context/ContextManager';
 import {totalAllDishPrice} from '../restaurant/Basket';
 import {dishOptionsItem} from '../shopping-cart/OrderSummary';
-
+import Zarinpal from '../../images/zarinpal.png';
+import {useMutation} from '@apollo/client';
+import {CreateOrderMutation, CreateOrderMutationResult, CreateOrderMutationVariables, CreatepaymentMutation, CreatepaymentMutationVariables} from '../../graphql/schemaTypes';
+import {CREATE_ORDER, CREATE_PAYMENT} from '../../graphql/mutations';
 const PaymentForm = () => {
 	const [state] = useStateValue();
+
+	const update = (cache, result) => {
+		const {ok, message} = result?.data?.createOrder;
+		console.log({ok, message});
+		// const newEmail = getValues().email;
+		// const newPassword = getValues().password;
+		// if (!ok) {
+		// 	setError('password', {message});
+		// }
+		// if (ok) {
+		// 	setServerMessage(message);
+		// 	cache.modify({
+		// 		id: `User:${user?.id}`,
+		// 		fields: {
+		// 			email() {
+		// 				return newEmail;
+		// 			},
+		// 			password() {
+		// 				return newPassword;
+		// 			},
+		// 			verified() {
+		// 				if (newEmail !== user?.email && inputEmail) return false;
+		// 			},
+		// 		},
+		// 	});
+		// 	setTimeout(() => {
+		// 		setServerMessage(message);
+		// 		clearErrors();
+		// 		navigate('/');
+		// 	}, 3000);
+		// }
+	};
+	const [createOrderHandler] = useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CREATE_ORDER, {update});
+
+	// const onValidSubmit = () => {
+	// 	if (loading) return;
+	// 	const {email, password} = getValues();
+
+	// 	inputEmail && loginHandler({variables: {data: {email}}});
+	// 	inputPassword && loginHandler({variables: {data: {...(password !== '' && {password})}}});
+	// };
+
+	const paymentHandler = (e) => {
+		console.log(state.basket);
+		state.basket.items.map((item) => item.options?.map((option) => console.log(option)));
+
+		const totalPrice = (totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(state.basket) * 0.09).toFixed(2);
+		createOrderHandler({variables: {data: {items: state.basket.items, restaurantId: state.basket.restaurantId, totalPrice: Number(totalPrice)}}});
+		// setPayButtonText('در ال انتقال به درگاه ...');
+		// API.post(
+		// 	'/api/v1/purchase',
+		// 	{
+		// 		...state,
+		// 	},
+		// 	{
+		// 		headers: {
+		// 			Authorization: localStorage.getItem('token'),
+		// 		},
+		// 	},
+		// )
+		// 	.then((response) => {
+		// 		if (!response.data.success) {
+		// 			setPayButtonText('پرداخت ناموفق');
+		// 		}
+		// 		if (response.data.success) {
+		// 			window.location.href = response.data.url;
+		// 		}
+		// 	})
+		// 	.catch((error) => console.log(error));
+	};
 
 	const totaldishOptionsPrice = (dishOptions) => {
 		const dishQuantity: any = [];
@@ -125,7 +198,7 @@ const PaymentForm = () => {
 						</div>
 					</section>
 
-					<div className='mt-20 flex space-x-2'>
+					<div className='my-10 flex space-x-2'>
 						<div className='flex items-center h-5'>
 							<input id='same-as-shipping' name='same-as-shipping' type='checkbox' defaultChecked className='h-4 w-4 border-gray-300 rounded text-green-600 focus:ring-green-500' />
 						</div>
@@ -134,10 +207,22 @@ const PaymentForm = () => {
 						</label>
 					</div>
 
-					<button type='submit' className='w-full mt-6 bg-green-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+					<button onClick={paymentHandler} type='button' className='w-full flex items-center justify-center bg-yellow-300 border border-transparent text-white rounded-md py-2 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'>
+						<span className='text-black font-bold px-2'>Pay with</span>
+						<img className='h-5 w-auto' src={Zarinpal} alt='zarinpal-logo' />
+					</button>
+					<div className='relative my-4'>
+						<div className='absolute inset-0 flex items-center' aria-hidden='true'>
+							<div className='w-full border-t border-gray-200' />
+						</div>
+						<div className='relative flex justify-center'>
+							<span className='px-4 bg-white text-sm font-medium text-gray-500'>or</span>
+						</div>
+					</div>
+
+					<button type='submit' className='w-full bg-green-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
 						Pay $ ${(totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}
 					</button>
-
 					<p className='flex justify-center text-sm font-medium text-gray-500 mt-6'>
 						<FontAwesomeIcon icon={faLock} className='w-5 h-5 text-gray-400 mr-1.5' aria-hidden='true' />
 						Payment details stored in plain text

@@ -166,10 +166,6 @@ export const DISH = gql`
 				options {
 					name
 					extra
-					choices {
-						name
-						extra
-					}
 				}
 				photo
 				createdAt

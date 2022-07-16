@@ -2,8 +2,8 @@ import userReducer from './users/userReducer';
 import basketReducer from './basket/basketReducer';
 
 export const initialState = {
-	orders: {items: [], message: '', hasError: false, errorMessages: '', status: false},
-	basket: {items: [], message: '', hasError: false, errorMessages: '', status: false, quantity: {}, dishOption: {}},
+	orders: {items: [], message: '', status: false},
+	basket: {items: [], message: '', quantity: {}, dishOption: {}, restaurantId: ''},
 };
 
 export const reducer = (state = initialState, action) => {

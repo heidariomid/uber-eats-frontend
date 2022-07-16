@@ -1,4 +1,4 @@
-import {ApolloClient, createHttpLink, InMemoryCache} from '@apollo/client';
+import {ApolloClient, ApolloLink, createHttpLink, InMemoryCache} from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 import {isDarkVar, isLoginVar} from './GlobalVar';
 
@@ -7,6 +7,16 @@ const httpLink = createHttpLink({
 	// uri: 'https://aqueous-reef-59013.herokuapp.com/graphql',
 	uri: 'http://localhost:4000/graphql',
 });
+const cleanTypeName = new ApolloLink((operation, forward) => {
+	if (operation.variables) {
+		const omitTypename = (key, value) => (key === '__typename' ? undefined : value);
+		operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename);
+	}
+	return forward(operation).map((data) => {
+		return data;
+	});
+});
+const httpLinkWithErrorHandling = ApolloLink.from([cleanTypeName, httpLink]);
 const authLink = setContext((_, {headers}) => {
 	const token = localStorage.getItem('token');
 	return {
@@ -18,7 +28,7 @@ const authLink = setContext((_, {headers}) => {
 });
 
 export const client = new ApolloClient({
-	link: authLink.concat(httpLink),
+	link: authLink.concat(httpLinkWithErrorHandling),
 	cache: new InMemoryCache({
 		typePolicies: {
 			User: {
