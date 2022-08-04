@@ -11,7 +11,65 @@ export const LOGGED_IN_USER = gql`
 		}
 	}
 `;
+export const ORDERS = gql`
+	query GetOrders($data: OrdersInputFilter!) {
+		getOrders(data: $data) {
+			ok
+			message
+			orders {
+				id
+				totalPrice
+				status
+				driver {
+					id
+				}
+				customer {
+					id
+					email
+				}
+				createdAt
+				restaurant {
+					id
+					name
+					coverImg
+				}
+			}
+		}
+	}
+`;
+export const GET_ORDER_BY_ID = gql`
+	query GetOrderById($data: OrderInputType!) {
+		getOrderById(data: $data) {
+			ok
+			message
+			order {
+				id
+				createdAt
+				status
+				totalPrice
+				items {
+					id
 
+					options {
+						id
+						name
+						extra
+					}
+				}
+				customer {
+					id
+				}
+				driver {
+					id
+				}
+				restaurant {
+					...RestaurantFragment
+				}
+			}
+		}
+	}
+	${RESTAURANT_FEAGMENT}
+`;
 export const RESTAURANTS = gql`
 	query restaurants($data: RestaurantsInput!) {
 		getRestaurants(data: $data) {
@@ -180,7 +238,7 @@ export const PAYMENTS = gql`
 			ok
 			message
 			payments {
-				transactionId
+				payment_method
 			}
 		}
 	}

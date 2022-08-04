@@ -1,5 +1,5 @@
-import OrderSummary from '../../components/shopping-cart/OrderSummary';
-import PaymentForm from '../../components/Payment/PaymentForm';
+import PaymentForms from '../components/Payment/PaymentForms';
+import OrderSummary from '../components/shopping-cart/OrderSummary';
 
 const Checkout = () => {
 	return (
@@ -12,7 +12,7 @@ const Checkout = () => {
 					<h1 className='sr-only'>Order information</h1>
 
 					<OrderSummary />
-					<PaymentForm />
+					<PaymentForms />
 				</div>
 			</div>
 		</>

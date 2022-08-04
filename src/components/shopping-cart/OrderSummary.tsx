@@ -2,7 +2,7 @@ import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {ChevronUpIcon} from '@heroicons/react/solid';
 import {Link} from 'react-router-dom';
-import {totaldishPrice, totalAllDishPrice} from '../../components/restaurant/Basket';
+import {totaldishPrice, totalAllDishPrice} from './Basket';
 import {useStateValue} from '../../store/context/ContextManager';
 import {v4 as uuidv4} from 'uuid';
 export const dishOptionsItem: any = [];
@@ -38,17 +38,17 @@ const OrderSummary = () => {
 
 				<div className='mt-8 py-6 px-4 sm:px-6'>
 					<div className='flow-root'>
-						<ul className='-my-6 divide-y divide-gray-200'>
+						<ul key={uuidv4()} className='-my-6 divide-y divide-gray-200'>
 							{state.basket?.items
 								.filter((dish, i) => state.basket?.items.indexOf(dish) === i)
 								.map((dish, i) => {
 									const dishOptions = dish?.options?.map((option) => {
-										const quantity = state.basket?.dishOption[option.id];
+										const quantity = state.basket?.dishOptionQuantity[option.id];
 										const newOption = {name: option.name, quantity, price: option.extra};
 										dishOptionsItem.push(newOption);
 										return newOption;
 									});
-									const quantity = state.basket.quantity[dish.id];
+									const quantity = state.basket.dishQuantity[dish.id];
 
 									return (
 										<li key={i} className='flex py-6'>

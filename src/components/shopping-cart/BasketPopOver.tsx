@@ -1,6 +1,5 @@
 /* This example requires Tailwind CSS v2.0+ */
 import {Fragment} from 'react';
-import {ShoppingBagIcon} from '@heroicons/react/outline';
 import {Popover, Transition} from '@headlessui/react';
 import {Link} from 'react-router-dom';
 

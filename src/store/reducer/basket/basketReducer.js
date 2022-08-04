@@ -1,36 +1,31 @@
 import {actions} from '../../actions';
 
-// basket: {items: [], message: '',hasError: false, errorMessages: '',status:false,quantity: {},dishOption: {},restaurantId: ''}
+// basket: {items: [], message: '',hasError: false, errorMessages: '',status:false,dishQuantity: {},dishOptionQuantity: {},restaurantId: ''}
 
 const reducer = (userState, action) => {
 	let result = userState;
-	let newQuantity = {...userState.quantity};
+	let newDishQuantity = userState.dishQuantity;
 	switch (action.type) {
 		case actions.ADD_TO_BASKET:
-			const basket = {...userState, items: [...userState.items, action.payload.items], message: action.payload.message, restaurantId: action.payload.restaurantId};
-			const quantity = {};
+			const basket = {...userState, items: [...userState.items, action.payload.item], message: action.payload.message, restaurantId: action.payload.restaurantId};
 
-			basket.items.forEach((item) => {
-				quantity[item.id] = (quantity[item.id] || 0) + 1;
-			});
+			newDishQuantity = {...newDishQuantity, [action.payload.id]: (newDishQuantity[action.payload.id] || 0) + 1};
 
-			result = {...basket, quantity};
+			result = {...basket, dishQuantity: newDishQuantity};
 			break;
 
 		case actions.BASKET_QUANTITY_CHANGE:
-			newQuantity = {...userState.quantity};
-
 			if (action.payload.opration === 'increase') {
-				newQuantity[action.payload.id] = newQuantity[action.payload.id] + 1;
+				newDishQuantity = {...newDishQuantity, [action.payload.id]: (newDishQuantity[action.payload.id] || 0) + 1};
 			}
-			if (action.payload.opration === 'decrease' && newQuantity[action.payload.id] > 1) {
-				newQuantity[action.payload.id] = newQuantity[action.payload.id] - 1;
+			if (action.payload.opration === 'decrease' && newDishQuantity[action.payload.id] > 1) {
+				newDishQuantity = {...newDishQuantity, [action.payload.id]: (newDishQuantity[action.payload.id] || 0) - 1};
 			}
-			result = {...userState, quantity: newQuantity};
+			result = {...userState, dishQuantity: newDishQuantity};
 			break;
 
 		case actions.DISH_OPTIONS_QUANTITY_CHANGE:
-			let newDishOption = {...userState.dishOption};
+			let newDishOption = {...userState.dishOptionQuantity};
 			if (action.payload.opration === 'increase') {
 				newDishOption[action.payload.id] = (newDishOption[action.payload.id] || 0) + 1;
 			}
@@ -38,7 +33,7 @@ const reducer = (userState, action) => {
 				newDishOption[action.payload.id] = newDishOption[action.payload.id] - 1;
 			}
 
-			result = {...userState, dishOption: newDishOption};
+			result = {...userState, dishOptionQuantity: newDishOption};
 
 			break;
 

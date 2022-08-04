@@ -1,83 +1,29 @@
 import {faLock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useStateValue} from '../../store/context/ContextManager';
-import {totalAllDishPrice} from '../restaurant/Basket';
+import {totalAllDishPrice} from '../shopping-cart/Basket';
 import {dishOptionsItem} from '../shopping-cart/OrderSummary';
 import Zarinpal from '../../images/zarinpal.png';
 import {useMutation} from '@apollo/client';
-import {CreateOrderMutation, CreateOrderMutationResult, CreateOrderMutationVariables, CreatepaymentMutation, CreatepaymentMutationVariables} from '../../graphql/schemaTypes';
-import {CREATE_ORDER, CREATE_PAYMENT} from '../../graphql/mutations';
-const PaymentForm = () => {
+import {CreateOrderMutation, CreateOrderMutationVariables} from '../../graphql/schemaTypes';
+import {CREATE_ORDER} from '../../graphql/mutations';
+import {useNavigate} from 'react-router-dom';
+const PaymentForms = () => {
 	const [state] = useStateValue();
-
+	let navigate = useNavigate();
 	const update = (cache, result) => {
-		const {ok, message} = result?.data?.createOrder;
-		console.log({ok, message});
-		// const newEmail = getValues().email;
-		// const newPassword = getValues().password;
-		// if (!ok) {
-		// 	setError('password', {message});
-		// }
-		// if (ok) {
-		// 	setServerMessage(message);
-		// 	cache.modify({
-		// 		id: `User:${user?.id}`,
-		// 		fields: {
-		// 			email() {
-		// 				return newEmail;
-		// 			},
-		// 			password() {
-		// 				return newPassword;
-		// 			},
-		// 			verified() {
-		// 				if (newEmail !== user?.email && inputEmail) return false;
-		// 			},
-		// 		},
-		// 	});
-		// 	setTimeout(() => {
-		// 		setServerMessage(message);
-		// 		clearErrors();
-		// 		navigate('/');
-		// 	}, 3000);
-		// }
+		const {ok, message, orderId} = result?.data?.createOrder;
+		if (ok && orderId) {
+			navigate('/payment/pending', {state: {orderId}});
+		} else {
+			console.log(message);
+		}
 	};
 	const [createOrderHandler] = useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CREATE_ORDER, {update});
 
-	// const onValidSubmit = () => {
-	// 	if (loading) return;
-	// 	const {email, password} = getValues();
-
-	// 	inputEmail && loginHandler({variables: {data: {email}}});
-	// 	inputPassword && loginHandler({variables: {data: {...(password !== '' && {password})}}});
-	// };
-
-	const paymentHandler = (e) => {
-		console.log(state.basket);
-		state.basket.items.map((item) => item.options?.map((option) => console.log(option)));
-
+	const orderHandler = (e) => {
 		const totalPrice = (totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(state.basket) * 0.09).toFixed(2);
-		createOrderHandler({variables: {data: {items: state.basket.items, restaurantId: state.basket.restaurantId, totalPrice: Number(totalPrice)}}});
-		// setPayButtonText('در ال انتقال به درگاه ...');
-		// API.post(
-		// 	'/api/v1/purchase',
-		// 	{
-		// 		...state,
-		// 	},
-		// 	{
-		// 		headers: {
-		// 			Authorization: localStorage.getItem('token'),
-		// 		},
-		// 	},
-		// )
-		// 	.then((response) => {
-		// 		if (!response.data.success) {
-		// 			setPayButtonText('پرداخت ناموفق');
-		// 		}
-		// 		if (response.data.success) {
-		// 			window.location.href = response.data.url;
-		// 		}
-		// 	})
-		// 	.catch((error) => console.log(error));
+		createOrderHandler({variables: {data: {items: state?.basket?.items, restaurantId: state.basket.restaurantId, totalPrice: Number(totalPrice)}}});
 	};
 
 	const totaldishOptionsPrice = (dishOptions) => {
@@ -207,7 +153,7 @@ const PaymentForm = () => {
 						</label>
 					</div>
 
-					<button onClick={paymentHandler} type='button' className='w-full flex items-center justify-center bg-yellow-300 border border-transparent text-white rounded-md py-2 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'>
+					<button onClick={orderHandler} type='button' className='w-full flex items-center justify-center bg-yellow-300 border border-transparent text-white rounded-md py-2 hover:bg-yellow-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'>
 						<span className='text-black font-bold px-2'>Pay with</span>
 						<img className='h-5 w-auto' src={Zarinpal} alt='zarinpal-logo' />
 					</button>
@@ -233,4 +179,4 @@ const PaymentForm = () => {
 	);
 };
 
-export default PaymentForm;
+export default PaymentForms;

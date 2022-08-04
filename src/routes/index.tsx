@@ -11,8 +11,14 @@ import ErrorPage from '../components/custom/ErrorPage';
 import SingleCategory from '../pages/client/SingleCategory';
 import AddRestaurant from '../pages/owner/AddRestaurant';
 import AddDish from '../pages/owner/AddDish';
-import Basket from '../components/restaurant/Basket';
-import Checkout from '../pages/owner/Checkout';
+import Basket from '../components/shopping-cart/Basket';
+import Checkout from '../pages/Checkout';
+import PaymentPending from '../components/Payment/PaymentPending';
+import PaymentVerify from '../components/Payment/PaymentVerify';
+import PaymentSuccess from '../components/Payment/PaymentSuccess';
+import PaymentFailed from '../components/Payment/PaymentFailed';
+import Orders from '../components/order/Orders';
+import OrderSingle from '../components/order/OrderSingle';
 
 const Router = () => {
 	return (
@@ -30,6 +36,12 @@ const Router = () => {
 			<Route path='/basket' element={<Basket />} />
 			<Route path='/checkout' element={<Checkout />} />
 			<Route path='/user/edit' element={<EditProfile />} />
+			<Route path='/payment/pending' element={<PaymentPending />} />
+			<Route path='/payment/success' element={<PaymentSuccess />} />
+			<Route path='/payment/failed' element={<PaymentFailed />} />
+			<Route path='/payment/verify/:reserve' element={<PaymentVerify />} />
+			<Route path='/order/:id' element={<OrderSingle />} />
+			<Route path='/orders' element={<Orders />} />
 			<Route path='*' element={<ErrorPage title='404' message='Nothing Found' />} />
 		</Routes>
 	);

@@ -1,7 +1,18 @@
-import {ApolloClient, ApolloLink, createHttpLink, InMemoryCache} from '@apollo/client';
+import {ApolloClient, ApolloLink, createHttpLink, InMemoryCache, split} from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 import {isDarkVar, isLoginVar} from './GlobalVar';
-
+import {createClient} from 'graphql-ws';
+import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
+import {getMainDefinition} from '@apollo/client/utilities';
+import {authToken} from './GlobalVar';
+const wsLink = new GraphQLWsLink(
+	createClient({
+		url: 'ws://localhost:4000/graphql',
+		connectionParams: {
+			authToken,
+		},
+	}),
+);
 // const uri=process.env.NODE_ENV==='development'?'http://localhost:4000/graphql':'https://apollo-server-graphql.herokuapp.com/graphql';
 const httpLink = createHttpLink({
 	// uri: 'https://aqueous-reef-59013.herokuapp.com/graphql',
@@ -26,9 +37,16 @@ const authLink = setContext((_, {headers}) => {
 		},
 	};
 });
-
+const splitLink = split(
+	({query}) => {
+		const definition = getMainDefinition(query);
+		return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';
+	},
+	wsLink,
+	authLink.concat(httpLinkWithErrorHandling),
+);
 export const client = new ApolloClient({
-	link: authLink.concat(httpLinkWithErrorHandling),
+	link: splitLink,
 	cache: new InMemoryCache({
 		typePolicies: {
 			User: {

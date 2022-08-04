@@ -13,13 +13,13 @@ export const totalAllDishPrice = (basket) => {
 	return basket.items
 		.filter((dish, i) => basket.items.indexOf(dish) === i)
 		.reduce((total: number, dish) => {
-			const quantity = basket.quantity[dish.id];
+			const quantity = basket.dishQuantity[dish.id];
 			const totalDishes = total + dish.price * quantity;
 			return totalDishes;
 		}, 0);
 };
 export const totaldishPrice = (dish, basket) => {
-	const quantity = basket.quantity[dish.id];
+	const quantity = basket.dishQuantity[dish.id];
 	const dishQuantity: any = [];
 	for (let i = 0; i < quantity; i++) {
 		dishQuantity.push(dish.price);
@@ -99,9 +99,10 @@ const Basket = () => {
 												<div className='flow-root'>
 													<ul className='-my-6 divide-y divide-gray-200'>
 														{state.basket?.items
-															.filter((dish, i) => state.basket?.items.indexOf(dish) === i)
+															.filter((dish, i) => state.basket.items.indexOf(dish) === i)
 															.map((dish, i) => {
-																const quantity = state.basket.quantity[dish.id];
+																const quantity = state.basket.dishQuantity[dish.id];
+
 																return (
 																	<li key={i} className='flex py-6'>
 																		<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>

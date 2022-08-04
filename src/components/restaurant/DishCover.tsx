@@ -43,7 +43,7 @@ const DishCover = ({setIsSelected, dish}) => {
 	};
 
 	const addToBasketHandler = () => {
-		const items = {
+		const item = {
 			id: dish.id,
 			name: dish.name,
 			price: dish.price,
@@ -54,13 +54,13 @@ const DishCover = ({setIsSelected, dish}) => {
 		if (restaurant) {
 			dispatch({
 				type: actions.ADD_TO_BASKET,
-				payload: {items, message: 'Added to basket', restaurantId: restaurant.id},
+				payload: {item, message: 'Added to basket', restaurantId: restaurant.id, id: dish.id},
 			});
 		}
 	};
 	const addtoOrderButton = () => {
 		const isDishAlreadyAdded = state.basket.items.find((item) => item.id === dish.id);
-		const quantity = state.basket.quantity[dish.id];
+		const quantity = state.basket.dishQuantity[dish.id];
 		if (isDishAlreadyAdded) {
 			return (
 				<div className=' flex flex-row'>
@@ -170,7 +170,7 @@ const DishCover = ({setIsSelected, dish}) => {
 															<h4 className='text-sm text-gray-900 font-bold mb-5'>Options</h4>
 															<div className='grid grid-cols-2'>
 																{dish?.options?.map((item, i) => {
-																	const quantity = state.basket.dishOption[item.id] || 0;
+																	const quantity = state.basket.dishOptionQuantity[item.id] || 0;
 																	return (
 																		<div key={item.id} className='grid grid-cols-3 py-1 gap-x-4'>
 																			<div key={item.name} className=' group relative flex items-center justify-around text-sm font-medium uppercase  focus:outline-none sm:flex-1'>

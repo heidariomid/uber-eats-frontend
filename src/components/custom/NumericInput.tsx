@@ -13,7 +13,7 @@ const NumericInput = ({quantity, changeQuantity, dishId}) => {
 					>
 						<span className='m-auto text-lg font-thin'>−</span>
 					</button>
-					<input type='number' onChange={() => changeQuantity(dishId, quantity)} value={quantity} className='border-2 border-gray-100 focus:outline-none text-center w-full  font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none' name='custom-input-number' />
+					<input type='number' onChange={() => console.log('ok')} value={quantity} className='border-2 border-gray-100 focus:outline-none text-center w-full  font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none' name='custom-input-number' />
 					<button
 						type='button'
 						onClick={() => {

@@ -1,15 +1,17 @@
 import Logo from '../../images/uber-eats.svg';
 import LogoWhite from '../../images/uber-eats-white.svg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBasketShopping, faMoon, faSignOut, faSun} from '@fortawesome/free-solid-svg-icons';
+import {faBasketShopping, faMoon, faReorder, faSignOut, faSun} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 import {themeHandler, userLoggedOut} from '../../apollo';
-import {useReactiveVar} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 import useUser from '../../hooks/useUser';
-import {UserRole} from '../../graphql/schemaTypes';
+import {Order, OrderStatus, UserRole} from '../../graphql/schemaTypes';
+import {ORDERS} from '../../graphql/queries';
+import {useEffect, useState} from 'react';
 
 const Header = () => {
 	const isDark = useReactiveVar(isDarkVar);
@@ -21,24 +23,39 @@ const Header = () => {
 			payload: {status: state.basket.status ? false : true},
 		});
 	};
-
+	const [orders, setOrders] = useState<Order[] | null>(null);
+	const {data} = useQuery(ORDERS, {variables: {data: {status: OrderStatus.Cooking}}});
+	useEffect(() => {
+		if (!data?.getOrders.ok) {
+			setOrders(null);
+		}
+		if (data?.getOrders.ok && data?.getOrders.orders) {
+			setOrders(data.getOrders.orders);
+		}
+	}, [data]);
+	const quantityObject = state.basket.dishQuantity;
+	const totalQuantity: any = Object.values(quantityObject).reduce((total: any, quantity) => {
+		return total + quantity;
+	}, 0);
 	return (
 		<div className='flex flex-row content-center items-center justify-start text-center  w-full '>
 			<header className='flex items-center justify-start text-center py-4 w-full mx-auto'>
 				<div className='w-full px-5 xl:-x-0 max-w-screen-2xl mx-auto flex justify-between items-center'>
 					<Link to={'/'}>
-						{!isDark && <img className='w-40 p-1  cursor-pointer' src={Logo} alt='logo' />}
-						{isDark && <img className='w-40 p-1   cursor-pointer' src={LogoWhite} alt='logo' />}
+						{!isDark && <img className='w-40 p-1 cursor-pointer' src={Logo} alt='logo' />}
+						{isDark && <img className='w-40 p-1  cursor-pointer' src={LogoWhite} alt='logo' />}
 					</Link>
+
 					<div className='flex flex-row  '>
 						{user?.role === UserRole.Client && (
 							<div className='mr-5'>
 								<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${state.basket.items.length > 0 && 'text-green-500'} `}>
 									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
-									{state.basket.items.length > 0 && <span className='text-lg px-2 text-green-500'>{state.basket.items.length}</span>}
+									{state.basket.items.length > 0 && <span className='text-lg px-2 text-green-500'>{totalQuantity}</span>}
 								</div>
 							</div>
 						)}
+
 						{!isDark && (
 							<button className=' py-1 mx-0.5 cursor-pointer' onClick={() => themeHandler(false)}>
 								<FontAwesomeIcon className='  text-xl px-2' icon={faMoon} />
@@ -53,6 +70,15 @@ const Header = () => {
 						<span className=' py-1  mx-0.5 cursor-pointer' onClick={userLoggedOut}>
 							<FontAwesomeIcon className='  text-xl px-2' icon={faSignOut} />
 						</span>
+						{user?.role === UserRole.Owner && (
+							<div className='mx-10'>
+								<Link to={'/orders'} className=' mx-0.5 cursor-pointer inline-flex relative items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
+									<FontAwesomeIcon icon={faReorder} />
+									<span className='sr-only'>Notifications</span>
+									<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900'>{orders?.length}</div>
+								</Link>
+							</div>
+						)}
 					</div>
 				</div>
 			</header>

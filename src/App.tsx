@@ -1,7 +1,8 @@
 import {useReactiveVar} from '@apollo/client';
+import {useLocation} from 'react-router-dom';
 import {isDarkVar, isLoginVar} from './apollo/GlobalVar';
 import Header from './components/header/Header';
-import Basket from './components/restaurant/Basket';
+import Basket from './components/shopping-cart/Basket';
 import Routes from './routes';
 import {useStateValue} from './store/context/ContextManager';
 
@@ -9,9 +10,11 @@ const App = () => {
 	const isDark = useReactiveVar(isDarkVar);
 	const isLoggedIn = useReactiveVar(isLoginVar);
 	const [state] = useStateValue();
+	const location = useLocation();
+	const checkPath = location.pathname === '/payment/pending';
 	return (
 		<div className={`h-full ${isDark && 'bg-black text-white'}`}>
-			{isLoggedIn && <Header />}
+			{isLoggedIn && !checkPath && <Header />}
 			{isLoggedIn && state.basket.status && <Basket />}
 			<Routes />
 		</div>

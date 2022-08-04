@@ -90,36 +90,11 @@ export const CREATE_ORDER = gql`
 		createOrder(data: $data) {
 			ok
 			message
+			orderId
 		}
 	}
 `;
-export const ORDERS = gql`
-	mutation Orders($data: OrdersInputFilter!) {
-		getOrders(data: $data) {
-			ok
-			message
-			orders {
-				id
-			}
-		}
-	}
-`;
-export const ORDER = gql`
-	mutation Order($data: OrderInputType!) {
-		getOrderById(data: $data) {
-			ok
-			message
-			order {
-				id
-				status
-				restaurant {
-					...RestaurantFragment
-				}
-			}
-		}
-	}
-	${RESTAURANT_FEAGMENT}
-`;
+
 export const EDIT_ORDER = gql`
 	mutation editOrder($data: EditOrderInput!) {
 		editOrder(data: $data) {
@@ -140,10 +115,21 @@ export const TAKE_ORDER = gql`
 	}
 `;
 export const CREATE_PAYMENT = gql`
-	mutation Createpayment($data: CreatePaymentInputType!) {
+	mutation CreatePayment($data: CreatePaymentInputType!) {
 		createPayment(data: $data) {
 			ok
 			message
+			url
+		}
+	}
+`;
+
+export const VERIFY_PAYMENT = gql`
+	mutation Mutation($data: VerifyPaymentInputType!) {
+		verifyPayment(data: $data) {
+			message
+			ok
+			orderId
 		}
 	}
 `;
