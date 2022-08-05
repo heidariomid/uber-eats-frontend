@@ -5,6 +5,7 @@ import Loading from '../components/loading/Loading';
 import {UserRole} from '../graphql/schemaTypes';
 import useUser from '../hooks/useUser';
 import Client from './client/Client';
+import Driver from './driver/Driver';
 import Owner from './owner/Owner';
 
 const Home = () => {
@@ -17,6 +18,9 @@ const Home = () => {
 			}
 			if (user.role === UserRole.Owner) {
 				return <Owner />;
+			}
+			if (user.role === UserRole.Delivery) {
+				return <Driver />;
 			}
 		}
 	};
