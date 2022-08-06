@@ -7,16 +7,17 @@ import {getMainDefinition} from '@apollo/client/utilities';
 import {authToken} from './GlobalVar';
 const wsLink = new GraphQLWsLink(
 	createClient({
-		url: 'ws://localhost:4000/graphql',
+		url: 'ws://uber-eats-back.herokuapp.com/graphql',
+		// url: 'ws://localhost:4000/graphql',
 		connectionParams: {
 			authToken,
 		},
 	}),
 );
-// const uri=process.env.NODE_ENV==='development'?'http://localhost:4000/graphql':'https://apollo-server-graphql.herokuapp.com/graphql';
+// const uri=process.env.NODE_ENV==='development'?'http://localhost:4000/graphql':'https://uber-eats-back.herokuapp.com/graphql';
 const httpLink = createHttpLink({
-	// uri: 'https://aqueous-reef-59013.herokuapp.com/graphql',
-	uri: 'http://localhost:4000/graphql',
+	uri: 'https://uber-eats-back.herokuapp.com/graphql',
+	// uri: 'http://localhost:4000/graphql',
 });
 const cleanTypeName = new ApolloLink((operation, forward) => {
 	if (operation.variables) {
