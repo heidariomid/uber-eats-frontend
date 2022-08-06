@@ -6,7 +6,7 @@ import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
 import {getMainDefinition} from '@apollo/client/utilities';
 import {authToken} from './GlobalVar';
 
-const url = process.env.NODE_ENV === 'production' ? 'ws://uber-eats-back.herokuapp.com/graphql' : 'ws://localhost:4000/graphql';
+const url = process.env.NODE_ENV === 'production' ? 'wss://uber-eats-back.herokuapp.com/graphql' : 'ws://localhost:4000/graphql';
 const wsLink = new GraphQLWsLink(
 	createClient({
 		url,
