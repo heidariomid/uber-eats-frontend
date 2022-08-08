@@ -1,4 +1,3 @@
-import {Navigate} from 'react-router-dom';
 import Banner from '../components/banner/Banner';
 import Footer from '../components/footer/Footer';
 import Loading from '../components/loading/Loading';
@@ -13,28 +12,30 @@ const Home = () => {
 
 	const homeHandler = () => {
 		if (user) {
-			if (user.role === UserRole.Client) {
-				return <Client />;
-			}
 			if (user.role === UserRole.Owner) {
 				return <Owner />;
 			}
 			if (user.role === UserRole.Delivery) {
 				return <Driver />;
 			}
+			if (user.role === UserRole.Client) {
+				return <Client />;
+			}
+		} else {
+			return <Client />;
 		}
 	};
 	return (
 		<div>
-			{!loading && user && (
+			{!loading ? (
 				<div className='font-[Rubik]'>
-					{!user?.verified && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
+					{!user?.verified && user && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
 					{homeHandler()}
 					<Footer />
 				</div>
+			) : (
+				<Loading />
 			)}
-			{loading && <Loading />}
-			{!loading && !user && <Navigate to={'/auth/login'} />}
 		</div>
 	);
 };

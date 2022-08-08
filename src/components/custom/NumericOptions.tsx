@@ -1,7 +1,7 @@
 const NumericOptions = ({quantity, changeDishOptionQuantity, optionId}) => {
 	return (
 		<div className=' justify-center items-center custom-number-input '>
-			<div className='flex flex-row h-7 w-20  rounded-lg relative bg-transparent'>
+			<div className='flex flex-row h-7 mx-5 rounded-lg relative bg-transparent'>
 				<button
 					type='button'
 					onClick={() => {

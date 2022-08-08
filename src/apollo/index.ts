@@ -59,6 +59,7 @@ export const client = new ApolloClient({
 
 export const userLoggedOut = () => {
 	localStorage.removeItem('token');
+	sessionStorage.removeItem('basket');
 	window.location.replace('/auth/login');
 	isLoginVar(false);
 };

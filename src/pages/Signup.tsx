@@ -61,9 +61,9 @@ const Signup = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
-					<input className='input mb-3' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
-					<input className='input mb-3' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
-					<select className='input mb-3' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
+					<select className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
 						{Object.keys(UserRole).map((role, key) => (
 							<option key={key} value={role}>
 								{role}

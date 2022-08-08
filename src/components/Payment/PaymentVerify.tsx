@@ -6,10 +6,10 @@ import Loading from '../loading/Loading';
 
 const PaymentVerify = () => {
 	const navigate = useNavigate();
-
 	const update = (_, result) => {
 		const {ok, message, orderId} = result?.data?.verifyPayment;
-		if (ok && orderId) {
+		if (ok && orderId && !loading) {
+			sessionStorage.removeItem('basket');
 			navigate('/payment/success', {state: {orderId}});
 		} else {
 			navigate('/payment/failed', {state: {message}});

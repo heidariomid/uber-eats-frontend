@@ -3,11 +3,10 @@ import {Popover, Transition} from '@headlessui/react';
 import {ChevronUpIcon} from '@heroicons/react/solid';
 import {Link} from 'react-router-dom';
 import {totaldishPrice, totalAllDishPrice} from './Basket';
-import {useStateValue} from '../../store/context/ContextManager';
 import {v4 as uuidv4} from 'uuid';
 export const dishOptionsItem: any = [];
 const OrderSummary = () => {
-	const [state] = useStateValue();
+	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
 
 	const totaldishOptionsPrice = (dishOptions) => {
 		const dishQuantity: any = [];
@@ -39,16 +38,16 @@ const OrderSummary = () => {
 				<div className='mt-8 py-6 px-4 sm:px-6'>
 					<div className='flow-root'>
 						<ul key={uuidv4()} className='-my-6 divide-y divide-gray-200'>
-							{state.basket?.items
-								.filter((dish, i) => state.basket?.items.indexOf(dish) === i)
+							{basketItem?.items
+								.filter((dish, i) => basketItem?.items.indexOf(dish) === i)
 								.map((dish, i) => {
 									const dishOptions = dish?.options?.map((option) => {
-										const quantity = state.basket?.dishOptionQuantity[option.id];
+										const quantity = basketItem?.dishOptionQuantity[option.id];
 										const newOption = {name: option.name, quantity, price: option.extra};
 										dishOptionsItem.push(newOption);
 										return newOption;
 									});
-									const quantity = state.basket.dishQuantity[dish.id];
+									const quantity = basketItem?.dishQuantity[dish.id];
 
 									return (
 										<li key={i} className='flex py-6'>
@@ -63,7 +62,7 @@ const OrderSummary = () => {
 															<Link to={dish?.name}> {dish?.name} </Link>
 														</h3>
 
-														<p className='ml-4'>${totaldishPrice(dish, state.basket) + totaldishOptionsPrice(dishOptions)}</p>
+														<p className='ml-4'>${totaldishPrice(dish, basketItem) + totaldishOptionsPrice(dishOptions)}</p>
 													</div>
 												</div>
 												<div className='flex flex-1  items-end justify-between text-sm my-3'>
@@ -71,7 +70,7 @@ const OrderSummary = () => {
 														${dish.price} X {quantity}
 													</p>
 
-													<p className='ml-4'>${totaldishPrice(dish, state.basket)}</p>
+													<p className='ml-4'>${totaldishPrice(dish, basketItem)}</p>
 												</div>
 												{totaldishOptionsPrice(dishOptions) > 0 && (
 													<div className='flex flex-1  items-end justify-between text-sm '>
@@ -107,12 +106,12 @@ const OrderSummary = () => {
 				<dl className='hidden text-sm font-medium text-gray-900 space-y-6 border-t b border-gray-300 pt-6 lg:block'>
 					<div className='flex items-center justify-between'>
 						<dt className='text-gray-600'>Subtotal</dt>
-						<dd>${totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem)}</dd>
+						<dd>${totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem)}</dd>
 					</div>
 
 					<div className='flex items-center justify-between'>
 						<dt className='text-gray-600'>Taxes</dt>
-						<dd>${totalAllDishPrice(state.basket) > 0 ? (totalAllDishPrice(state.basket) * 0.09).toFixed(2) : 0}</dd>
+						<dd>${totalAllDishPrice(basketItem) > 0 ? (totalAllDishPrice(basketItem) * 0.09).toFixed(2) : 0}</dd>
 					</div>
 
 					<div className='flex items-center justify-between'>
@@ -133,7 +132,7 @@ const OrderSummary = () => {
 								</form> */}
 					<div className='flex items-center justify-between border-t border-gray-400 pt-6'>
 						<dt className='text-base'>Total</dt>
-						<dd className='text-base'>${(totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}</dd>
+						<dd className='text-base'>${(totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2)}</dd>
 					</div>
 				</dl>
 
@@ -142,7 +141,7 @@ const OrderSummary = () => {
 						<div className='max-w-lg mx-auto'>
 							<Popover.Button className='w-full flex items-center py-6 font-medium'>
 								<span className='text-base mr-auto'>Total</span>
-								<span className='text-base mr-2'>${(totalAllDishPrice(state.basket) + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}</span>
+								<span className='text-base mr-2'>${(totalAllDishPrice(basketItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2)}</span>
 								<ChevronUpIcon className='w-5 h-5 text-gray-500' aria-hidden='true' />
 							</Popover.Button>
 						</div>
@@ -153,23 +152,20 @@ const OrderSummary = () => {
 							<Transition.Child as={Fragment} enter='transition-opacity ease-linear duration-300' enterFrom='opacity-0' enterTo='opacity-100' leave='transition-opacity ease-linear duration-300' leaveFrom='opacity-100' leaveTo='opacity-0'>
 								<Popover.Overlay className='fixed inset-0 bg-black bg-opacity-25' />
 							</Transition.Child>
-
 							<Transition.Child as={Fragment} enter='transition ease-in-out duration-300 transform' enterFrom='translate-y-full' enterTo='translate-y-0' leave='transition ease-in-out duration-300 transform' leaveFrom='translate-y-0' leaveTo='translate-y-full'>
 								<Popover.Panel className='relative bg-white px-4 py-6 sm:px-6'>
 									<dl className='max-w-lg mx-auto space-y-6'>
 										<div className='flex items-center justify-between'>
 											<dt className='text-gray-600'>Subtotal</dt>
-											<dd>$3200000.00</dd>
+											<dd>${totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem)}</dd>
 										</div>
-
-										<div className='flex items-center justify-between'>
-											<dt className='text-gray-600'>Shipping</dt>
-											<dd>$150000.00</dd>
-										</div>
-
 										<div className='flex items-center justify-between'>
 											<dt className='text-gray-600'>Taxes</dt>
-											<dd>$26000000.80</dd>
+											<dd>${totalAllDishPrice(basketItem) > 0 ? (totalAllDishPrice(basketItem) * 0.09).toFixed(2) : 0}</dd>
+										</div>
+										<div className='flex items-center justify-between'>
+											<dt className='text-gray-600'>Shipping</dt>
+											<dd> 0</dd>
 										</div>
 									</dl>
 								</Popover.Panel>

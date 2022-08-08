@@ -14,7 +14,7 @@ const PaymentFailed = () => {
 					<div>
 						<h4 className='text-lg font-bold text-white'>Payment Failed !</h4>
 						<p className='mt-1 text-white font-bold'>{state.message}</p>
-						<Link to={'/'}>
+						<Link to={'/checkout'}>
 							<button className='btn mt-10 flex mx-auto px-5 bg-white text-gray-600'>Try Again</button>
 						</Link>
 					</div>

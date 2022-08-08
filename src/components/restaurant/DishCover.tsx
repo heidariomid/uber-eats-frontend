@@ -1,4 +1,4 @@
-import {Fragment, useState} from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import {XIcon} from '@heroicons/react/outline';
 import {StarIcon} from '@heroicons/react/solid';
@@ -21,6 +21,14 @@ function classNames(...classes) {
 const DishCover = ({setIsSelected, dish}) => {
 	const [state, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
+	const [basket, setBasket] = useState<any>({});
+
+	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+
+	useEffect(() => {
+		setBasket(basketItem);
+	}, [basketItem?.items?.length]);
+
 	const {user} = useUser();
 	const restaurant = useRestaurant();
 	const changeQuantity = (id, opration) => {
@@ -59,9 +67,10 @@ const DishCover = ({setIsSelected, dish}) => {
 		}
 	};
 	const addtoOrderButton = () => {
-		const isDishAlreadyAdded = state.basket.items.find((item) => item.id === dish.id);
-		const quantity = state.basket.dishQuantity[dish.id];
-		if (isDishAlreadyAdded) {
+		const isDishAlreadyAdded = basketItem?.items ? basketItem?.items?.find((item) => item.id === dish.id) : state?.basket?.items.find((item) => item.id === dish.id);
+		const quantity = basketItem?.items ? basketItem?.dishQuantity[dish.id] : state?.basket?.dishQuantity[dish.id];
+
+		if (isDishAlreadyAdded && basketItem?.items) {
 			return (
 				<div className=' flex flex-row'>
 					<div className='mt-12 w-1/3  border-dotted border-2 border-green-500 text-green-500  border-grren-400 rounded-md py-3 px-8 flex items-center justify-center text-base font-medium '>
@@ -170,13 +179,14 @@ const DishCover = ({setIsSelected, dish}) => {
 															<h4 className='text-sm text-gray-900 font-bold mb-5'>Options</h4>
 															<div className='grid grid-cols-2'>
 																{dish?.options?.map((item, i) => {
-																	const quantity = state.basket.dishOptionQuantity[item.id] || 0;
-																	return (
-																		<div key={item.id} className='grid grid-cols-3 py-1 gap-x-4'>
-																			<div key={item.name} className=' group relative flex items-center justify-around text-sm font-medium uppercase  focus:outline-none sm:flex-1'>
-																				<span className={'text-sm w-full'}>{item.name}</span>
+																	const quantity = basketItem?.items ? basketItem?.dishOptionQuantity[item.id] || 0 : state?.basket?.dishOptionQuantity[item.id] || 0;
+																	// const quantity = basketItem?.items ? basketItem?.dishQuantity[dish.id] : state?.basket?.dishQuantity[dish.id];
 
-																				<span className={'text-sm '}>${item.extra}</span>
+																	return (
+																		<div key={item.id} className='grid grid-cols-3 py-1 gap-x-10'>
+																			<div key={item.name} className=''>
+																				<span className={'text-sm w-full'}>{item.name}</span>
+																				<span className={'text-sm ml-3'}>${item.extra}</span>
 																			</div>
 
 																			<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} />

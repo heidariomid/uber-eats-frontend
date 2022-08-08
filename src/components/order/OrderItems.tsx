@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {useStateValue} from '../../store/context/ContextManager';
-import {v4 as uuidv4} from 'uuid';
+import {v4 as uuid} from 'uuid';
 import {totaldishPrice} from '../shopping-cart/Basket';
 export const dishOptionsItem: any = [];
 
@@ -31,11 +31,11 @@ const OrderItems = ({items}) => {
 		<>
 			<div className='mt-8 py-6 px-4 sm:px-6 w-full bg-white border-2 border-gray-200'>
 				<div className=''>
-					<ul key={uuidv4()} className='-my-6  flex flex-row'>
+					<ul className='-my-6  flex flex-row'>
 						{items
 							.filter((dish, i) => items.indexOf(dish) === i)
 							.map((dish, i) => {
-								const dishOptions = dish?.options?.map((option) => {
+								const dishOptions = dish?.options?.map((option, i) => {
 									// const quantity = dishOptionQuantity[option.id];
 									const quantity = 1;
 									const newOption = {name: option.name, quantity, price: option.extra};
@@ -74,7 +74,7 @@ const OrderItems = ({items}) => {
 														{dishOptions.map((option) => {
 															if (option.quantity) {
 																return (
-																	<div className='text-gray-600 flex justify-around '>
+																	<div key={uuid()} className='text-gray-600 flex justify-around '>
 																		<span className='px-4 flex-1'>{option?.name}</span>
 																		<span>
 																			${option?.price} X {option?.quantity}

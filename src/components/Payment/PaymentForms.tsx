@@ -10,6 +10,8 @@ import {CREATE_ORDER} from '../../graphql/mutations';
 import {useNavigate} from 'react-router-dom';
 const PaymentForms = () => {
 	const [state] = useStateValue();
+	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+
 	let navigate = useNavigate();
 	const update = (cache, result) => {
 		const {ok, message, orderId} = result?.data?.createOrder;
@@ -22,8 +24,8 @@ const PaymentForms = () => {
 	const [createOrderHandler] = useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CREATE_ORDER, {update});
 
 	const orderHandler = (e) => {
-		const totalPrice = (totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(state.basket) * 0.09).toFixed(2);
-		createOrderHandler({variables: {data: {items: state?.basket?.items, restaurantId: state.basket.restaurantId, totalPrice: Number(totalPrice)}}});
+		const totalPrice = (totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2);
+		createOrderHandler({variables: {data: {items: state?.basket?.items, restaurantId: basketItem.restaurantId, totalPrice: Number(totalPrice)}}});
 	};
 
 	const totaldishOptionsPrice = (dishOptions) => {
@@ -43,6 +45,7 @@ const PaymentForms = () => {
 		}, 0);
 		return totalPrice;
 	};
+
 	return (
 		<>
 			<form className='pt-16 pb-36 px-4 sm:px-6 lg:pb-16 lg:px-0 lg:row-start-1 lg:col-start-1'>
@@ -167,7 +170,7 @@ const PaymentForms = () => {
 					</div>
 
 					<button type='submit' className='w-full bg-green-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
-						Pay $ ${(totalAllDishPrice(state.basket) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(state.basket) * 0.09).toFixed(2)}
+						Pay $ ${(totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2)}
 					</button>
 					<p className='flex justify-center text-sm font-medium text-gray-500 mt-6'>
 						<FontAwesomeIcon icon={faLock} className='w-5 h-5 text-gray-400 mr-1.5' aria-hidden='true' />

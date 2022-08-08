@@ -8,12 +8,14 @@ import {actions} from '../../store/actions';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import NumericInput from '../custom/NumericInput';
-
+import {useReactiveVar} from '@apollo/client';
+import {isBasketItemVar} from '../../apollo/GlobalVar';
+import EmptyBasket from '../../images/empty-basket.svg';
 export const totalAllDishPrice = (basket) => {
-	return basket.items
-		.filter((dish, i) => basket.items.indexOf(dish) === i)
+	return basket?.items
+		?.filter((dish, i) => basket?.items.indexOf(dish) === i)
 		.reduce((total: number, dish) => {
-			const quantity = basket.dishQuantity[dish.id];
+			const quantity = basket?.dishQuantity[dish.id];
 			const totalDishes = total + dish.price * quantity;
 			return totalDishes;
 		}, 0);
@@ -30,7 +32,11 @@ export const totaldishPrice = (dish, basket) => {
 	return totalPrice;
 };
 const Basket = () => {
-	const [state, dispatch] = useStateValue();
+	const isBasket = useReactiveVar<boolean>(isBasketItemVar);
+
+	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+
+	const [_, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
 
 	const changeBasketStatus = () => {
@@ -81,7 +87,7 @@ const Basket = () => {
 												<div className='ml-3 flex h-7 items-center transition-all'>
 													<button
 														type='button'
-														className='-m-2 p-2  text-gray-400 hover:text-gray-500'
+														className='-m-2 p-2  text-gray-400 hover:text-gray-500 focus:ring-0 focus:border-red-400'
 														onClick={() => {
 															setOpen(false);
 															setTimeout(() => {
@@ -90,7 +96,7 @@ const Basket = () => {
 														}}
 													>
 														<span className='sr-only'>Close panel</span>
-														<XIcon className='h-6 w-6' aria-hidden='true' />
+														<XIcon className='h-6 w-6 focus:ring-0 focus:border-none' aria-hidden='true' />
 													</button>
 												</div>
 											</div>
@@ -98,67 +104,93 @@ const Basket = () => {
 											<div className='mt-8'>
 												<div className='flow-root'>
 													<ul className='-my-6 divide-y divide-gray-200'>
-														{state.basket?.items
-															.filter((dish, i) => state.basket.items.indexOf(dish) === i)
-															.map((dish, i) => {
-																const quantity = state.basket.dishQuantity[dish.id];
+														{isBasket ? (
+															basketItem?.items
+																?.filter((dish, i) => basketItem?.items.indexOf(dish) === i)
+																?.map((dish, i) => {
+																	const quantity = basketItem?.dishQuantity[dish.id];
 
-																return (
-																	<li key={i} className='flex py-6'>
-																		<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
-																			<img src={dish?.photo} alt={dish?.name} className='h-full w-full object-cover object-center' />
-																		</div>
+																	return (
+																		<li key={i} className='flex py-6'>
+																			<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
+																				<img src={dish?.photo} alt={dish?.name} className='h-full w-full object-cover object-center' />
+																			</div>
 
-																		<div className='ml-4 flex flex-1 flex-col'>
-																			<div>
-																				<div className='flex justify-between text-base font-medium text-gray-900'>
-																					<h3>
-																						<Link to={dish?.name}> {dish?.name} </Link>
-																					</h3>
+																			<div className='ml-4 flex flex-1 flex-col'>
+																				<div>
+																					<div className='flex justify-between text-base font-medium text-gray-900'>
+																						<h3>
+																							<Link to={dish?.name}> {dish?.name} </Link>
+																						</h3>
 
-																					<p className='ml-4'>$ {totaldishPrice(dish, state.basket)}</p>
+																						{isBasket ? <p className='ml-4'>$ {totaldishPrice(dish, basketItem)}</p> : <p className='ml-4'>$ 0</p>}
+																					</div>
+																				</div>
+																				<div className='flex flex-1  items-end justify-between text-sm my-3'>
+																					<p className='text-gray-600'>each ${dish.price}</p>
+																				</div>
+																				<div className='flex flex-1 items-start justify-between text-sm'>
+																					<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
+																					<div className='flex'>
+																						<button type='button' onClick={() => removeFromBasket(dish.id)} className='font-medium text-red-600 hover:text-red-500'>
+																							<FontAwesomeIcon size='lg' icon={faTrash} />
+																						</button>
+																					</div>
 																				</div>
 																			</div>
-																			<div className='flex flex-1  items-end justify-between text-sm my-3'>
-																				<p className='text-gray-600'>each ${dish.price}</p>
-																			</div>
-																			<div className='flex flex-1 items-start justify-between text-sm'>
-																				<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
-																				<div className='flex'>
-																					<button type='button' onClick={() => removeFromBasket(dish.id)} className='font-medium text-red-600 hover:text-red-500'>
-																						<FontAwesomeIcon size='lg' icon={faTrash} />
-																					</button>
-																				</div>
-																			</div>
-																		</div>
-																	</li>
-																);
-															})}
+																		</li>
+																	);
+																})
+														) : (
+															<div className='flex justify-center items-center  h-screen '>
+																<div className='text-center'>
+																	<img className='w-full' src={EmptyBasket} alt='no-item' />
+
+																	<p className='lg:text-2xl p-4 rounded-2xl'>You have no items in your basket</p>
+																</div>
+															</div>
+														)}
 													</ul>
 												</div>
 											</div>
 										</div>
 
-										<div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
-											<div className='flex justify-between text-base font-medium text-gray-900'>
-												<p>Subtotal</p>
-												<p>$ {totalAllDishPrice(state.basket)}</p>
+										{isBasket ? (
+											<div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
+												<div className='flex justify-between text-base font-medium text-gray-900'>
+													<p>Subtotal</p>
+													<p>$ {totalAllDishPrice(basketItem)}</p>
+												</div>
+												<p className='mt-0.5 text-sm text-gray-500'>Shipping and taxes calculated at checkout.</p>
+												<div className='mt-6' onClick={() => setOpen(false)}>
+													<Link to='/checkout' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
+														Checkout
+													</Link>
+												</div>
+												<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
+													<p>
+														or{' '}
+														<button type='button' className='font-medium text-green-600 hover:text-green-500' onClick={() => setOpen(false)}>
+															Continue Ordering<span aria-hidden='true'> &rarr;</span>
+														</button>
+													</p>
+												</div>
 											</div>
-											<p className='mt-0.5 text-sm text-gray-500'>Shipping and taxes calculated at checkout.</p>
-											<div className='mt-6' onClick={() => setOpen(false)}>
-												<Link to='/checkout' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
-													Checkout
-												</Link>
+										) : (
+											<div className='border-t border-gray-200 py-6 px-4 sm:px-6 cursor-pointer'>
+												<div
+													className='mt-6'
+													onClick={() => {
+														setOpen(false);
+														setTimeout(() => {
+															changeBasketStatus();
+														}, 500);
+													}}
+												>
+													<div className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>&larr; Add Item to Basket</div>
+												</div>
 											</div>
-											<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
-												<p>
-													or{' '}
-													<button type='button' className='font-medium text-green-600 hover:text-green-500' onClick={() => setOpen(false)}>
-														Continue Ordering<span aria-hidden='true'> &rarr;</span>
-													</button>
-												</p>
-											</div>
-										</div>
+										)}
 									</div>
 								</Dialog.Panel>
 							</Transition.Child>
