@@ -33,7 +33,6 @@ export const totaldishPrice = (dish, basket) => {
 };
 const Basket = () => {
 	const isBasket = useReactiveVar<boolean>(isBasketItemVar);
-
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
 
 	const [_, dispatch] = useStateValue();

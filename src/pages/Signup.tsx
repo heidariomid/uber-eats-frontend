@@ -49,7 +49,7 @@ const Signup = () => {
 	const clearLoginErrors = () => clearErrors('password');
 	const clearRoleErrors = () => clearErrors('role');
 	return (
-		<div className='container flex flex-col h-screen items-center justify-center '>
+		<div className='container flex flex-col h-screen items-center justify-center mx-auto'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 				<img src={Logo} alt='logo' className='w-48 mb-10' />
 				<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10'>Welcome to Uber</h3>

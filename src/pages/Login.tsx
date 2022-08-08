@@ -53,7 +53,7 @@ const Login = () => {
 	const clearEmailErrors = () => clearErrors('email');
 	const clearLoginErrors = () => clearErrors('password');
 	return (
-		<div className='container flex flex-col h-screen items-center justify-center '>
+		<div className='container flex flex-col mx-auto h-screen items-center justify-center'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 				<span className='flex mb-20 relative'>
 					<img src={Logo} alt='logo' className='w-48 mr-4 mb-10 z-10 ' />
