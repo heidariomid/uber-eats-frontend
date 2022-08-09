@@ -34,7 +34,6 @@ export const totaldishPrice = (dish, basket) => {
 const Basket = () => {
 	const isBasket = useReactiveVar<boolean>(isBasketItemVar);
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
-
 	const [_, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
 
@@ -82,7 +81,9 @@ const Basket = () => {
 									<div className='flex h-full flex-col overflow-y-scroll bg-white shadow-xl'>
 										<div className='flex-1 overflow-y-auto py-6 px-4 sm:px-6'>
 											<div className='flex items-start justify-between'>
-												<Dialog.Title className='text-lg font-medium text-gray-900'> Orders </Dialog.Title>
+												<Dialog.Title className='text-lg font-medium text-gray-900'>
+													<div>Basket</div>
+												</Dialog.Title>
 												<div className='ml-3 flex h-7 items-center transition-all'>
 													<button
 														type='button'
@@ -103,12 +104,11 @@ const Basket = () => {
 											<div className='mt-8'>
 												<div className='flow-root'>
 													<ul className='-my-6 divide-y divide-gray-200'>
-														{isBasket ? (
+														{basketItem?.items ? (
 															basketItem?.items
 																?.filter((dish, i) => basketItem?.items.indexOf(dish) === i)
 																?.map((dish, i) => {
 																	const quantity = basketItem?.dishQuantity[dish.id];
-
 																	return (
 																		<li key={i} className='flex py-6'>
 																			<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
@@ -145,7 +145,7 @@ const Basket = () => {
 																<div className='text-center'>
 																	<img className='w-full' src={EmptyBasket} alt='no-item' />
 
-																	<p className='lg:text-2xl p-4 rounded-2xl'>You have no items in your basket</p>
+																	<p className='lg:text-2xl p-4 rounded-2xl'>No Item Added </p>
 																</div>
 															</div>
 														)}
@@ -154,7 +154,7 @@ const Basket = () => {
 											</div>
 										</div>
 
-										{isBasket ? (
+										{basketItem?.items ? (
 											<div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
 												<div className='flex justify-between text-base font-medium text-gray-900'>
 													<p>Subtotal</p>
@@ -186,7 +186,7 @@ const Basket = () => {
 														}, 500);
 													}}
 												>
-													<div className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>&larr; Add Item to Basket</div>
+													<div className='flex items-center justify-center px-6 py-3 font-medium bg-green-600 text-white hover:bg-green-700'>&larr; Add Item to Basket</div>
 												</div>
 											</div>
 										)}

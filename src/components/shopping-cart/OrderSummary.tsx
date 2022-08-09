@@ -39,8 +39,8 @@ const OrderSummary = () => {
 					<div className='flow-root'>
 						<ul key={uuidv4()} className='-my-6 divide-y divide-gray-200'>
 							{basketItem?.items
-								.filter((dish, i) => basketItem?.items.indexOf(dish) === i)
-								.map((dish, i) => {
+								?.filter((dish, i) => basketItem?.items.indexOf(dish) === i)
+								?.map((dish, i) => {
 									const dishOptions = dish?.options?.map((option) => {
 										const quantity = basketItem?.dishOptionQuantity[option.id];
 										const newOption = {name: option.name, quantity, price: option.extra};
@@ -50,7 +50,7 @@ const OrderSummary = () => {
 									const quantity = basketItem?.dishQuantity[dish.id];
 
 									return (
-										<li key={i} className='flex py-6'>
+										<li key={dish.id} className='flex py-6'>
 											<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
 												<img src={dish?.photo} alt={dish?.name} className='h-full w-full object-cover object-center' />
 											</div>
@@ -76,10 +76,10 @@ const OrderSummary = () => {
 													<div className='flex flex-1  items-end justify-between text-sm '>
 														<h3 className='ml-2'>
 															Options
-															{dishOptions.map((option) => {
+															{dishOptions.map((option, i) => {
 																if (option.quantity) {
 																	return (
-																		<div className='text-gray-600 flex justify-around '>
+																		<div key={i} className='text-gray-600 flex justify-around '>
 																			<span className='px-4 flex-1'>{option?.name}</span>
 																			<span>
 																				${option?.price} X {option?.quantity}

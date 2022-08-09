@@ -22,7 +22,7 @@ const DishCover = ({setIsSelected, dish}) => {
 	const [state, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
 	const [basket, setBasket] = useState<any>({});
-
+	const [dishOptionId, setDishOptionId] = useState<number | null>(null);
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
 
 	useEffect(() => {
@@ -38,6 +38,7 @@ const DishCover = ({setIsSelected, dish}) => {
 		});
 	};
 	const changeDishOptionQuantity = (id, opration) => {
+		setDishOptionId(id);
 		dispatch({
 			type: actions.DISH_OPTIONS_QUANTITY_CHANGE,
 			payload: {id, opration},
@@ -46,7 +47,7 @@ const DishCover = ({setIsSelected, dish}) => {
 	const removeFromBasket = (id) => {
 		dispatch({
 			type: actions.REMOVE_FROM_BASKET,
-			payload: {id},
+			payload: {id, dishOptionId},
 		});
 	};
 
@@ -66,6 +67,7 @@ const DishCover = ({setIsSelected, dish}) => {
 			});
 		}
 	};
+
 	const addtoOrderButton = () => {
 		const isDishAlreadyAdded = basketItem?.items ? basketItem?.items?.find((item) => item.id === dish.id) : state?.basket?.items.find((item) => item.id === dish.id);
 		const quantity = basketItem?.items ? basketItem?.dishQuantity[dish.id] : state?.basket?.dishQuantity[dish.id];
@@ -179,8 +181,7 @@ const DishCover = ({setIsSelected, dish}) => {
 															<h4 className='text-sm text-gray-900 font-bold mb-5'>Options</h4>
 															<div className='grid grid-cols-2'>
 																{dish?.options?.map((item, i) => {
-																	const quantity = basketItem?.items ? basketItem?.dishOptionQuantity[item.id] || 0 : state?.basket?.dishOptionQuantity[item.id] || 0;
-																	// const quantity = basketItem?.items ? basketItem?.dishQuantity[dish.id] : state?.basket?.dishQuantity[dish.id];
+																	const quantity = basketItem?.items ? basketItem?.dishOptionQuantity[item.id] || 0 : state?.basket?.dishOptionQuantity[item?.id] || 0;
 
 																	return (
 																		<div key={item.id} className='grid grid-cols-3 py-1 gap-x-10'>

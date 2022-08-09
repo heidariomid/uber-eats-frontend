@@ -16,7 +16,6 @@ import Loading from '../loading/Loading';
 
 const Header = () => {
 	const isDark = useReactiveVar(isDarkVar);
-	const [basket, setBasket] = useState<any>({});
 
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
 
@@ -25,7 +24,7 @@ const Header = () => {
 	const basketHandler = () => {
 		dispatch({
 			type: actions.BASKET_STATUS,
-			payload: {status: basket?.status ? false : true},
+			payload: {status: basketItem?.status ? false : true},
 		});
 	};
 	const [orders, setOrders] = useState<Order[] | null>(null);
@@ -41,10 +40,6 @@ const Header = () => {
 	}, [data]);
 
 	useEffect(() => {
-		setBasket(basketItem);
-	}, [basketItem?.items?.length]);
-
-	useEffect(() => {
 		const quantityObject = basketItem?.dishQuantity;
 		const total: any =
 			quantityObject &&
@@ -52,7 +47,7 @@ const Header = () => {
 				return total + quantity;
 			}, 0);
 
-		setTotalQuantity(total);
+		setTotalQuantity(total > 0 ? total : null);
 	}, [basketItem?.dishQuantity]);
 
 	return (
@@ -68,7 +63,7 @@ const Header = () => {
 						<div className='flex flex-row  '>
 							{user?.role === UserRole.Client && (
 								<div className='mr-5'>
-									<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${basket?.items?.length > 0 && 'text-green-500'} `}>
+									<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
 										<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
 										{totalQuantity && <span className='text-lg px-2 text-green-500'>{totalQuantity}</span>}
 									</div>

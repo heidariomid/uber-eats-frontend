@@ -85,12 +85,40 @@ const reducer = (userState, action) => {
 			break;
 
 		case actions.BASKET_STATUS:
-			result = {...userState, status: action.payload.status};
+			if (!isBasket) {
+				result = {...userState, status: action.payload.status};
+			} else {
+				result = {...basket, status: action.payload.status};
+				sessionStorage.setItem('basket', JSON.stringify(result));
+			}
 			break;
 
 		case actions.REMOVE_FROM_BASKET:
-			const newItems = userState.items.filter((item) => item.id !== action.payload.id);
-			result = {...userState, items: newItems, message: 'removed from basket'};
+			if (!isBasket) {
+				const newItems = userState.items.filter((item) => item.id !== action.payload.id);
+				result = {...userState, items: newItems, message: 'removed from basket'};
+			} else {
+				const newItems = basket?.items.filter((item) => item.id !== action.payload.id);
+
+				const deletedItems = basket?.items.filter((item) => item.id === action.payload.id);
+
+				delete basketDishQuantity[action.payload.id];
+				action.payload.dishOptionId
+					? delete basket.dishOptionQuantity[action.payload.dishOptionId]
+					: deletedItems?.map((item) => {
+							item?.options?.map((option) => {
+								delete basket.dishOptionQuantity[option.id];
+							});
+					  });
+
+				result = {...basket, items: newItems, message: 'removed from basket'};
+
+				sessionStorage.setItem('basket', JSON.stringify(result));
+				const newBasket = JSON.parse(sessionStorage.getItem('basket') || 'null');
+
+				newBasket.items < 1 && sessionStorage.removeItem('basket');
+			}
+
 			break;
 
 		default:
