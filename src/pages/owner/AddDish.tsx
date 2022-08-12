@@ -46,7 +46,7 @@ const AddRestaurant = () => {
 		if (loading) return;
 		const {name, price, description, ...rest} = getValues();
 
-		const options = optionNumber.map((id) => ({id, name: rest[`dishOptionName-${id}`], extra: +rest[`dishOptionExtra-${id}`]}));
+		const options = optionNumber.map((id) => ({id, name: rest[`dishOptionName-${id}`], quantity: 0, extra: +rest[`dishOptionExtra-${id}`]}));
 		dispatch({variables: {data: {restaurantId: Number(id), name, price: Number(price), description, options, photo: photoUrl}}});
 	};
 	const randomId = uuidv4();

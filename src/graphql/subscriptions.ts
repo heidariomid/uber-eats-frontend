@@ -4,18 +4,18 @@ export const NEW_PENDING_ORDER = gql`
 	subscription PendingOrderSub {
 		pendingOrders {
 			id
-			items {
-				id
-				dish {
-					name
-					options {
-						name
-					}
-				}
-				options {
-					name
-				}
-			}
+			# items {
+			# 	id
+			# 	dish {
+			# 		name
+			# 		options {
+			# 			name
+			# 		}
+			# 	}
+			# 	options {
+			# 		name
+			# 	}
+			# }
 		}
 	}
 `;
@@ -50,14 +50,14 @@ export const NEW_UPDATE_ORDER = gql`
 				}
 				coverImg
 			}
-			items {
-				id
-				options {
-					id
-					name
-					extra
-				}
-			}
+			# items {
+			# 	id
+			# 	options {
+			# 		id
+			# 		name
+			# 		extra
+			# 	}
+			# }
 			totalPrice
 			customer {
 				id

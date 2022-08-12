@@ -1,6 +1,5 @@
 import {faLock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {useStateValue} from '../../store/context/ContextManager';
 import {totalAllDishPrice} from '../shopping-cart/Basket';
 import {dishOptionsItem} from '../shopping-cart/OrderSummary';
 import Zarinpal from '../../images/zarinpal.png';
@@ -8,24 +7,34 @@ import {useMutation} from '@apollo/client';
 import {CreateOrderMutation, CreateOrderMutationVariables} from '../../graphql/schemaTypes';
 import {CREATE_ORDER} from '../../graphql/mutations';
 import {useNavigate} from 'react-router-dom';
+import {useState} from 'react';
 const PaymentForms = () => {
-	const [state] = useStateValue();
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
-
+	const [serverMessage, setServerMessage] = useState<string | null>(null);
 	let navigate = useNavigate();
-	const update = (cache, result) => {
+	const update = (_, result) => {
 		const {ok, message, orderId} = result?.data?.createOrder;
 		if (ok && orderId) {
 			navigate('/payment/pending', {state: {orderId}});
 		} else {
-			console.log(message);
+			setServerMessage(message);
 		}
 	};
 	const [createOrderHandler] = useMutation<CreateOrderMutation, CreateOrderMutationVariables>(CREATE_ORDER, {update});
 
 	const orderHandler = (e) => {
+		e.preventDefault();
+		const dishQuantityIds = Object.keys(basketItem?.dishQuantity);
+
+		const dishQuantityObject = dishQuantityIds.map((dishQuantityId) => {
+			return {id: Number(dishQuantityId), quantity: basketItem?.dishQuantity[Number(dishQuantityId)]};
+		});
+		const dishOptionQuantityIds = Object.keys(basketItem?.dishOptionQuantity);
+		const dishOptionQuantityObject = dishOptionQuantityIds.map((dishOptionQuantityId) => {
+			return {id: Number(dishOptionQuantityId), quantity: basketItem?.dishOptionQuantity[Number(dishOptionQuantityId)]};
+		});
 		const totalPrice = (totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2);
-		createOrderHandler({variables: {data: {items: state?.basket?.items, restaurantId: basketItem.restaurantId, totalPrice: Number(totalPrice)}}});
+		createOrderHandler({variables: {data: {dishQuantity: dishQuantityObject, dishOptionQuantity: dishOptionQuantityObject, restaurantId: basketItem.restaurantId, totalPrice: Number(totalPrice)}}});
 	};
 
 	const totaldishOptionsPrice = (dishOptions) => {
@@ -50,6 +59,7 @@ const PaymentForms = () => {
 		<>
 			<form className='pt-16 pb-36 px-4 sm:px-6 lg:pb-16 lg:px-0 lg:row-start-1 lg:col-start-1'>
 				<div className='max-w-lg mx-auto lg:max-w-none'>
+					{serverMessage && <div className='bg-red-500 text-white text-center'>{serverMessage}</div>}
 					<section aria-labelledby='payment-heading' className='mt-10'>
 						<h2 id='payment-heading' className='text-lg font-medium text-gray-900'>
 							Payment details

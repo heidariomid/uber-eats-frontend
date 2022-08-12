@@ -47,14 +47,20 @@ export const GET_ORDER_BY_ID = gql`
 				createdAt
 				status
 				totalPrice
+				options {
+					id
+					quantity
+					name
+					extra
+					dishId
+				}
 				items {
 					id
-
-					options {
-						id
-						name
-						extra
-					}
+					quantity
+					photo
+					price
+					name
+					restaurantId
 				}
 				customer {
 					id

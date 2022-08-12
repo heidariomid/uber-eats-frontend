@@ -190,7 +190,7 @@ const DishCover = ({setIsSelected, dish}) => {
 																				<span className={'text-sm ml-3'}>${item.extra}</span>
 																			</div>
 
-																			<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} />
+																			<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} dishId={dish.id} />
 																		</div>
 																	);
 																})}

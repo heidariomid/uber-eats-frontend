@@ -73,18 +73,10 @@ export interface CreateDishOutput {
 }
 
 export interface CreateOrderInput {
-  items: Array<CreateOrderItemInput>;
+  dishOptionQuantity?: InputMaybe<Array<DishOptionQuantitInputType>>;
+  dishQuantity: Array<DishQuantityInputType>;
   restaurantId: Scalars['Int'];
   totalPrice: Scalars['Float'];
-}
-
-export interface CreateOrderItemInput {
-  description?: InputMaybe<Scalars['String']>;
-  id: Scalars['Float'];
-  name: Scalars['String'];
-  options?: InputMaybe<Array<DishOptionInput>>;
-  photo?: InputMaybe<Scalars['String']>;
-  price: Scalars['Int'];
 }
 
 export interface CreateOrderOutput {
@@ -166,12 +158,19 @@ export interface DishOption {
   extra: Scalars['Int'];
   id: Scalars['Float'];
   name: Scalars['String'];
+  quantity: Scalars['Int'];
 }
 
 export interface DishOptionInput {
   extra: Scalars['Int'];
   id: Scalars['Float'];
   name: Scalars['String'];
+  quantity: Scalars['Int'];
+}
+
+export interface DishOptionQuantitInputType {
+  id: Scalars['Float'];
+  quantity: Scalars['Float'];
 }
 
 export interface DishOutput {
@@ -180,6 +179,11 @@ export interface DishOutput {
   message?: Maybe<Scalars['String']>;
   ok: Scalars['Boolean'];
   totalPages?: Maybe<Scalars['Int']>;
+}
+
+export interface DishQuantityInputType {
+  id: Scalars['Float'];
+  quantity: Scalars['Float'];
 }
 
 export interface EditDishInput {
@@ -236,7 +240,6 @@ export interface Mutation {
   editDish: EditDishOutput;
   editOrder: EditOrderOutput;
   editRestaurant: EditRestaurantOutput;
-  getOrders: OrdersOutput;
   login: LoginOutput;
   takeOrder: OrderOutput;
   updateUser: UpdateUserOutput;
@@ -300,11 +303,6 @@ export interface MutationEditRestaurantArgs {
 }
 
 
-export interface MutationGetOrdersArgs {
-  data: OrdersInputFilter;
-}
-
-
 export interface MutationLoginArgs {
   data: LoginInput;
 }
@@ -336,6 +334,7 @@ export interface Order {
   driver?: Maybe<User>;
   id: Scalars['Float'];
   items: Array<OrderItem>;
+  options?: Maybe<Array<OrderOptionItem>>;
   restaurant?: Maybe<Restaurant>;
   status: OrderStatus;
   totalPrice?: Maybe<Scalars['Float']>;
@@ -348,29 +347,36 @@ export interface OrderInputType {
 
 export interface OrderItem {
   __typename?: 'OrderItem';
-  createdAt?: Maybe<Scalars['DateTime']>;
-  dish: Dish;
   id: Scalars['Float'];
-  options?: Maybe<Array<OrderItemOption>>;
-  updatedAt?: Maybe<Scalars['DateTime']>;
+  name: Scalars['String'];
+  photo: Scalars['String'];
+  quantity: Scalars['Float'];
+  restaurantId: Scalars['Float'];
 }
 
 export interface OrderItemInputType {
-  dish: DishInput;
-  options?: InputMaybe<Array<OrderItemOptionInputType>>;
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  photo: Scalars['String'];
+  quantity: Scalars['Float'];
+  restaurantId: Scalars['Float'];
 }
 
-export interface OrderItemOption {
-  __typename?: 'OrderItemOption';
+export interface OrderOptionItem {
+  __typename?: 'OrderOptionItem';
+  dishId: Scalars['Float'];
   extra: Scalars['Float'];
   id: Scalars['Float'];
   name: Scalars['String'];
+  quantity: Scalars['Float'];
 }
 
-export interface OrderItemOptionInputType {
+export interface OrderOptionItemInputType {
+  dishId: Scalars['Float'];
   extra: Scalars['Float'];
   id: Scalars['Float'];
   name: Scalars['String'];
+  quantity: Scalars['Float'];
 }
 
 export interface OrderOutput {
@@ -397,6 +403,7 @@ export interface OrdersInputType {
   customer?: InputMaybe<UserInput>;
   driver?: InputMaybe<UserInput>;
   items: Array<OrderItemInputType>;
+  options?: InputMaybe<Array<OrderOptionItemInputType>>;
   restaurant?: InputMaybe<RestaurantInput>;
   status: OrderStatus;
   totalPrice?: InputMaybe<Scalars['Float']>;
@@ -445,6 +452,7 @@ export interface Query {
   getCategory: CategoryOutput;
   getDish: DishOutput;
   getOrderById: OrderOutput;
+  getOrders: OrdersOutput;
   getOwnerRestaurant: RestaurantOutput;
   getOwnerRestaurants: RestaurantsOutput;
   getRestaurant: RestaurantOutput;
@@ -468,6 +476,11 @@ export interface QueryGetDishArgs {
 
 export interface QueryGetOrderByIdArgs {
   data: OrderInputType;
+}
+
+
+export interface QueryGetOrdersArgs {
+  data: OrdersInputFilter;
 }
 
 
@@ -572,11 +585,6 @@ export interface Subscription {
   pendingOrders: Order;
   pendingPayments: Payment;
   updateOrders: Order;
-}
-
-
-export interface SubscriptionUpdateOrdersArgs {
-  data: OrderInputType;
 }
 
 export interface UpdateUserInput {
@@ -767,13 +775,6 @@ export type CreateOrderMutationVariables = Exact<{
 
 export type CreateOrderMutation = { __typename?: 'Mutation', createOrder: { __typename?: 'CreateOrderOutput', ok: boolean, message?: string, orderId?: number } };
 
-export type GetOrdersMutationVariables = Exact<{
-  data: OrdersInputFilter;
-}>;
-
-
-export type GetOrdersMutation = { __typename?: 'Mutation', getOrders: { __typename?: 'OrdersOutput', ok: boolean, message?: string, orders?: Array<{ __typename?: 'Order', id: number, totalPrice?: number, status: OrderStatus, createdAt?: any, driver?: { __typename?: 'User', id: number }, customer?: { __typename?: 'User', id: number, email: string }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string } }> } };
-
 export type EditOrderMutationVariables = Exact<{
   data: EditOrderInput;
 }>;
@@ -807,12 +808,19 @@ export type LoggedInUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type LoggedInUserQuery = { __typename?: 'Query', loggedInUser: { __typename?: 'User', id: number, email: string, role: UserRole, verified: boolean } };
 
+export type GetOrdersQueryVariables = Exact<{
+  data: OrdersInputFilter;
+}>;
+
+
+export type GetOrdersQuery = { __typename?: 'Query', getOrders: { __typename?: 'OrdersOutput', ok: boolean, message?: string, orders?: Array<{ __typename?: 'Order', id: number, totalPrice?: number, status: OrderStatus, createdAt?: any, driver?: { __typename?: 'User', id: number }, customer?: { __typename?: 'User', id: number, email: string }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, coverImg: string } }> } };
+
 export type GetOrderByIdQueryVariables = Exact<{
   data: OrderInputType;
 }>;
 
 
-export type GetOrderByIdQuery = { __typename?: 'Query', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, createdAt?: any, status: OrderStatus, totalPrice?: number, items: Array<{ __typename?: 'OrderItem', id: number, options?: Array<{ __typename?: 'OrderItemOption', id: number, name: string, extra: number }> }>, customer?: { __typename?: 'User', id: number }, driver?: { __typename?: 'User', id: number }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
+export type GetOrderByIdQuery = { __typename?: 'Query', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, createdAt?: any, status: OrderStatus, totalPrice?: number, customer?: { __typename?: 'User', id: number }, driver?: { __typename?: 'User', id: number }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
 
 export type RestaurantsQueryVariables = Exact<{
   data: RestaurantsInput;
@@ -894,7 +902,12 @@ export type OrderFragmentFragment = { __typename?: 'Order', id: number, status: 
 export type PendingOrderSubSubscriptionVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PendingOrderSubSubscription = { __typename?: 'Subscription', pendingOrders: { __typename?: 'Order', id: number, items: Array<{ __typename?: 'OrderItem', id: number, dish: { __typename?: 'Dish', name: string, options?: Array<{ __typename?: 'DishOption', name: string }> }, options?: Array<{ __typename?: 'OrderItemOption', name: string }> }> } };
+export type PendingOrderSubSubscription = { __typename?: 'Subscription', pendingOrders: { __typename?: 'Order', id: number } };
+
+export type UpdateOrdersSubscriptionVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UpdateOrdersSubscription = { __typename?: 'Subscription', updateOrders: { __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any, driver?: { __typename?: 'User', email: string }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', id: number } }, customer?: { __typename?: 'User', id: number } } };
 
 export const RestaurantFragmentFragmentDoc = gql`
     fragment RestaurantFragment on Restaurant {
@@ -1307,58 +1320,6 @@ export function useCreateOrderMutation(baseOptions?: Apollo.MutationHookOptions<
 export type CreateOrderMutationHookResult = ReturnType<typeof useCreateOrderMutation>;
 export type CreateOrderMutationResult = Apollo.MutationResult<CreateOrderMutation>;
 export type CreateOrderMutationOptions = Apollo.BaseMutationOptions<CreateOrderMutation, CreateOrderMutationVariables>;
-export const GetOrdersDocument = gql`
-    mutation GetOrders($data: OrdersInputFilter!) {
-  getOrders(data: $data) {
-    ok
-    message
-    orders {
-      id
-      totalPrice
-      status
-      driver {
-        id
-      }
-      customer {
-        id
-        email
-      }
-      createdAt
-      restaurant {
-        id
-        name
-        coverImg
-      }
-    }
-  }
-}
-    `;
-export type GetOrdersMutationFn = Apollo.MutationFunction<GetOrdersMutation, GetOrdersMutationVariables>;
-
-/**
- * __useGetOrdersMutation__
- *
- * To run a mutation, you first call `useGetOrdersMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useGetOrdersMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [getOrdersMutation, { data, loading, error }] = useGetOrdersMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useGetOrdersMutation(baseOptions?: Apollo.MutationHookOptions<GetOrdersMutation, GetOrdersMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<GetOrdersMutation, GetOrdersMutationVariables>(GetOrdersDocument, options);
-      }
-export type GetOrdersMutationHookResult = ReturnType<typeof useGetOrdersMutation>;
-export type GetOrdersMutationResult = Apollo.MutationResult<GetOrdersMutation>;
-export type GetOrdersMutationOptions = Apollo.BaseMutationOptions<GetOrdersMutation, GetOrdersMutationVariables>;
 export const EditOrderDocument = gql`
     mutation editOrder($data: EditOrderInput!) {
   editOrder(data: $data) {
@@ -1537,6 +1498,60 @@ export function useLoggedInUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type LoggedInUserQueryHookResult = ReturnType<typeof useLoggedInUserQuery>;
 export type LoggedInUserLazyQueryHookResult = ReturnType<typeof useLoggedInUserLazyQuery>;
 export type LoggedInUserQueryResult = Apollo.QueryResult<LoggedInUserQuery, LoggedInUserQueryVariables>;
+export const GetOrdersDocument = gql`
+    query GetOrders($data: OrdersInputFilter!) {
+  getOrders(data: $data) {
+    ok
+    message
+    orders {
+      id
+      totalPrice
+      status
+      driver {
+        id
+      }
+      customer {
+        id
+        email
+      }
+      createdAt
+      restaurant {
+        id
+        name
+        coverImg
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetOrdersQuery__
+ *
+ * To run a query within a React component, call `useGetOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetOrdersQuery({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useGetOrdersQuery(baseOptions: Apollo.QueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+      }
+export function useGetOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetOrdersQuery, GetOrdersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetOrdersQuery, GetOrdersQueryVariables>(GetOrdersDocument, options);
+        }
+export type GetOrdersQueryHookResult = ReturnType<typeof useGetOrdersQuery>;
+export type GetOrdersLazyQueryHookResult = ReturnType<typeof useGetOrdersLazyQuery>;
+export type GetOrdersQueryResult = Apollo.QueryResult<GetOrdersQuery, GetOrdersQueryVariables>;
 export const GetOrderByIdDocument = gql`
     query GetOrderById($data: OrderInputType!) {
   getOrderById(data: $data) {
@@ -1547,14 +1562,6 @@ export const GetOrderByIdDocument = gql`
       createdAt
       status
       totalPrice
-      items {
-        id
-        options {
-          id
-          name
-          extra
-        }
-      }
       customer {
         id
       }
@@ -2068,18 +2075,6 @@ export const PendingOrderSubDocument = gql`
     subscription PendingOrderSub {
   pendingOrders {
     id
-    items {
-      id
-      dish {
-        name
-        options {
-          name
-        }
-      }
-      options {
-        name
-      }
-    }
   }
 }
     `;
@@ -2105,3 +2100,51 @@ export function usePendingOrderSubSubscription(baseOptions?: Apollo.Subscription
       }
 export type PendingOrderSubSubscriptionHookResult = ReturnType<typeof usePendingOrderSubSubscription>;
 export type PendingOrderSubSubscriptionResult = Apollo.SubscriptionResult<PendingOrderSubSubscription>;
+export const UpdateOrdersDocument = gql`
+    subscription UpdateOrders {
+  updateOrders {
+    id
+    status
+    driver {
+      email
+    }
+    restaurant {
+      id
+      name
+      isPromoted
+      address
+      category {
+        id
+      }
+      coverImg
+    }
+    totalPrice
+    customer {
+      id
+    }
+    createdAt
+  }
+}
+    `;
+
+/**
+ * __useUpdateOrdersSubscription__
+ *
+ * To run a query within a React component, call `useUpdateOrdersSubscription` and pass it any options that fit your needs.
+ * When your component renders, `useUpdateOrdersSubscription` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the subscription, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUpdateOrdersSubscription({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUpdateOrdersSubscription(baseOptions?: Apollo.SubscriptionHookOptions<UpdateOrdersSubscription, UpdateOrdersSubscriptionVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useSubscription<UpdateOrdersSubscription, UpdateOrdersSubscriptionVariables>(UpdateOrdersDocument, options);
+      }
+export type UpdateOrdersSubscriptionHookResult = ReturnType<typeof useUpdateOrdersSubscription>;
+export type UpdateOrdersSubscriptionResult = Apollo.SubscriptionResult<UpdateOrdersSubscription>;

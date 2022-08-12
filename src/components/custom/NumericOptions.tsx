@@ -1,4 +1,4 @@
-const NumericOptions = ({quantity, changeDishOptionQuantity, optionId}) => {
+const NumericOptions = ({quantity, changeDishOptionQuantity, optionId, dishId}) => {
 	return (
 		<div className=' justify-center items-center custom-number-input '>
 			<div className='flex flex-row h-7 mx-5 rounded-lg relative bg-transparent'>

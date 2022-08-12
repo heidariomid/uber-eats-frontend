@@ -67,7 +67,8 @@ const reducer = (userState, action) => {
 					sessionStorage.setItem('basket', JSON.stringify({...userState, dishOptionQuantity: newDishOption}));
 				} else {
 					dishOptionQuantity = {...dishOptionQuantity, [action.payload.id]: (dishOptionQuantity[action.payload.id] || 0) + 1};
-					sessionStorage.setItem('basket', JSON.stringify({...basket, dishOptionQuantity: dishOptionQuantity}));
+
+					sessionStorage.setItem('basket', JSON.stringify({...basket, dishOptionQuantity}));
 				}
 			}
 			if (action.payload.opration === 'decrease' && (newDishOption[action.payload.id] > 0 || dishOptionQuantity[action.payload.id] > 0)) {
@@ -76,7 +77,7 @@ const reducer = (userState, action) => {
 					sessionStorage.setItem('basket', JSON.stringify({...userState, dishOptionQuantity: newDishOption}));
 				} else {
 					dishOptionQuantity = {...dishOptionQuantity, [action.payload.id]: (dishOptionQuantity[action.payload.id] || 0) - 1};
-					sessionStorage.setItem('basket', JSON.stringify({...basket, dishOptionQuantity: dishOptionQuantity}));
+					sessionStorage.setItem('basket', JSON.stringify({...basket, dishOptionQuantity}));
 				}
 			}
 

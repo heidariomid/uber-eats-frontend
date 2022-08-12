@@ -71,7 +71,7 @@ const OrderDetails = ({order}: {order: Order}) => {
 				</section>
 				{/* Order Items */}
 				<section aria-labelledby='products-heading' className='mt-6'>
-					<OrderItems items={order.items} />
+					<OrderItems items={order.items} options={order?.options ? order.options : null} />
 				</section>
 			</main>
 		</div>

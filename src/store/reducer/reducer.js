@@ -2,7 +2,7 @@ import userReducer from './users/userReducer';
 import basketReducer from './basket/basketReducer';
 
 export const initialState = {
-	orders: {items: [], message: '', status: false},
+	users: {items: [], message: '', status: false},
 	basket: {items: [], message: '', dishQuantity: {}, dishOptionQuantity: {}, restaurantId: ''},
 };
 
