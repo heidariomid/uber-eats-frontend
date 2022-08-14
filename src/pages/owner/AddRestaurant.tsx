@@ -4,18 +4,19 @@ import {Link, useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleCheck, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {CREATE_RESTAURANT} from '../../graphql/mutations';
-import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, CreateRestaurantMutationVariables} from '../../graphql/schemaTypes';
+import {CategoriesQuery, CategoriesQueryVariables, CreateRestaurantMutation, CreateRestaurantMutationVariables, UserRole} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import {CATEGORIES, RESTAURANTS_OWNER} from '../../graphql/queries';
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {uploadPhotoHandler} from '../../services/UploadPhoto';
+import useUser from '../../hooks/useUser';
 
 const AddRestaurant = () => {
 	let navigate = useNavigate();
 	const [categories, setCategories] = useState<any>([]);
 	const [photoUrl, setPhotoUrl] = useState<string>('');
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
-
+	const {user} = useUser();
 	const {
 		register,
 		getValues,
@@ -26,7 +27,11 @@ const AddRestaurant = () => {
 	} = useForm({
 		mode: 'onChange',
 	});
-
+	useEffect(() => {
+		if (user?.role !== UserRole.Owner) {
+			navigate('/', {replace: true, state: {message: 'You are not authorized to access this page'}});
+		}
+	}, [user]);
 	const onCompleted = (data: CreateRestaurantMutation) => {
 		const {ok, message} = data?.createRestaurant;
 		if (!ok) {
@@ -63,7 +68,7 @@ const AddRestaurant = () => {
 	const clearCategoryErrors = () => clearErrors("category['name']");
 	return (
 		<>
-			<div className='container flex flex-col h-screen items-center justify-center  '>
+			<div className='container flex flex-col h-screen items-center justify-center  mx-auto'>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Restaurant</h3>
 					<span className=' text-gray-600 text-left w-full pl-10'>

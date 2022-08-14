@@ -32,7 +32,7 @@ export interface Category {
   name: Scalars['String'];
   restaurantCount: Scalars['Int'];
   restaurants: Array<Restaurant>;
-  slug: Scalars['String'];
+  slug?: Maybe<Scalars['String']>;
   updatedAt?: Maybe<Scalars['DateTime']>;
 }
 
@@ -40,7 +40,7 @@ export interface CategoryInput {
   iconImg?: InputMaybe<Scalars['String']>;
   name: Scalars['String'];
   restaurants: Array<RestaurantInput>;
-  slug: Scalars['String'];
+  slug?: InputMaybe<Scalars['String']>;
 }
 
 export interface CategoryInputType {
@@ -55,6 +55,18 @@ export interface CategoryOutput {
   ok: Scalars['Boolean'];
   restaurants?: Maybe<Array<Restaurant>>;
   totalPages?: Maybe<Scalars['Int']>;
+}
+
+export interface CreateCategoryInput {
+  iconImg?: InputMaybe<Scalars['String']>;
+  name: Scalars['String'];
+  slug?: InputMaybe<Scalars['String']>;
+}
+
+export interface CreateCategoryOutput {
+  __typename?: 'CreateCategoryOutput';
+  message?: Maybe<Scalars['String']>;
+  ok: Scalars['Boolean'];
 }
 
 export interface CreateDishInput {
@@ -231,6 +243,7 @@ export interface Mutation {
   __typename?: 'Mutation';
   addUser: User;
   createAccount: CreateAccountOutput;
+  createCategory: CreateCategoryOutput;
   createDishe: CreateDishOutput;
   createOrder: CreateOrderOutput;
   createPayment: CreatePaymentOutput;
@@ -255,6 +268,11 @@ export interface MutationAddUserArgs {
 
 export interface MutationCreateAccountArgs {
   data: CreateAccountInput;
+}
+
+
+export interface MutationCreateCategoryArgs {
+  data: CreateCategoryInput;
 }
 
 
@@ -350,6 +368,7 @@ export interface OrderItem {
   id: Scalars['Float'];
   name: Scalars['String'];
   photo: Scalars['String'];
+  price: Scalars['Float'];
   quantity: Scalars['Float'];
   restaurantId: Scalars['Float'];
 }
@@ -358,6 +377,7 @@ export interface OrderItemInputType {
   id: Scalars['Float'];
   name: Scalars['String'];
   photo: Scalars['String'];
+  price: Scalars['Float'];
   quantity: Scalars['Float'];
   restaurantId: Scalars['Float'];
 }
@@ -554,6 +574,7 @@ export interface RestaurantOutput {
 
 export interface RestaurantsInput {
   page?: InputMaybe<Scalars['Int']>;
+  slug?: InputMaybe<Scalars['String']>;
 }
 
 export interface RestaurantsOutput {
@@ -820,7 +841,7 @@ export type GetOrderByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetOrderByIdQuery = { __typename?: 'Query', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, createdAt?: any, status: OrderStatus, totalPrice?: number, customer?: { __typename?: 'User', id: number }, driver?: { __typename?: 'User', id: number }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
+export type GetOrderByIdQuery = { __typename?: 'Query', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, createdAt?: any, status: OrderStatus, totalPrice?: number, options?: Array<{ __typename?: 'OrderOptionItem', id: number, quantity: number, name: string, extra: number, dishId: number }>, items: Array<{ __typename?: 'OrderItem', id: number, quantity: number, photo: string, price: number, name: string, restaurantId: number }>, customer?: { __typename?: 'User', id: number }, driver?: { __typename?: 'User', id: number }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
 
 export type RestaurantsQueryVariables = Exact<{
   data: RestaurantsInput;
@@ -853,7 +874,7 @@ export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: {
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type CategoriesQuery = { __typename?: 'Query', getCategories: { __typename?: 'CategoriesOutput', message?: string, ok: boolean, categories?: Array<{ __typename?: 'Category', id: number, name: string, slug: string, restaurantCount: number, iconImg?: string }> } };
+export type CategoriesQuery = { __typename?: 'Query', getCategories: { __typename?: 'CategoriesOutput', message?: string, ok: boolean, categories?: Array<{ __typename?: 'Category', id: number, name: string, slug?: string, restaurantCount: number, iconImg?: string }> } };
 
 export type SearchRestaurantsQueryVariables = Exact<{
   data: SearchRestaurantInput;
@@ -879,7 +900,7 @@ export type CategoryQueryVariables = Exact<{
 }>;
 
 
-export type CategoryQuery = { __typename?: 'Query', getCategory: { __typename?: 'CategoryOutput', ok: boolean, message?: string, totalPages?: number, category?: { __typename?: 'Category', name: string, id: number, iconImg?: string, restaurantCount: number, slug: string }, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
+export type CategoryQuery = { __typename?: 'Query', getCategory: { __typename?: 'CategoryOutput', ok: boolean, message?: string, totalPages?: number, category?: { __typename?: 'Category', name: string, id: number, iconImg?: string, restaurantCount: number, slug?: string }, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
 export type DishQueryVariables = Exact<{
   dishId: Scalars['Int'];
@@ -1562,6 +1583,21 @@ export const GetOrderByIdDocument = gql`
       createdAt
       status
       totalPrice
+      options {
+        id
+        quantity
+        name
+        extra
+        dishId
+      }
+      items {
+        id
+        quantity
+        photo
+        price
+        name
+        restaurantId
+      }
       customer {
         id
       }

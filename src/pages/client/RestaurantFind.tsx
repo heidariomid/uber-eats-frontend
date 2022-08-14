@@ -6,20 +6,31 @@ import RestaurantCover from '../../components/restaurant/client/RestaurantCover'
 import Loading from '../../components/loading/Loading';
 import ErrorPage from '../../components/custom/ErrorPage';
 import {useEffect} from 'react';
+import {useStateValue} from '../../store/context/ContextManager';
+import {actions} from '../../store/actions';
 
 const RestaurantFind = () => {
 	let {query} = useParams();
-	const [dispatch, {data, loading, error}] = useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT);
+	const [_, dispatch] = useStateValue();
+	const [handler, {data, loading, error}] = useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT);
 	useEffect(() => {
 		if (query) {
-			dispatch({
+			handler({
 				variables: {
 					data: {query},
 				},
 			});
 		}
-	}, [dispatch, query]);
+	}, [handler, query]);
 
+	// useEffect(() => {
+	// 	if (data?.searchRestaurants.ok && !loading && !error) {
+	// 		dispatch({
+	// 			type: actions.RESTAURANT_SEARCH,
+	// 			payload: {restaurants: data?.searchRestaurants?.restaurants},
+	// 		});
+	// 	}
+	// }, [data]);
 	return (
 		<>
 			{!loading && (

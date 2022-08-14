@@ -61,8 +61,14 @@ const Header = () => {
 						</Link>
 
 						<div className='flex flex-row  '>
+							{user && (
+								<Link to='/orders' className=' mcursor-pointer border-r-2 text-center hover:text-green-600'>
+									<span className='text-xl px-4 text-center'>Orders</span>
+								</Link>
+							)}
+
 							{user?.role === UserRole.Client && (
-								<div className='mr-5'>
+								<div className=''>
 									<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
 										<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
 										{totalQuantity && <span className='text-lg px-2 text-green-500'>{totalQuantity}</span>}
