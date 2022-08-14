@@ -199,7 +199,7 @@ const DishCover = ({setIsSelected, dish}) => {
 													) : (
 														<div className='py-12'></div>
 													)}
-													{user?.role === UserRole.Client && addtoOrderButton()}
+													{addtoOrderButton()}
 													{user?.role === UserRole.Owner && (
 														<button onClick={addToBasketHandler} type='button' className='mt-12 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
 															<span>

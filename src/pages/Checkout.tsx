@@ -1,7 +1,11 @@
+import {useReactiveVar} from '@apollo/client';
+import {isLoginVar} from '../apollo/GlobalVar';
+import CheckAuth from '../components/banner/CheckAuth';
 import PaymentForms from '../components/Payment/PaymentForms';
 import OrderSummary from '../components/shopping-cart/OrderSummary';
 
 const Checkout = () => {
+	const isLoggedIn = useReactiveVar(isLoginVar);
 	return (
 		<>
 			<div>
@@ -13,6 +17,7 @@ const Checkout = () => {
 
 					<OrderSummary />
 					<PaymentForms />
+					{!isLoggedIn && <CheckAuth />}
 				</div>
 			</div>
 		</>

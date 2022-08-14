@@ -32,14 +32,15 @@ const Restaurant = ({restaurant}) => {
 				</div>
 
 				<div className=' flex flex-col items-center mt-10 '>
+					{restaurant?.menu?.length === 0 && (
+						<div className='flex items-center justify-center text-xl mb-5 text-center w-full bg-red-600 text-white py-10 '>
+							<p className='text-2xl font-bold'>No dish founded !</p>
+						</div>
+					)}
 					<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 mx-10 w-full'>
-						{restaurant?.menu?.length === 0 ? (
-							<h1 className='text-xl mb-5'>please upload a dish!</h1>
-						) : (
-							restaurant?.menu?.map((dish, i) => {
-								return <Dish key={i} dish={dish} />;
-							})
-						)}
+						{restaurant?.menu?.map((dish, i) => {
+							return <Dish key={i} dish={dish} />;
+						})}
 					</div>
 				</div>
 			</div>

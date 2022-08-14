@@ -67,35 +67,24 @@ const Header = () => {
 								</Link>
 							)}
 
-							{user?.role === UserRole.Client && (
-								<div className=''>
-									<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
-										<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
-										{totalQuantity && <span className='text-lg px-2 text-green-500'>{totalQuantity}</span>}
-									</div>
+							<div className=''>
+								<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
+									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
+									{totalQuantity && <span className='text-lg px-2 text-green-500'>{totalQuantity}</span>}
 								</div>
-							)}
+							</div>
 
-							{!isDark && user && (
+							{!isDark && (
 								<button className=' py-1 mx-0.5 cursor-pointer' onClick={() => themeHandler(false)}>
 									<FontAwesomeIcon className='  text-xl px-2' icon={faMoon} />
 								</button>
 							)}
-							{isDark && user && (
+							{isDark && (
 								<button className=' py-1  mx-0.5 cursor-pointer' onClick={() => themeHandler(true)}>
 									<FontAwesomeIcon className='  text-xl px-2' icon={faSun} />
 								</button>
 							)}
 
-							{user ? (
-								<span className=' py-1  mx-0.5 cursor-pointer' onClick={userLoggedOut}>
-									<FontAwesomeIcon className='  text-xl px-2' icon={faSignOut} />
-								</span>
-							) : (
-								<Link to='/auth/login' className=' py-1  mx-4 cursor-pointer'>
-									<span className='text-xl px-4 btn'>Login</span>
-								</Link>
-							)}
 							{user?.role === UserRole.Owner && (
 								<div className='mx-10'>
 									<Link to={'/orders'} className=' mx-0.5 cursor-pointer inline-flex relative items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
@@ -104,6 +93,15 @@ const Header = () => {
 										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900'>{orders?.length}</div>
 									</Link>
 								</div>
+							)}
+							{user ? (
+								<span className=' py-1  mx-0.5 cursor-pointer' onClick={userLoggedOut}>
+									<FontAwesomeIcon className='  text-xl px-2' icon={faSignOut} />
+								</span>
+							) : (
+								<Link to='/auth/login' className=' py-1  mx-4 cursor-pointer'>
+									<span className='text-xl px-4 btn'>Login</span>
+								</Link>
 							)}
 						</div>
 					</div>

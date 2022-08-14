@@ -4,7 +4,6 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Confirm from '../components/email/Confirm';
 import EditProfile from '../components/user/EditProfile';
-import RestaurantFind from '../pages/client/RestaurantFind';
 import ClientRestaurant from '../pages/client/Restaurant';
 import OwnerRestaurant from '../pages/owner/SingleRestaurant';
 import ErrorPage from '../components/custom/ErrorPage';
@@ -25,7 +24,7 @@ const Router = () => {
 			<Route path='/' element={<Home />} />
 			<Route path='/auth/login' element={<Login />} />
 			<Route path='/auth/signup' element={<Signup />} />
-			<Route path='search/:query' element={<RestaurantFind />} />
+
 			<Route path='restaurant/:id' element={<ClientRestaurant />} />
 			<Route path='restaurant/owner/:id' element={<OwnerRestaurant />} />
 			<Route path='restaurant/owner/:id/add-dish' element={<AddDish />} />
