@@ -9,18 +9,30 @@ import {useStateValue} from '../../store/context/ContextManager';
 
 const RestaurantsSearch = () => {
 	const [query, setQuery] = useState(null);
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [_, dispatch] = useStateValue();
 	const {register, getValues, handleSubmit, clearErrors} = useForm({
-		mode: 'onChange',
+		mode: 'onSubmit',
 	});
 
-	const onValidSubmit = () => {
+	const onValidSubmit = (e) => {
 		const {restaurantName} = getValues();
 		setQuery(restaurantName);
 	};
-	const clearSearchErrors = () => clearErrors('name');
+	const clearSearchErrors = () => clearErrors('restaurantName');
 
-	const [handler, {data, loading, error}] = useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT);
+	const onCompleted = (data: SearchRestaurantsQuery) => {
+		const {ok, restaurants} = data?.searchRestaurants;
+		if (ok && restaurants) {
+			dispatch({
+				type: actions.RESTAURANTS,
+				payload: {restaurants},
+			});
+			setQuery(null);
+		}
+	};
+
+	const [handler, {loading}] = useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT, {onCompleted});
 	useEffect(() => {
 		if (query) {
 			handler({
@@ -31,16 +43,7 @@ const RestaurantsSearch = () => {
 		} else if (query === '') {
 			window.location.reload();
 		}
-	}, [query]);
-
-	useEffect(() => {
-		if (data?.searchRestaurants.ok && !loading && !error) {
-			dispatch({
-				type: actions.RESTAURANTS,
-				payload: {restaurants: data?.searchRestaurants?.restaurants},
-			});
-		}
-	}, [data]);
+	}, [query, handler]);
 
 	return (
 		<div className='w-full flex flex-col items-center justify-center bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurantBg})`}}>
