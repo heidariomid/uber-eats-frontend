@@ -69,12 +69,10 @@ const Restaurants = () => {
 				<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-500'}`}></div>
 				<div className='h-12'></div>
 				<section className='md:h-128 px-10'>
-				 <div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()</div>
+					<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
 				</section>
 				<div className='h-24 '></div>
-				 <Pagination totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
-
-				
+				<Pagination totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
 			</>
 		</>
 	);
