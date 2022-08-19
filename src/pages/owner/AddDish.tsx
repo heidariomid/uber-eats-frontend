@@ -12,7 +12,7 @@ import {v4 as uuidv4} from 'uuid';
 import {uploadPhotoHandler} from '../../services/UploadPhoto';
 export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
 
-const AddRestaurant = () => {
+const AddDish = () => {
 	let {id} = useParams();
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
 	const [photoUrl, setPhotoUrl] = useState<string>('');
@@ -46,7 +46,7 @@ const AddRestaurant = () => {
 		if (loading) return;
 		const {name, price, description, ...rest} = getValues();
 
-		const options = optionNumber.map((id) => ({id, name: rest[`dishOptionName-${id}`], quantity: 0, extra: +rest[`dishOptionExtra-${id}`]}));
+		const options = optionNumber.map((id) => ({id: String(id), name: rest[`dishOptionName-${id}`], quantity: 0, extra: +rest[`dishOptionExtra-${id}`]}));
 		dispatch({variables: {data: {restaurantId: Number(id), name, price: Number(price), description, options, photo: photoUrl}}});
 	};
 	const randomId = uuidv4();
@@ -71,13 +71,13 @@ const AddRestaurant = () => {
 
 	return (
 		<>
-			<div className='container flex flex-col h-screen items-center justify-center  '>
+			<div className='container flex flex-col h-screen items-center justify-center  mx-auto'>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Dish</h3>
 					<span className=' text-gray-600 text-left w-full pl-10'>
-						by adding restaurant,you agree to our
+						by adding restaurant,you agree to our{' '}
 						<Link className='text-blue-400 pr-1' to='/'>
-							policy
+							policy{' '}
 						</Link>
 						and
 						<Link className='text-blue-400 pl-1' to='/'>
@@ -151,4 +151,4 @@ const AddRestaurant = () => {
 	);
 };
 
-export default AddRestaurant;
+export default AddDish;

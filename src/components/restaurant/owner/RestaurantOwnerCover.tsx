@@ -8,7 +8,7 @@ const RestaurantOwnerCover = ({restaurant}) => {
 	return (
 		<div key={restaurant?.id} className='cursor-pointer text-center group '>
 			<Link to={`/restaurant/owner/${restaurant.id}`}>
-				<div className='py-24  bg-cover bg-center mb-2' style={{backgroundImage: `url(${restaurant?.coverImg})`}}></div>
+				<div className='py-24  bg-contain bg-no-repeat bg-center mb-2' style={{backgroundImage: `url(${restaurant?.coverImg})`}}></div>
 				<h3 className='font-bold'>{restaurant?.name}</h3>
 				<div className={` mx-auto ${isDark ? 'bg-green-500' : 'bg-black'} ${!isDark && 'group-hover:bg-green-500'} h-0.5 w-20 text-center justify-center items-center bg-center `}></div>
 				<span className='text-sm'>{restaurant?.category?.name}</span>

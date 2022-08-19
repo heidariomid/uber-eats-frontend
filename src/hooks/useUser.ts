@@ -5,8 +5,8 @@ import {LoggedInUserQuery} from '../graphql/schemaTypes';
 
 const useUser = () => {
 	const token = authToken();
-
 	const {data, error, loading, refetch} = useQuery<LoggedInUserQuery>(LOGGED_IN_USER);
+
 	if (token && !error) {
 		return {user: data?.loggedInUser, error, loading, refetch};
 	} else {

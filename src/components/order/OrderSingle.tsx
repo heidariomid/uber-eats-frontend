@@ -50,7 +50,7 @@ const OrderSingle = () => {
 		<div className='flex flex-col  items-center h-screen mt-10'>
 			<OrderDetails order={order} />
 			<div className='mt-10'>
-				<Link to={'/orders'} className='hidden text-lg font-medium text-green-600 hover:text-green-500 sm:block'>
+				<Link to={'/orders'} className='hidden text-lg font-medium text-green-500 hover:text-green-600 sm:block'>
 					<span aria-hidden='true'> &larr;</span> orders history
 				</Link>
 			</div>

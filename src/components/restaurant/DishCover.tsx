@@ -13,6 +13,8 @@ import NumericOptions from '../custom/NumericOptions';
 import NumericInput from '../custom/NumericInput';
 import Reviews from '../reviews/Reviews';
 import useRestaurant from '../../hooks/useRestaurant';
+import {isDarkVar} from '../../apollo/GlobalVar';
+import {useReactiveVar} from '@apollo/client';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
@@ -21,6 +23,8 @@ function classNames(...classes) {
 const DishCover = ({setIsSelected, dish}) => {
 	const [state, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
+	const isDark = useReactiveVar(isDarkVar);
+
 	const [basket, setBasket] = useState<any>({});
 	const [dishOptionId, setDishOptionId] = useState<number | null>(null);
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
@@ -90,7 +94,7 @@ const DishCover = ({setIsSelected, dish}) => {
 			);
 		} else {
 			return (
-				<button onClick={addToBasketHandler} type='button' className='mt-12 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+				<button onClick={addToBasketHandler} type='button' className={`mt-12 w-full ${isDark ? 'bg-green-500 text-white' : 'bg-black text-white'}  border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium  hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}>
 					<span>
 						<FontAwesomeIcon icon={faAdd} />
 					</span>
@@ -118,7 +122,7 @@ const DishCover = ({setIsSelected, dish}) => {
 					<div className='flex items-stretch md:items-center justify-center min-h-full text-center md:px-2 lg:px-4'>
 						<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0 translate-y-4 md:translate-y-0 md:scale-95' enterTo='opacity-100 translate-y-0 md:scale-100' leave='ease-in duration-200' leaveFrom='opacity-100 translate-y-0 md:scale-100' leaveTo='opacity-0 translate-y-4 md:translate-y-0 md:scale-95'>
 							<Dialog.Panel className='flex text-base  text-left transform transition w-full md:max-w-2xl md:px-4 md:my-8 lg:max-w-4xl'>
-								<div className='w-full relative flex items-center bg-white px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8'>
+								<div className={`w-full relative flex items-center ${isDark ? 'bg-black ' : 'bg-white '} px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8`}>
 									<button
 										type='button'
 										className='absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8'
@@ -132,18 +136,18 @@ const DishCover = ({setIsSelected, dish}) => {
 									</button>
 
 									<div className='w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8'>
-										<div className='aspect-w-3 aspect-h-4 rounded-lg bg-gray-100 overflow-hidden sm:col-span-4 lg:col-span-5'>
-											<img src={dish.photo} alt={dish.name} className='object-center object-cover' />
+										<div className='aspect-w-3 aspect-h-4  overflow-hidden sm:col-span-4 lg:col-span-5'>
+											<img src={dish.photo} alt={dish.name} className='object-center object-contain' />
 										</div>
 										<div className='sm:col-span-8 lg:col-span-7'>
-											<h2 className='text-2xl font-extrabold text-gray-900 sm:pr-12'>{dish.name}</h2>
+											<h2 className={`text-2xl font-extrabold ${isDark ? ' text-white' : 'text-gray-900'} sm:pr-12`}>{dish.name}</h2>
 
 											<section aria-labelledby='information-heading' className='mt-2'>
 												<h3 id='information-heading' className='sr-only'>
 													Product information
 												</h3>
 
-												<p className='text-2xl text-gray-900'>$ {dish.price}</p>
+												<p className={`text-2xl ${isDark ? ' text-white' : 'text-gray-900'}`}>$ {dish.price}</p>
 
 												{/* Reviews */}
 												<div className='mt-6'>
@@ -155,7 +159,7 @@ const DishCover = ({setIsSelected, dish}) => {
 															))}
 														</div>
 														<p className='sr-only'>{dish?.rating} out of 5 stars</p>
-														<Link to='#' className='ml-3 text-sm font-medium text-green-600 hover:text-green-500'>
+														<Link to='#' className='ml-3 text-sm font-medium text-green-500 hover:text-green-600'>
 															{dish?.reviewCount} reviews
 														</Link>
 													</div>
@@ -170,27 +174,25 @@ const DishCover = ({setIsSelected, dish}) => {
 												<form>
 													{/* Description */}
 													<div>
-														<h4 className='text-sm text-gray-900 font-bold'>Description</h4>
+														<h4 className={`text-sm ${isDark ? 'text-white' : 'text-gray-900'} font-bold`}>Description</h4>
 
-														<span className='mt-4 flex items-center space-x-3'>{dish.description}</span>
+														<span className={`mt-4 flex items-center space-x-3 ${isDark ? ' text-white' : 'text-gray-900'}`}>{dish.description}</span>
 													</div>
 
 													{/* Options */}
 													{dish?.options?.map.length > 0 ? (
 														<div className='mt-10'>
-															<h4 className='text-sm text-gray-900 font-bold mb-5'>Options</h4>
-															<div className='grid grid-cols-2'>
+															<h4 className={`text-sm ${isDark ? 'text-white' : 'text-gray-900'} font-bold mb-5`}>Options</h4>
+															<div className='grid grid-cols-1'>
 																{dish?.options?.map((item, i) => {
 																	const quantity = basketItem?.items ? basketItem?.dishOptionQuantity[item.id] || 0 : state?.basket?.dishOptionQuantity[item?.id] || 0;
 
 																	return (
-																		<div key={item.id} className='grid grid-cols-3 py-1 gap-x-10'>
-																			<div key={item.name} className=''>
-																				<span className={'text-sm w-full'}>{item.name}</span>
-																				<span className={'text-sm ml-3'}>${item.extra}</span>
-																			</div>
+																		<div key={item.id} className='grid grid-cols-3 py-1 '>
+																			<p className={`text-sm    ${isDark ? ' text-white' : 'text-gray-900'}`}>{item.name}</p>
+																			<span className={`text-sm ml-3 ${isDark ? ' text-white' : 'text-gray-900'}`}>${item.extra}</span>
 
-																			<NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} dishId={dish.id} />
+																			{user?.role === UserRole.Client && <NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} dishId={dish.id} />}
 																		</div>
 																	);
 																})}
@@ -199,27 +201,29 @@ const DishCover = ({setIsSelected, dish}) => {
 													) : (
 														<div className='py-12'></div>
 													)}
-													{addtoOrderButton()}
+													{user?.role === UserRole.Client && addtoOrderButton()}
 													{user?.role === UserRole.Owner && (
-														<button onClick={addToBasketHandler} type='button' className='mt-12 w-full bg-black border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+														<Link to={`edit-dish/${dish.id}`} className={`mt-12 w-full ${isDark ? ' bg-green-500 text-white' : 'bg-black'} border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}>
 															<span>
 																<FontAwesomeIcon icon={faEdit} />
 															</span>
-															<span className='pl-4'> Edit Order</span>
-														</button>
+															<span className='pl-4'> Edit Dish</span>
+														</Link>
 													)}
 												</form>
 											</section>
 										</div>
-										<div className='sm:col-span-8 lg:col-span-12'>
-											<section aria-labelledby='options-heading' className='mt-10 '>
-												<h3 id='reviews-heading' className='sr-only'>
-													Reviews
-												</h3>
+										{user?.role === UserRole.Client && (
+											<div className='sm:col-span-8 lg:col-span-12'>
+												<section aria-labelledby='options-heading' className='mt-10 '>
+													<h3 id='reviews-heading' className='sr-only'>
+														Reviews
+													</h3>
 
-												<Reviews />
-											</section>
-										</div>
+													<Reviews />
+												</section>
+											</div>
+										)}
 									</div>
 								</div>
 							</Dialog.Panel>

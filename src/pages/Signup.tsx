@@ -1,13 +1,16 @@
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-
+import 'react-phone-number-input/style.css';
+import PhoneInputWithCountry from 'react-phone-number-input/react-hook-form';
 import {SIGN_UP_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
 import {CreateAccountInput, CreateAccountMutation, CreateAccountMutationVariables, UserRole} from '../graphql/schemaTypes';
 import ErrorSpan from '../components/custom/ErrorSpan';
+import {useState} from 'react';
 const Signup = () => {
 	const {state}: {state: any} = useLocation();
+	const [mobile, setMobile] = useState<any>('+98');
 	let navigate = useNavigate();
 
 	const {
@@ -16,6 +19,7 @@ const Signup = () => {
 		formState: {errors, isValid},
 		handleSubmit,
 		setError,
+		control,
 		clearErrors,
 	} = useForm<CreateAccountInput>({
 		mode: 'onChange',
@@ -37,17 +41,21 @@ const Signup = () => {
 
 	const onValidSubmit = () => {
 		if (loading) return;
-		const {email, password, role} = getValues();
+		const {email, password, role, firstName, lastName} = getValues();
 
-		signupHandler({variables: {data: {email, password, role}}});
+		signupHandler({variables: {data: {email, password, role, firstName, lastName, mobile}}});
 	};
 	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	const emailRegister = {required: {value: true, message: 'email is required'}, pattern: {value: emailPattern, message: 'email format is incorrect'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}};
 	const passwordRegister = {required: {value: true, message: 'password could not be empty'}, minLength: {value: 4, message: 'password should be greater than 4'}};
 	const roleRegister = {required: {value: true, message: 'role could not be empty'}};
+	const firstNameRegister = {required: {value: true, message: 'firstName could not be empty'}};
+	const lastNameRegister = {required: {value: true, message: 'lastName could not be empty'}};
 	const clearEmailErrors = () => clearErrors('email');
 	const clearLoginErrors = () => clearErrors('password');
 	const clearRoleErrors = () => clearErrors('role');
+	const clearFirstNameErrors = () => clearErrors('firstName');
+	const clearLastNameErrors = () => clearErrors('lastName');
 	return (
 		<div className='container flex flex-col h-screen items-center justify-center mx-auto'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
@@ -61,8 +69,13 @@ const Signup = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('firstName', firstNameRegister)} type='text' placeholder='First Name' onKeyDown={clearFirstNameErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('lastName', lastNameRegister)} type='text' placeholder='Last Name' onKeyDown={clearLastNameErrors} />
 					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
 					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
+					<div className=' my-5 focus:ring-0 focus:border-gray-400 '>
+						<PhoneInputWithCountry name='phoneInputWithCountrySelect' control={control} rules={{required: true}} placeholder='Enter phone number' value={mobile} onChange={setMobile} defaultCountry='IR' />
+					</div>
 					<select className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
 						{Object.keys(UserRole).map((role, key) => (
 							<option key={key} value={role}>

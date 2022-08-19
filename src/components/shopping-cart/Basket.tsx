@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import NumericInput from '../custom/NumericInput';
 import {useReactiveVar} from '@apollo/client';
-import {isBasketItemVar} from '../../apollo/GlobalVar';
+import {isBasketItemVar, isDarkVar} from '../../apollo/GlobalVar';
 import EmptyBasket from '../../images/empty-basket.svg';
 export const totalAllDishPrice = (basket) => {
 	return basket?.items
@@ -32,6 +32,7 @@ export const totaldishPrice = (dish, basket) => {
 	return totalPrice;
 };
 const Basket = () => {
+	const isDark = useReactiveVar(isDarkVar);
 	const isBasket = useReactiveVar<boolean>(isBasketItemVar);
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
 	const [_, dispatch] = useStateValue();
@@ -78,16 +79,16 @@ const Basket = () => {
 						<div className='pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10'>
 							<Transition.Child as={Fragment} enter='transform transition ease-in-out duration-500 sm:duration-500' enterFrom='translate-x-full' enterTo='translate-x-0' leave='transform transition ease-in-out duration-500 sm:duration-500' leaveFrom='translate-x-0' leaveTo='translate-x-full'>
 								<Dialog.Panel className='pointer-events-auto w-screen max-w-md'>
-									<div className='flex h-full flex-col overflow-y-scroll bg-white shadow-xl'>
+									<div className={`flex h-full flex-col overflow-y-scroll ${isDark ? 'bg-black ' : 'bg-white '} shadow-xl`}>
 										<div className='flex-1 overflow-y-auto py-6 px-4 sm:px-6'>
 											<div className='flex items-start justify-between'>
-												<Dialog.Title className='text-lg font-medium text-gray-900'>
+												<Dialog.Title className={`text-lg font-medium ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
 													<div>Basket</div>
 												</Dialog.Title>
 												<div className='ml-3 flex h-7 items-center transition-all'>
 													<button
 														type='button'
-														className='-m-2 p-2  text-gray-400 hover:text-gray-500 focus:ring-0 focus:border-red-400'
+														className={`-m-2 p-2  ${isDark ? 'text-white ' : 'text-gray-900 '} hover:text-gray-500 focus:ring-0 focus:border-red-400`}
 														onClick={() => {
 															setOpen(false);
 															setTimeout(() => {
@@ -117,16 +118,16 @@ const Basket = () => {
 
 																			<div className='ml-4 flex flex-1 flex-col'>
 																				<div>
-																					<div className='flex justify-between text-base font-medium text-gray-900'>
+																					<div className={`flex justify-between text-base font-medium ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
 																						<h3>
 																							<Link to={dish?.name}> {dish?.name} </Link>
 																						</h3>
 
-																						{isBasket ? <p className='ml-4'>$ {totaldishPrice(dish, basketItem)}</p> : <p className='ml-4'>$ 0</p>}
+																						{isBasket ? <p className={`ml-4 ${isDark ? 'text-white ' : 'text-gray-900 '}`}>$ {totaldishPrice(dish, basketItem)}</p> : <p className='ml-4'>$ 0</p>}
 																					</div>
 																				</div>
 																				<div className='flex flex-1  items-end justify-between text-sm my-3'>
-																					<p className='text-gray-600'>each ${dish.price}</p>
+																					<p className={`${isDark ? 'text-white ' : 'text-gray-600 '}`}>each ${dish.price}</p>
 																				</div>
 																				<div className='flex flex-1 items-start justify-between text-sm'>
 																					<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
@@ -145,7 +146,7 @@ const Basket = () => {
 																<div className='text-center'>
 																	<img className='w-full' src={EmptyBasket} alt='no-item' />
 
-																	<p className='lg:text-2xl p-4 rounded-2xl'>No Item Added </p>
+																	<p className={`lg:text-2xl p-4 rounded-2xl ${isDark ? 'text-white ' : 'text-gray-900 '}`}>No Item Added </p>
 																</div>
 															</div>
 														)}
@@ -157,19 +158,19 @@ const Basket = () => {
 										{basketItem?.items ? (
 											<div className='border-t border-gray-200 py-6 px-4 sm:px-6'>
 												<div className='flex justify-between text-base font-medium text-gray-900'>
-													<p>Subtotal</p>
-													<p>$ {totalAllDishPrice(basketItem)}</p>
+													<p className={`${isDark ? 'text-white ' : 'text-gray-900 '}`}>Subtotal</p>
+													<p className={`${isDark ? 'text-white ' : 'text-gray-900 '}`}>$ {totalAllDishPrice(basketItem)}</p>
 												</div>
-												<p className='mt-0.5 text-sm text-gray-500'>Shipping and taxes calculated at checkout.</p>
+												<p className={`mt-0.5 text-sm ${isDark ? 'text-white ' : 'text-gray-500 '}`}>Shipping and taxes calculated at checkout.</p>
 												<div className='mt-6' onClick={() => setOpen(false)}>
 													<Link to='/checkout' className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'>
 														Checkout
 													</Link>
 												</div>
-												<div className='mt-6 flex justify-center text-center text-sm text-gray-500'>
+												<div className='mt-6 flex justify-center text-center text-sm text-gray-400'>
 													<p>
 														or{' '}
-														<button type='button' className='font-medium text-green-600 hover:text-green-500' onClick={() => setOpen(false)}>
+														<button type='button' className='font-medium text-green-500 hover:text-green-600' onClick={() => setOpen(false)}>
 															Continue Ordering<span aria-hidden='true'> &rarr;</span>
 														</button>
 													</p>

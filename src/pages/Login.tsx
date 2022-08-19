@@ -37,7 +37,7 @@ const Login = () => {
 			localStorage.setItem('token', token);
 			isLoginVar(true);
 			authToken(token);
-			navigate('/', {replace: true, state: {message}});
+			navigate(state?.path ? state?.path : '/', {replace: true, state: {message}});
 		}
 	};
 	const [loginHandler, {loading}] = useMutation<LoginMutation, LoginMutationVariables>(LOGIN_MUTATION, {onCompleted});
@@ -55,13 +55,13 @@ const Login = () => {
 	return (
 		<div className='container flex flex-col mx-auto h-screen items-center justify-center'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
-				<span className='flex mb-20 relative'>
+				<Link to={'/'} className='flex mb-20 relative'>
 					<img src={Logo} alt='logo' className='w-48 mr-4 mb-10 z-10 ' />
-				</span>
+				</Link>
 				<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Welcome Back</h3>
 				<span className=' text-gray-600 text-left w-full pl-10'>Sign in with your email address and password.</span>
 				<div className='flex flex-col mt-5 px-20 '>
-					{state?.message !== undefined ? <span className='bg-green-600 span'>{state?.message}</span> : null}
+					{state?.message !== undefined ? <span className='bg-green-600 span text-white'>{state?.message}</span> : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
 					{errors.email?.type === 'validate' && <ErrorSpan message={'email must include @'} />}
 					{errors?.email?.message && <ErrorSpan message={errors?.email?.message} />}

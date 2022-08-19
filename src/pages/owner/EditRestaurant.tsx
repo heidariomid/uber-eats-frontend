@@ -11,7 +11,7 @@ import {useEffect, useState} from 'react';
 import {uploadPhotoHandler} from '../../services/UploadPhoto';
 import useUser from '../../hooks/useUser';
 
-const AddRestaurant = () => {
+const EditRestaurant = () => {
 	let navigate = useNavigate();
 	const [categories, setCategories] = useState<any>([]);
 	const [photoUrl, setPhotoUrl] = useState<string>('');
@@ -70,17 +70,8 @@ const AddRestaurant = () => {
 		<>
 			<div className='container flex flex-col h-screen items-center justify-center  mx-auto'>
 				<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
-					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Restaurant</h3>
-					<span className=' text-gray-600 text-left w-full pl-10'>
-						by adding restaurant,you agree to our{' '}
-						<Link className='text-green-500 pr-1' to='/'>
-							policy
-						</Link>
-						and
-						<Link className='text-green-500 pl-1' to='/'>
-							rules
-						</Link>
-					</span>
+					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Edit Restaurant</h3>
+
 					<div className='flex flex-col mt-5 px-20 '>
 						{errors?.name?.message && <ErrorSpan message={errors?.name?.message} />}
 						{errors?.address?.message && <ErrorSpan message={errors?.address?.message} />}
@@ -141,4 +132,4 @@ const AddRestaurant = () => {
 	);
 };
 
-export default AddRestaurant;
+export default EditRestaurant;

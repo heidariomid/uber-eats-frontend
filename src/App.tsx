@@ -5,7 +5,6 @@ import Header from './components/header/Header';
 import Basket from './components/shopping-cart/Basket';
 import Routes from './routes';
 import {useStateValue} from './store/context/ContextManager';
-
 const App = () => {
 	const isDark = useReactiveVar(isDarkVar);
 
@@ -16,6 +15,7 @@ const App = () => {
 		<div className={`h-full ${isDark && 'bg-black text-white'}`}>
 			{!checkPath && <Header />}
 			{state.basket.status && <Basket />}
+
 			<Routes />
 		</div>
 	);

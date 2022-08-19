@@ -8,6 +8,14 @@ export const LOGGED_IN_USER = gql`
 			email
 			role
 			verified
+			address {
+				id
+				address
+				apartment
+				postalCode
+				region
+				city
+			}
 		}
 	}
 `;
@@ -64,9 +72,19 @@ export const GET_ORDER_BY_ID = gql`
 				}
 				customer {
 					id
+					email
+					role
 				}
 				driver {
 					id
+				}
+				address {
+					id
+					address
+					apartment
+					postalCode
+					region
+					city
 				}
 				restaurant {
 					...RestaurantFragment
@@ -213,8 +231,8 @@ export const CATEGORY = gql`
 	}
 	${RESTAURANT_FEAGMENT}
 `;
-export const DISH = gql`
-	query Dish($dishId: Int!) {
+export const GET_DISH_BY_ID = gql`
+	query getDish($dishId: Int!) {
 		getDish(dishId: $dishId) {
 			message
 			ok
@@ -228,8 +246,10 @@ export const DISH = gql`
 					id
 				}
 				options {
+					id
 					name
 					extra
+					quantity
 				}
 				photo
 				createdAt

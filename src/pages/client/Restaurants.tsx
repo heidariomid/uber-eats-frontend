@@ -53,7 +53,6 @@ const Restaurants = () => {
 		<>
 			{error && <ErrorSpan message={errorMessage} />}
 			{categoriesError && <ErrorSpan message={errorMessage} />}
-			{errorMessage && <ErrorSpan message={errorMessage} />}
 			{categoriesLoading && <Loading />}
 
 			<>
@@ -62,7 +61,13 @@ const Restaurants = () => {
 				<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-500'}`}></div>
 				<div className='h-12'></div>
 				<section className='md:h-128 px-10'>
-					<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
+					{!errorMessage ? (
+						<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
+					) : (
+						<div role={'alert'} className='bg-gray-600 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
+							{errorMessage}
+						</div>
+					)}
 				</section>
 				<div className='h-24 '></div>
 				{!loading ? (

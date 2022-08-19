@@ -17,7 +17,7 @@ const Restaurant = ({restaurant}) => {
 
 	return (
 		<>
-			<div className='h-screen mx-auto lg:max-w-screen-2xl max-w-screen-sm  items-center justify-center'>
+			<div className='h-screen mx-auto lg:max-w-screen-2xl max-w-screen-sm   items-center justify-center'>
 				{state.basket.message && showNotificationBasket()}
 				<div className='justify-center items-center flex'>
 					<div className=' bg-cover bg-center py-36 w-full' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
@@ -37,7 +37,7 @@ const Restaurant = ({restaurant}) => {
 							<p className='text-2xl font-bold'>No dish founded !</p>
 						</div>
 					)}
-					<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 mx-10 w-full'>
+					<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 mx-10 w-full '>
 						{restaurant?.menu?.map((dish, i) => {
 							return <Dish key={i} dish={dish} />;
 						})}

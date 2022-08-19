@@ -14,7 +14,9 @@
   }
   ```
 */
+import {useReactiveVar} from '@apollo/client';
 import {StarIcon} from '@heroicons/react/solid';
+import {isDarkVar} from '../../apollo/GlobalVar';
 
 const reviews = [
 	{
@@ -68,19 +70,20 @@ function classNames(...classes) {
 }
 
 const Reviews = () => {
+	const isDark = useReactiveVar(isDarkVar);
 	return (
-		<div className='bg-gray-50 p-4 overflow-y-auto transition-all'>
+		<div className={` ${isDark ? 'bg-black' : 'bg-gray-50'} p-4 overflow-y-auto transition-all`}>
 			<div>
 				<h2 className='sr-only'>Customer Reviews</h2>
 
 				<div className='-my-10 '>
 					{reviews.map((review, reviewIdx) => (
-						<div key={review.id} className='flex text-sm text-gray-500 space-x-4'>
+						<div key={review.id} className={`flex text-sm ${isDark ? 'text-white' : 'text-gray-900'} space-x-4`}>
 							<div className='flex-none py-10'>
 								<img src={review.avatarSrc} alt='' className='w-10 h-10 bg-gray-100 rounded-full' />
 							</div>
 							<div className={classNames(reviewIdx === 0 ? '' : 'border-t border-gray-200', 'flex-1 py-10')}>
-								<h3 className='font-medium text-gray-900'>{review.author}</h3>
+								<h3 className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{review.author}</h3>
 								<p>
 									<time dateTime={review.datetime}>{review.date}</time>
 								</p>
@@ -92,7 +95,7 @@ const Reviews = () => {
 								</div>
 								<p className='sr-only'>{review.rating} out of 5 stars</p>
 
-								<div className='mt-4 prose prose-sm max-w-none text-gray-500' dangerouslySetInnerHTML={{__html: review.content}} />
+								<div className={`mt-4 prose prose-sm max-w-none ${isDark ? 'text-white' : 'text-gray-900'}`} dangerouslySetInnerHTML={{__html: review.content}} />
 							</div>
 						</div>
 					))}

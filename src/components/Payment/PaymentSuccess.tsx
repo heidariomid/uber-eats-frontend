@@ -1,17 +1,19 @@
 import {Link, useLocation} from 'react-router-dom';
 import PreaperFood from '../../images/preaper.svg';
 import OrderSuccessImg from '../../images/order-success.svg';
-import {useQuery} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client';
 import {GET_ORDER_BY_ID} from '../../graphql/queries';
 import {useEffect, useState} from 'react';
 import {Order, OrderStatus} from '../../graphql/schemaTypes';
 import Loading from '../loading/Loading';
 import {NEW_UPDATE_ORDER} from '../../graphql/subscriptions';
+import {isDarkVar} from '../../apollo/GlobalVar';
 
 function classNames(...classes) {
 	return classes.filter(Boolean).join(' ');
 }
 const PaymentSuccess = () => {
+	const isDark = useReactiveVar(isDarkVar);
 	const {state}: {state: any} = useLocation();
 	const orderId = state.orderId;
 	const [order, setOrder] = useState<Order | null>(null);
@@ -64,17 +66,17 @@ const PaymentSuccess = () => {
 				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
 					<div className='px-4 space-y-2 sm:px-0 sm:flex sm:items-baseline sm:justify-between sm:space-y-0'>
 						<div className='flex sm:items-baseline sm:space-x-4'>
-							<Link to={`/order/${order.id}`} className='hidden text-sm font-medium text-green-600 hover:text-green-500 sm:block'>
+							<Link to={`/order/${order.id}`} className='hidden text-sm font-medium text-green-500 hover:text-green-600 sm:block'>
 								View Order Details<span aria-hidden='true'> &rarr;</span>
 							</Link>
 						</div>
-						<p className='text-sm text-gray-600 '>
+						<p className={`text-sm mx-2 ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
 							Order placed:
-							<time dateTime='2021-03-22' className='font-medium text-gray-900'>
+							<time dateTime='2021-03-22' className={`pl-2 font-medium ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
 								{new Date(order.createdAt).toLocaleDateString()}
 							</time>
 						</p>
-						<Link to={`/orders`} className='text-sm font-medium text-green-600 hover:text-green-500 sm:hidden'>
+						<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 sm:hidden'>
 							View Order Details<span aria-hidden='true'> &rarr;</span>
 						</Link>
 					</div>

@@ -4,10 +4,12 @@ import {ChevronUpIcon} from '@heroicons/react/solid';
 import {Link} from 'react-router-dom';
 import {totaldishPrice, totalAllDishPrice} from './Basket';
 import {v4 as uuidv4} from 'uuid';
+import {useReactiveVar} from '@apollo/client';
+import {isDarkVar} from '../../apollo/GlobalVar';
 export const dishOptionsItem: any = [];
 const OrderSummary = () => {
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
-
+	const isDark = useReactiveVar(isDarkVar);
 	const totaldishOptionsPrice = (dishOptions) => {
 		const dishQuantity: any = [];
 
@@ -29,9 +31,9 @@ const OrderSummary = () => {
 		return totalPrice;
 	};
 	return (
-		<section aria-labelledby='summary-heading' className='bg-gray-50 pt-16 pb-10 px-4 sm:px-6 lg:px-0 lg:pb-16 lg:bg-transparent lg:row-start-1 lg:col-start-2'>
+		<section aria-labelledby='summary-heading' className=' pt-16 pb-10 px-4 sm:px-6 lg:px-0 lg:pb-16 lg:bg-transparent lg:row-start-1 lg:col-start-2'>
 			<div className='max-w-lg mx-auto lg:max-w-none'>
-				<h2 id='summary-heading' className='text-center text-center9 text-lg font-medium text-gray-900'>
+				<h2 id='summary-heading' className={`text-center text-center9 text-lg font-medium  ${isDark ? 'text-white' : 'text-gray-900'}`}>
 					Order summary
 				</h2>
 
@@ -57,7 +59,7 @@ const OrderSummary = () => {
 
 											<div className='ml-4 flex flex-1 flex-col'>
 												<div>
-													<div className='flex justify-between text-base font-medium text-gray-900'>
+													<div className={`flex justify-between text-base font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
 														<h3>
 															<Link to={dish?.name}> {dish?.name} </Link>
 														</h3>
@@ -66,7 +68,7 @@ const OrderSummary = () => {
 													</div>
 												</div>
 												<div className='flex flex-1  items-end justify-between text-sm my-3'>
-													<p className='text-gray-600'>
+													<p className={`${isDark ? 'text-white' : 'text-gray-500'}`}>
 														${dish.price} X {quantity}
 													</p>
 
@@ -79,7 +81,7 @@ const OrderSummary = () => {
 															{dishOptions.map((option, i) => {
 																if (option.quantity) {
 																	return (
-																		<div key={i} className='text-gray-600 flex justify-around '>
+																		<div key={i} className={` flex justify-around ${isDark ? 'text-white' : 'text-gray-500'} `}>
 																			<span className='px-4 flex-1'>{option?.name}</span>
 																			<span>
 																				${option?.price} X {option?.quantity}
@@ -103,19 +105,19 @@ const OrderSummary = () => {
 			</div>
 
 			<div className=' py-6 px-4 sm:px-6'>
-				<dl className='hidden text-sm font-medium text-gray-900 space-y-6 border-t b border-gray-300 pt-6 lg:block'>
+				<dl className={`hidden text-sm font-medium ${isDark ? 'text-white' : 'text-gray-900'} space-y-6 border-t b border-gray-300 pt-6 lg:block`}>
 					<div className='flex items-center justify-between'>
-						<dt className='text-gray-600'>Subtotal</dt>
+						<dt className={`${isDark ? 'text-white' : 'text-gray-600'}`}>Subtotal</dt>
 						<dd>${totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem)}</dd>
 					</div>
 
 					<div className='flex items-center justify-between'>
-						<dt className='text-gray-600'>Taxes</dt>
+						<dt className={`${isDark ? 'text-white' : 'text-gray-600'}`}>Taxes</dt>
 						<dd>${totalAllDishPrice(basketItem) > 0 ? (totalAllDishPrice(basketItem) * 0.09).toFixed(2) : 0}</dd>
 					</div>
 
 					<div className='flex items-center justify-between'>
-						<dt className='text-gray-600'>Shipping</dt>
+						<dt className={`${isDark ? 'text-white' : 'text-gray-600'}`}>Shipping</dt>
 						<dd> 0</dd>
 					</div>
 					{/* You Can Add Coupon */}

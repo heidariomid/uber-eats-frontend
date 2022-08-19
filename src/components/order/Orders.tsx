@@ -3,6 +3,7 @@ import {useEffect, useState} from 'react';
 import {ORDERS} from '../../graphql/queries';
 import {Order} from '../../graphql/schemaTypes';
 import {NEW_UPDATE_ORDER} from '../../graphql/subscriptions';
+import Footer from '../footer/Footer';
 import OrdersTable from './OrdersTable';
 
 const Orders = () => {
@@ -35,18 +36,29 @@ const Orders = () => {
 		}
 	}, [data]);
 	return (
-		<div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10'>
-			<div className='lg:max-w-7xl max-w-4xl mx-auto'>
-				<div className='bg-white overflow-hidden '>
-					<div className='px-4 py-5 sm:px-6 text-center mx-auto font-extrabold text-2xl'>
-						<h1>Orders History</h1>
-					</div>
-					<div className='px-4 py-5 sm:p-6 mt-10'>
-						<OrdersTable orders={orders} />
+		<>
+			<div className='max-w-7xl mb-10 mx-auto px-4 sm:px-6 lg:px-8 mt-10'>
+				<div className='lg:max-w-7xl max-w-4xl mx-auto'>
+					<div className=' overflow-hidden '>
+						{orders && orders?.length > 0 ? (
+							<>
+								<div className='px-4 py-5 sm:px-6 text-center mx-auto font-extrabold text-2xl'>
+									<h1>Orders History</h1>
+								</div>
+								<div className='px-4 py-5 sm:p-6 mt-10 h-screen'>
+									<OrdersTable orders={orders} />
+								</div>
+							</>
+						) : (
+							<div className='flex items-center justify-center px-4 py-5 sm:p-6 text-center mx-auto font-extrabold text-2xl h-screen bg-zinc-700 text-white '>
+								<div>No Record for Orders History</div>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
-		</div>
+			<Footer />
+		</>
 	);
 };
 

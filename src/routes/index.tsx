@@ -17,6 +17,8 @@ import PaymentSuccess from '../components/Payment/PaymentSuccess';
 import PaymentFailed from '../components/Payment/PaymentFailed';
 import Orders from '../components/order/Orders';
 import OrderSingle from '../components/order/OrderSingle';
+import EditDish from '../pages/owner/EditDish';
+import EditRestaurant from '../pages/owner/EditRestaurant';
 
 const Router = () => {
 	return (
@@ -28,7 +30,9 @@ const Router = () => {
 			<Route path='restaurant/:id' element={<ClientRestaurant />} />
 			<Route path='restaurant/owner/:id' element={<OwnerRestaurant />} />
 			<Route path='restaurant/owner/:id/add-dish' element={<AddDish />} />
+			<Route path='restaurant/owner/:id/edit-dish/:dishId' element={<EditDish />} />
 			<Route path='restaurant/add' element={<AddRestaurant />} />
+			<Route path='restaurant/edit' element={<EditRestaurant />} />
 			<Route path='/confirm' element={<Confirm />} />
 			<Route path='/basket' element={<Basket />} />
 			<Route path='/checkout' element={<Checkout />} />

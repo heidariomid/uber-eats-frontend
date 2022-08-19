@@ -1,7 +1,11 @@
+import {useReactiveVar} from '@apollo/client';
 import {Link} from 'react-router-dom';
+import {isDarkVar} from '../../apollo/GlobalVar';
 import {Order, OrderStatus} from '../../graphql/schemaTypes';
 
 const OrdersTable = ({orders}: {orders: Order[] | null}) => {
+	const isDark = useReactiveVar(isDarkVar);
+
 	const orderStatusStyle = (status) => {
 		let bgColor;
 		switch (status) {
@@ -30,18 +34,18 @@ const OrdersTable = ({orders}: {orders: Order[] | null}) => {
 				<div className='py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8'>
 					<div className='shadow overflow-hidden border-b border-gray-200 sm:rounded-lg'>
 						<table className='min-w-full divide-y divide-gray-200'>
-							<thead className='bg-gray-50'>
+							<thead className={`${isDark ? 'bg-white' : 'bg-gray-50'}`}>
 								<tr>
-									<th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+									<th scope='col' className={`px-6 py-3 text-left text-xs font-medium ${isDark ? 'text-black' : 'text-gray-500'} uppercase tracking-wider`}>
 										Name
 									</th>
-									<th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+									<th scope='col' className={`px-6 py-3 text-left text-xs font-medium ${isDark ? 'text-black' : 'text-gray-500'} uppercase tracking-wider`}>
 										Date
 									</th>
-									<th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+									<th scope='col' className={`px-6 py-3 text-left text-xs font-medium ${isDark ? 'text-black' : 'text-gray-500'} uppercase tracking-wider`}>
 										Status
 									</th>
-									<th scope='col' className='px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider'>
+									<th scope='col' className={`px-6 py-3 text-left text-xs font-medium ${isDark ? 'text-black' : 'text-gray-500'} uppercase tracking-wider`}>
 										Price
 									</th>
 									<th scope='col' className='relative px-6 py-3'>
@@ -49,7 +53,7 @@ const OrdersTable = ({orders}: {orders: Order[] | null}) => {
 									</th>
 								</tr>
 							</thead>
-							<tbody className='bg-white divide-y divide-gray-200'>
+							<tbody className={` ${isDark ? 'bg-black ' : 'bg-white '} divide-y divide-gray-200`}>
 								{orders?.map((order: Order) => (
 									<tr key={order.id}>
 										<td className='px-6 py-4 whitespace-nowrap'>
@@ -58,8 +62,8 @@ const OrdersTable = ({orders}: {orders: Order[] | null}) => {
 													<img className='h-10 w-10 rounded-full' src={order.restaurant?.coverImg} alt='' />
 												</div>
 												<div className='ml-4'>
-													<div className='text-sm font-medium text-gray-900'>#{order?.id}</div>
-													<div className='text-sm text-gray-500'>{order?.customer?.email}</div>
+													<div className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-800'}`}>#{order?.id}</div>
+													<div className={`text-sm ${isDark ? 'text-white' : 'text-gray-500'}`}>{order?.customer?.email}</div>
 												</div>
 											</div>
 										</td>
@@ -70,9 +74,9 @@ const OrdersTable = ({orders}: {orders: Order[] | null}) => {
 										<td className='px-6 py-4 whitespace-nowrap'>
 											<span className={`w-16 inline-flex  text-center justify-center text-xs leading-5 font-semibold rounded-full  text-gray-600 ${orderStatusStyle(order.status)}`}>{order.status}</span>
 										</td>
-										<td className='px-6 py-4 whitespace-nowrap text-sm text-gray-500'>$ {order.totalPrice}</td>
+										<td className={`px-6 py-4 whitespace-nowrap text-sm ${isDark ? 'text-white' : 'text-gray-500'}`}>$ {order.totalPrice}</td>
 										<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
-											<Link to={`/order/${order.id}`} className='text-green-600 hover:text-green-900'>
+											<Link to={`/order/${order.id}`} className='text-green-500 hover:text-green-900'>
 												Details
 											</Link>
 										</td>

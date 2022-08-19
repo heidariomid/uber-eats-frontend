@@ -1,7 +1,7 @@
 import Logo from '../../images/uber-eats.svg';
 import LogoWhite from '../../images/uber-eats-white.svg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBasketShopping, faMoon, faReorder, faSignOut, faSun} from '@fortawesome/free-solid-svg-icons';
+import {faBasketShopping, faMoon, faReorder, faSignOut, faSun, faUser} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 import {themeHandler, userLoggedOut} from '../../apollo';
 import {useQuery, useReactiveVar} from '@apollo/client';
@@ -21,6 +21,7 @@ const Header = () => {
 
 	const [_, dispatch] = useStateValue();
 	const {user, loading} = useUser();
+
 	const basketHandler = () => {
 		dispatch({
 			type: actions.BASKET_STATUS,
@@ -61,18 +62,28 @@ const Header = () => {
 						</Link>
 
 						<div className='flex flex-row  '>
-							{user && (
-								<Link to='/orders' className=' mcursor-pointer border-r-2 text-center hover:text-green-600'>
-									<span className='text-xl px-4 text-center'>Orders</span>
-								</Link>
+							{user?.role === UserRole.Owner && (
+								<div className='mx-10'>
+									<Link to={'/orders'} className=' mx-0.5 cursor-pointer inline-flex relative items-center p-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-black dark:bg-black dark:hover:bg-black dark:focus:ring-black'>
+										<FontAwesomeIcon icon={faReorder} />
+										<span className='sr-only'>Notifications</span>
+										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>{orders?.length}</div>
+									</Link>
+								</div>
+							)}
+							{user?.role === UserRole.Client && (
+								<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer mr-5 inline-flex relative  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
+									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
+									{totalQuantity && <div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>{totalQuantity}</div>}
+									{/* {totalQuantity && <span className=' px-2 py-1 text-white rounded-full bg-green-500'>{totalQuantity}</span>} */}
+								</div>
 							)}
 
-							<div className=''>
-								<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
-									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
-									{totalQuantity && <span className='text-lg px-2 text-green-500'>{totalQuantity}</span>}
-								</div>
-							</div>
+							{user && (
+								<Link to='/orders' className={`py-1 mx-0.5 cursor-pointer  hover:text-green-600 `}>
+									<FontAwesomeIcon className=' text-xl px-4 text-center' icon={faUser} />
+								</Link>
+							)}
 
 							{!isDark && (
 								<button className=' py-1 mx-0.5 cursor-pointer' onClick={() => themeHandler(false)}>
@@ -85,15 +96,6 @@ const Header = () => {
 								</button>
 							)}
 
-							{user?.role === UserRole.Owner && (
-								<div className='mx-10'>
-									<Link to={'/orders'} className=' mx-0.5 cursor-pointer inline-flex relative items-center p-3 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-										<FontAwesomeIcon icon={faReorder} />
-										<span className='sr-only'>Notifications</span>
-										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-red-500 rounded-full border-2 border-white dark:border-gray-900'>{orders?.length}</div>
-									</Link>
-								</div>
-							)}
 							{user ? (
 								<span className=' py-1  mx-0.5 cursor-pointer' onClick={userLoggedOut}>
 									<FontAwesomeIcon className='  text-xl px-2' icon={faSignOut} />

@@ -17,6 +17,25 @@ export interface Scalars {
   DateTime: any;
 }
 
+export interface AddressItem {
+  __typename?: 'AddressItem';
+  address: Scalars['String'];
+  apartment: Scalars['String'];
+  city: Scalars['String'];
+  id: Scalars['String'];
+  postalCode: Scalars['Float'];
+  region: Scalars['String'];
+}
+
+export interface AddressItemObjectType {
+  address: Scalars['String'];
+  apartment: Scalars['String'];
+  city: Scalars['String'];
+  id: Scalars['String'];
+  postalCode: Scalars['Float'];
+  region: Scalars['String'];
+}
+
 export interface CategoriesOutput {
   __typename?: 'CategoriesOutput';
   categories?: Maybe<Array<Category>>;
@@ -89,6 +108,7 @@ export interface CreateOrderInput {
   dishQuantity: Array<DishQuantityInputType>;
   restaurantId: Scalars['Int'];
   totalPrice: Scalars['Float'];
+  userAddress: AddressItemObjectType;
 }
 
 export interface CreateOrderOutput {
@@ -168,20 +188,20 @@ export interface DishInput {
 export interface DishOption {
   __typename?: 'DishOption';
   extra: Scalars['Int'];
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   quantity: Scalars['Int'];
 }
 
 export interface DishOptionInput {
   extra: Scalars['Int'];
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   quantity: Scalars['Int'];
 }
 
 export interface DishOptionQuantitInputType {
-  id: Scalars['Float'];
+  id: Scalars['String'];
   quantity: Scalars['Float'];
 }
 
@@ -347,6 +367,7 @@ export interface MutationVerifyPaymentArgs {
 
 export interface Order {
   __typename?: 'Order';
+  address?: Maybe<AddressItem>;
   createdAt?: Maybe<Scalars['DateTime']>;
   customer?: Maybe<User>;
   driver?: Maybe<User>;
@@ -365,7 +386,7 @@ export interface OrderInputType {
 
 export interface OrderItem {
   __typename?: 'OrderItem';
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   photo: Scalars['String'];
   price: Scalars['Float'];
@@ -374,7 +395,7 @@ export interface OrderItem {
 }
 
 export interface OrderItemInputType {
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   photo: Scalars['String'];
   price: Scalars['Float'];
@@ -386,7 +407,7 @@ export interface OrderOptionItem {
   __typename?: 'OrderOptionItem';
   dishId: Scalars['Float'];
   extra: Scalars['Float'];
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   quantity: Scalars['Float'];
 }
@@ -394,7 +415,7 @@ export interface OrderOptionItem {
 export interface OrderOptionItemInputType {
   dishId: Scalars['Float'];
   extra: Scalars['Float'];
-  id: Scalars['Float'];
+  id: Scalars['String'];
   name: Scalars['String'];
   quantity: Scalars['Float'];
 }
@@ -420,6 +441,7 @@ export interface OrdersInputFilter {
 }
 
 export interface OrdersInputType {
+  address?: InputMaybe<AddressItemObjectType>;
   customer?: InputMaybe<UserInput>;
   driver?: InputMaybe<UserInput>;
   items: Array<OrderItemInputType>;
@@ -622,9 +644,13 @@ export interface UpdateUserOutput {
 
 export interface User {
   __typename?: 'User';
+  address?: Maybe<Array<AddressItem>>;
   createdAt?: Maybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  firstName: Scalars['String'];
   id: Scalars['Float'];
+  lastName: Scalars['String'];
+  mobile: Scalars['String'];
   orders: Array<Order>;
   password: Scalars['String'];
   payments: Array<Payment>;
@@ -636,7 +662,11 @@ export interface User {
 }
 
 export interface UserInput {
+  address?: InputMaybe<Array<AddressItemObjectType>>;
   email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  mobile: Scalars['String'];
   orders: Array<OrdersInputType>;
   password: Scalars['String'];
   payments: Array<PaymentsInputType>;
@@ -683,8 +713,12 @@ export interface VerifyPaymentOutput {
 }
 
 export interface AddUserArgs {
+  address?: InputMaybe<Array<AddressItemObjectType>>;
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  mobile: Scalars['String'];
   orders: Array<OrdersInputType>;
   password: Scalars['String'];
   payments: Array<PaymentsInputType>;
@@ -697,6 +731,9 @@ export interface AddUserArgs {
 
 export interface CreateAccountInput {
   email: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  mobile: Scalars['String'];
   password: Scalars['String'];
   role: UserRole;
 }
@@ -827,7 +864,7 @@ export type MutationMutation = { __typename?: 'Mutation', verifyPayment: { __typ
 export type LoggedInUserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type LoggedInUserQuery = { __typename?: 'Query', loggedInUser: { __typename?: 'User', id: number, email: string, role: UserRole, verified: boolean } };
+export type LoggedInUserQuery = { __typename?: 'Query', loggedInUser: { __typename?: 'User', id: number, email: string, role: UserRole, verified: boolean, address?: Array<{ __typename?: 'AddressItem', id: string, address: string, apartment: string, postalCode: number, region: string, city: string }> } };
 
 export type GetOrdersQueryVariables = Exact<{
   data: OrdersInputFilter;
@@ -841,7 +878,7 @@ export type GetOrderByIdQueryVariables = Exact<{
 }>;
 
 
-export type GetOrderByIdQuery = { __typename?: 'Query', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, createdAt?: any, status: OrderStatus, totalPrice?: number, options?: Array<{ __typename?: 'OrderOptionItem', id: number, quantity: number, name: string, extra: number, dishId: number }>, items: Array<{ __typename?: 'OrderItem', id: number, quantity: number, photo: string, price: number, name: string, restaurantId: number }>, customer?: { __typename?: 'User', id: number }, driver?: { __typename?: 'User', id: number }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
+export type GetOrderByIdQuery = { __typename?: 'Query', getOrderById: { __typename?: 'OrderOutput', ok: boolean, message?: string, order?: { __typename?: 'Order', id: number, createdAt?: any, status: OrderStatus, totalPrice?: number, options?: Array<{ __typename?: 'OrderOptionItem', id: string, quantity: number, name: string, extra: number, dishId: number }>, items: Array<{ __typename?: 'OrderItem', id: string, quantity: number, photo: string, price: number, name: string, restaurantId: number }>, customer?: { __typename?: 'User', id: number, email: string, role: UserRole }, driver?: { __typename?: 'User', id: number }, address?: { __typename?: 'AddressItem', id: string, address: string, apartment: string, postalCode: number, region: string, city: string }, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } } } } };
 
 export type RestaurantsQueryVariables = Exact<{
   data: RestaurantsInput;
@@ -862,14 +899,14 @@ export type RestaurantQueryVariables = Exact<{
 }>;
 
 
-export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: number, name: string, extra: number }> }>, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantQuery = { __typename?: 'Query', getRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: string, name: string, extra: number }> }>, category?: { __typename?: 'Category', name: string } } } };
 
 export type RestaurantOwnerQueryVariables = Exact<{
   data: RestaurantInputType;
 }>;
 
 
-export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: number, name: string, extra: number }> }>, orders: Array<{ __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any }>, category?: { __typename?: 'Category', name: string } } } };
+export type RestaurantOwnerQuery = { __typename?: 'Query', getOwnerRestaurant: { __typename?: 'RestaurantOutput', ok: boolean, message?: string, restaurant?: { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, menu: Array<{ __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: string, name: string, extra: number }> }>, orders: Array<{ __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any }>, category?: { __typename?: 'Category', name: string } } } };
 
 export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -902,12 +939,12 @@ export type CategoryQueryVariables = Exact<{
 
 export type CategoryQuery = { __typename?: 'Query', getCategory: { __typename?: 'CategoryOutput', ok: boolean, message?: string, totalPages?: number, category?: { __typename?: 'Category', name: string, id: number, iconImg?: string, restaurantCount: number, slug?: string }, restaurants?: Array<{ __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } }> } };
 
-export type DishQueryVariables = Exact<{
+export type GetDishQueryVariables = Exact<{
   dishId: Scalars['Int'];
 }>;
 
 
-export type DishQuery = { __typename?: 'Query', getDish: { __typename?: 'DishOutput', message?: string, ok: boolean, totalPages?: number, dish?: { __typename?: 'Dish', id: number, name: string, description?: string, price: number, photo?: string, createdAt?: any, updatedAt?: any, restaurant: { __typename?: 'Restaurant', id: number }, options?: Array<{ __typename?: 'DishOption', name: string, extra: number }> } } };
+export type GetDishQuery = { __typename?: 'Query', getDish: { __typename?: 'DishOutput', message?: string, ok: boolean, totalPages?: number, dish?: { __typename?: 'Dish', id: number, name: string, description?: string, price: number, photo?: string, createdAt?: any, updatedAt?: any, restaurant: { __typename?: 'Restaurant', id: number }, options?: Array<{ __typename?: 'DishOption', id: string, name: string, extra: number, quantity: number }> } } };
 
 export type PaymentsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -916,7 +953,7 @@ export type PaymentsQuery = { __typename?: 'Query', Payments: { __typename?: 'Pa
 
 export type RestaurantFragmentFragment = { __typename?: 'Restaurant', id: number, name: string, isPromoted: boolean, address: string, coverImg: string, category?: { __typename?: 'Category', name: string } };
 
-export type DishFragmentFragment = { __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: number, name: string, extra: number }> };
+export type DishFragmentFragment = { __typename?: 'Dish', id: number, name: string, price: number, description?: string, photo?: string, options?: Array<{ __typename?: 'DishOption', id: string, name: string, extra: number }> };
 
 export type OrderFragmentFragment = { __typename?: 'Order', id: number, status: OrderStatus, totalPrice?: number, createdAt?: any };
 
@@ -1489,6 +1526,14 @@ export const LoggedInUserDocument = gql`
     email
     role
     verified
+    address {
+      id
+      address
+      apartment
+      postalCode
+      region
+      city
+    }
   }
 }
     `;
@@ -1600,9 +1645,19 @@ export const GetOrderByIdDocument = gql`
       }
       customer {
         id
+        email
+        role
       }
       driver {
         id
+      }
+      address {
+        id
+        address
+        apartment
+        postalCode
+        region
+        city
       }
       restaurant {
         ...RestaurantFragment
@@ -2016,8 +2071,8 @@ export function useCategoryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<C
 export type CategoryQueryHookResult = ReturnType<typeof useCategoryQuery>;
 export type CategoryLazyQueryHookResult = ReturnType<typeof useCategoryLazyQuery>;
 export type CategoryQueryResult = Apollo.QueryResult<CategoryQuery, CategoryQueryVariables>;
-export const DishDocument = gql`
-    query Dish($dishId: Int!) {
+export const GetDishDocument = gql`
+    query getDish($dishId: Int!) {
   getDish(dishId: $dishId) {
     message
     ok
@@ -2031,8 +2086,10 @@ export const DishDocument = gql`
         id
       }
       options {
+        id
         name
         extra
+        quantity
       }
       photo
       createdAt
@@ -2043,32 +2100,32 @@ export const DishDocument = gql`
     `;
 
 /**
- * __useDishQuery__
+ * __useGetDishQuery__
  *
- * To run a query within a React component, call `useDishQuery` and pass it any options that fit your needs.
- * When your component renders, `useDishQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetDishQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetDishQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useDishQuery({
+ * const { data, loading, error } = useGetDishQuery({
  *   variables: {
  *      dishId: // value for 'dishId'
  *   },
  * });
  */
-export function useDishQuery(baseOptions: Apollo.QueryHookOptions<DishQuery, DishQueryVariables>) {
+export function useGetDishQuery(baseOptions: Apollo.QueryHookOptions<GetDishQuery, GetDishQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<DishQuery, DishQueryVariables>(DishDocument, options);
+        return Apollo.useQuery<GetDishQuery, GetDishQueryVariables>(GetDishDocument, options);
       }
-export function useDishLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DishQuery, DishQueryVariables>) {
+export function useGetDishLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetDishQuery, GetDishQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<DishQuery, DishQueryVariables>(DishDocument, options);
+          return Apollo.useLazyQuery<GetDishQuery, GetDishQueryVariables>(GetDishDocument, options);
         }
-export type DishQueryHookResult = ReturnType<typeof useDishQuery>;
-export type DishLazyQueryHookResult = ReturnType<typeof useDishLazyQuery>;
-export type DishQueryResult = Apollo.QueryResult<DishQuery, DishQueryVariables>;
+export type GetDishQueryHookResult = ReturnType<typeof useGetDishQuery>;
+export type GetDishLazyQueryHookResult = ReturnType<typeof useGetDishLazyQuery>;
+export type GetDishQueryResult = Apollo.QueryResult<GetDishQuery, GetDishQueryVariables>;
 export const PaymentsDocument = gql`
     query Payments {
   Payments {
