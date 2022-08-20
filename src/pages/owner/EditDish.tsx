@@ -17,6 +17,7 @@ export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
 const EditDish = () => {
 	let {id, dishId} = useParams();
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
+	const [changedOption, setChangedOption] = useState<string | undefined>(undefined);
 	const [photoUrl, setPhotoUrl] = useState<string>('');
 	const [optionAdded, setOptionAdded] = useState<Boolean>(false);
 	let navigate = useNavigate();
@@ -26,7 +27,7 @@ const EditDish = () => {
 		register,
 		getValues,
 
-		formState: {errors, isValid, isValidating},
+		formState: {errors, isValid},
 		handleSubmit,
 		setError,
 	} = useForm<CreateDishInput>({
@@ -72,30 +73,18 @@ const EditDish = () => {
 		}
 	}, [getValues, setNewOption, optionAdded]);
 
+	useEffect(() => {
+		const {options} = getValues();
+		console.log('hi');
+		if (options) {
+			setNewOption(options);
+		}
+	}, [changedOption]);
+
 	const onValidSubmit = async () => {
 		if (loading) return;
-		const {name, description, price, options} = getValues();
-
-		const optionItem = newOption
-			?.filter((option) => option.extra > 0 || option.name !== '')
-			.map((option: DishOptionInput) => {
-				// if (Number(option.extra) < 1 && option.name === '') {
-				// 	setError('name', {message: 'empty option not allowed'});
-				// 	return null;
-				// }
-				return {...option, quantity: Number(option.quantity), extra: Number(option.extra)};
-			});
-		const optionNewItem = options
-			?.filter((option) => option.extra > 0 || option.name !== '')
-			.map((option: DishOptionInput) => {
-				// if (Number(option.extra) < 1 && option.name === '') {
-				// 	setError('name', {message: 'empty option not allowed'});
-				// 	return null;
-				// }
-				return {...option, quantity: Number(option.quantity), extra: Number(option.extra)};
-			});
-		console.log(optionItem);
-		console.log(optionNewItem);
+		const {name, description, price} = getValues();
+		const optionItem = newOption?.filter((option) => option.extra > 0 || option.name !== '').map((option: DishOptionInput) => ({...option, quantity: Number(option.quantity), extra: Number(option.extra)}));
 		if (!isValid) {
 			setError('name', {message: 'something went wrong!'});
 		}
@@ -152,10 +141,10 @@ const EditDish = () => {
 											<input className='sr-only' type={'number'} defaultValue={Number(option.quantity)} {...register(`options[${index}].quantity`)} />
 
 											{/* @ts-ignore */}
-											<input className='input mb-3 mx-4' type='text' placeholder='name' defaultValue={option.name} {...register(`options[${index}].name`)} />
+											<input className='input mb-3 mx-4' type='text' placeholder='name' defaultValue={option.name} {...register(`options[${index}].name`, {onBlur: () => setChangedOption((c) => (c ? false : true))})} />
 
 											{/* @ts-ignore */}
-											<input className='input mb-3 w-16 text-center' type={'number'} min={0} placeholder='extra' defaultValue={Number(option.extra)} {...register(`options[${index}].extra`)} />
+											<input className='input mb-3 w-16 text-center' type={'number'} min={0} placeholder='extra' defaultValue={Number(option.extra)} {...register(`options[${index}].extra`, {onBlur: () => setChangedOption((c) => (c ? false : true))})} />
 
 											<button type='button' className='text-white ml-4 px-2 py-1  bg-rose-600' onClick={() => deleteOptionHndler(option.id)}>
 												X
