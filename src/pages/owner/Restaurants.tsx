@@ -48,10 +48,10 @@ const Restaurants = () => {
 									<h1 className='font-bold mt-2 text-4xl '>Welcome to Uber Eats</h1>
 									<h3 className={`font-bold text-xl  mt-4 ${isDark ? 'text-white' : 'text-gray-800'} `}>After adding your restaurant, you should wait for confirmation from us .</h3>
 									<div className='flex flex-row justify-start mt-10'>
-										<Link to={'/restaurant/add'} className='text-2xl btn mr-4 px-4 bg-green-500'>
+										<Link to={'/restaurant/add'} className='text-xl btn mr-4 px-4 bg-green-500'>
 											Add Restaurant
 										</Link>
-										<Link to={'/orders'} className='text-2xl bg-black text-center text-white p-2'>
+										<Link to={'/orders'} className='text-xl bg-black text-center text-white p-2 px-4'>
 											See Orders
 										</Link>
 									</div>
