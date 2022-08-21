@@ -90,7 +90,6 @@ const AddRestaurant = () => {
 					<form className='flex flex-col w-full mt-5 px-10 bg-white ' onSubmit={handleSubmit(onValidSubmit)}>
 						<input {...register('name', restaurantNameRegister)} className='input mb-3' type='text' placeholder='Restaurant Name' onKeyDown={clearNameErrors} />
 						<input {...register('address', addressRegister)} className='input mb-3' type='text' placeholder='Restaurant Address' onKeyDown={clearAddressErrors} />
-
 						<select {...register('categoryId', categoryRegister)} className='input mb-3' onKeyDown={clearCategoryErrors}>
 							<option>Select Category</option>
 							{categories &&

@@ -11,19 +11,19 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 	return (
 		<>
 			<div className='h-screen  w-full max-w-screen-xl mx-auto '>
-				<div className='bg-gray-500 bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
-					<div className={`${isDark ? 'bg-black' : 'bg-white'}   h-56 w-2/4  flex flex-col`}>
-						<div className='pl-14  '>
+				<div className='bg-gray-500 bg-blend-soft-light bg-cover bg-center py-36  ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
+					<div className={`${isDark ? 'bg-black' : 'bg-opacity-80 rounded-r-xl bg-white'}   h-56 w-2/4  flex flex-col`}>
+						<div className='pl-14 '>
 							<h1 className='font-bold mt-2 text-4xl '>{restaurant?.name}</h1>
-							<div className='text-xl mt-4 text-gray-700'>{restaurant?.category?.name}</div>
-							<div className='text-xl mt-2 text-gray-700'>{restaurant?.address}</div>
+							<div className={`text-xl mt-4 ${isDark ? 'text-white' : 'text-gray-700'} `}>{restaurant?.category?.name}</div>
+							<div className={`text-xl mt-2 ${isDark ? 'text-white' : 'text-gray-700'} `}>{restaurant?.address}</div>
 							<div className='mt-10 '>
 								<Link to={'add-dish'} className='py-2 text-white bg-green-500 mr-4 px-10'>
 									Add Dish
 								</Link>
 
-								<Link to={'/restaurant/edit'} className='cursor-pointer py-2 text-white bg-black mr-4 px-4'>
-									<span className='mr-2'>Edit Restaurant</span>
+								<Link to={`/restaurant/${restaurant.id}/edit-restaurant`} className={`cursor-pointer py-2 ${isDark ? 'bg-zinc-700 text-white' : 'bg-black text-white'}  mr-4 px-4`}>
+									<span className='mr-2'>Edit Restaurant </span>
 									<FontAwesomeIcon icon={faEdit} />
 								</Link>
 							</div>

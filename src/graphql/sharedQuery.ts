@@ -8,6 +8,7 @@ export const RESTAURANT_FEAGMENT = gql`
 		address
 		coverImg
 		category {
+			id
 			name
 		}
 		coverImg

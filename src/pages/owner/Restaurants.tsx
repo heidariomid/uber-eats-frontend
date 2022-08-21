@@ -35,8 +35,6 @@ const Restaurants = () => {
 
 	return (
 		<>
-			{error && <ErrorSpan message={errorMessage} />}
-
 			{loading ? (
 				<Loading />
 			) : (
@@ -65,6 +63,11 @@ const Restaurants = () => {
 						{!errorMessage ? (
 							<div className='grid md:grid-cols-3 mt-10 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurants && restaurants.map((restaurant) => <RestaurantOwnerCover key={restaurant.id} restaurant={restaurant} />)}</div>
 						) : (
+							<div role={'alert'} className='bg-zinc-700  mt-10 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
+								{errorMessage}
+							</div>
+						)}
+						{error && (
 							<div role={'alert'} className='bg-zinc-700  mt-10 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
 								{errorMessage}
 							</div>

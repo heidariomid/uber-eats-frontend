@@ -15,7 +15,6 @@ const Checkout = () => {
 
 				<div className='relative grid grid-cols-1 gap-x-16 max-w-7xl mx-auto lg:px-8 lg:grid-cols-2 xl:gap-x-48'>
 					<h1 className='sr-only'>Order information</h1>
-
 					<OrderSummary />
 					<PaymentForms />
 					{!isLoggedIn && <CheckAuth />}

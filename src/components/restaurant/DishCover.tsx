@@ -22,7 +22,8 @@ function classNames(...classes) {
 
 const DishCover = ({setIsSelected, dish}) => {
 	const [state, dispatch] = useStateValue();
-	const [open, setOpen] = useState(true);
+	const [open, setOpen] = useState<boolean>(true);
+	const [isReviewsShow, setIsReviewsShow] = useState<boolean>(false);
 	const isDark = useReactiveVar(isDarkVar);
 
 	const [basket, setBasket] = useState<any>({});
@@ -142,26 +143,25 @@ const DishCover = ({setIsSelected, dish}) => {
 										<div className='sm:col-span-8 lg:col-span-7'>
 											<h2 className={`text-2xl font-extrabold ${isDark ? ' text-white' : 'text-gray-900'} sm:pr-12`}>{dish.name}</h2>
 
-											<section aria-labelledby='information-heading' className='mt-2'>
+											<section aria-labelledby='information-heading' className='mt-4'>
 												<h3 id='information-heading' className='sr-only'>
 													Product information
 												</h3>
-
-												<p className={`text-2xl ${isDark ? ' text-white' : 'text-gray-900'}`}>$ {dish.price}</p>
-
+												<span className='text-2xl  text-white  rounded-full bg-green-500 px-4 '>$ {dish.price}</span>
 												{/* Reviews */}
 												<div className='mt-6'>
 													<h4 className='sr-only'>Reviews</h4>
 													<div className='flex items-center'>
 														<div className='flex items-center'>
 															{[0, 1, 2, 3, 4].map((rating) => (
-																<StarIcon key={rating} className={classNames(dish.rating > rating ? 'text-gray-900' : 'text-yellow-400', 'h-5 w-5 flex-shrink-0')} aria-hidden='true' />
+																<StarIcon key={rating} className={classNames(dish?.rating > rating ? 'text-gray-900' : 'text-yellow-400', 'h-5 w-5 flex-shrink-0')} aria-hidden='true' />
 															))}
 														</div>
 														<p className='sr-only'>{dish?.rating} out of 5 stars</p>
-														<Link to='#' className='ml-3 text-sm font-medium text-green-500 hover:text-green-600'>
-															{dish?.reviewCount} reviews
-														</Link>
+														<div onClick={() => setIsReviewsShow((c) => !c)} className='cursor-pointer ml-3 text-sm font-medium text-green-500 hover:text-green-600'>
+															{dish?.reviewCount}
+															<span className='mb-4 '>{isReviewsShow ? 'Hide Reviews' : 'See Reviews'}</span>
+														</div>
 													</div>
 												</div>
 											</section>
@@ -213,17 +213,8 @@ const DishCover = ({setIsSelected, dish}) => {
 												</form>
 											</section>
 										</div>
-										{user?.role === UserRole.Client && (
-											<div className='sm:col-span-8 lg:col-span-12'>
-												<section aria-labelledby='options-heading' className='mt-10 '>
-													<h3 id='reviews-heading' className='sr-only'>
-														Reviews
-													</h3>
-
-													<Reviews />
-												</section>
-											</div>
-										)}
+										{/* Reviews */}
+										{user?.role === UserRole.Client && isReviewsShow && <Reviews />}
 									</div>
 								</div>
 							</Dialog.Panel>

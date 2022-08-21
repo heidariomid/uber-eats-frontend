@@ -31,8 +31,8 @@ const Router = () => {
 			<Route path='restaurant/owner/:id' element={<OwnerRestaurant />} />
 			<Route path='restaurant/owner/:id/add-dish' element={<AddDish />} />
 			<Route path='restaurant/owner/:id/edit-dish/:dishId' element={<EditDish />} />
+			<Route path='restaurant/:id/edit-restaurant' element={<EditRestaurant />} />
 			<Route path='restaurant/add' element={<AddRestaurant />} />
-			<Route path='restaurant/edit' element={<EditRestaurant />} />
 			<Route path='/confirm' element={<Confirm />} />
 			<Route path='/basket' element={<Basket />} />
 			<Route path='/checkout' element={<Checkout />} />

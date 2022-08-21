@@ -1,6 +1,6 @@
 import {useMutation} from '@apollo/client';
 import {useForm} from 'react-hook-form';
-import {Link, useParams} from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faAdd, faCircleCheck, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {CREATE_DISH} from '../../graphql/mutations';
@@ -14,6 +14,7 @@ export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
 
 const AddDish = () => {
 	let {id} = useParams();
+	let navigate = useNavigate();
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
 	const [photoUrl, setPhotoUrl] = useState<string>('');
 
@@ -37,6 +38,9 @@ const AddDish = () => {
 		}
 		if (ok) {
 			setServerMessage(message);
+			setTimeout(() => {
+				navigate(`/restaurant/owner/${id}`);
+			}, 1500);
 		}
 	};
 
@@ -76,11 +80,11 @@ const AddDish = () => {
 					<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Add Dish</h3>
 					<span className=' text-gray-600 text-left w-full pl-10'>
 						by adding restaurant,you agree to our{' '}
-						<Link className='text-blue-400 pr-1' to='/'>
-							policy{' '}
+						<Link className='text-green-400 pr-1' to='/'>
+							policy
 						</Link>
 						and
-						<Link className='text-blue-400 pl-1' to='/'>
+						<Link className='text-green-400 pl-1' to='/'>
 							rules
 						</Link>
 					</span>
@@ -113,13 +117,15 @@ const AddDish = () => {
 									</div>
 								);
 							})}
+
 						{!photoUrl ? (
-							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
+							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className=' border-4 border-dotted border-gray-200 text-center px-20 py-5 my-6 text-black'>
 								Upload Photo
 							</button>
 						) : (
-							<div className='flex flex-row w-full'>
-								<span className='border-2 border-green-500 w-full  text-center flex justify-center px-20 py-5 my-6 text-green-600'>
+							<div className='flex flex-row justify-center items-center mt-10 '>
+								<img className='w-40 h-40 mr-10 bg-no-repeat bg-center   ' src={photoUrl ? photoUrl : ''} alt='dishImg' />
+								<span className='border-2 border-green-500  text-center px-20 py-5 my-6  text-green-600'>
 									Photo Uploaded
 									<span className='pl-5 '>
 										<FontAwesomeIcon icon={faCircleCheck} />
@@ -141,7 +147,7 @@ const AddDish = () => {
 					</form>
 					<div className='mt-5'>
 						<span className=' font-medium text-black'>Go Back?</span>
-						<Link className='pl-2 text-lime-600 font-medium hover:underline' to={'/'}>
+						<Link className='pl-2 text-lime-600 font-medium hover:underline' to={`/restaurant/owner/${id}`}>
 							Click here
 						</Link>
 					</div>

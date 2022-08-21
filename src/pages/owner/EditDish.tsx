@@ -16,22 +16,21 @@ export const client = filestack.init('AncOrYkrcRkll1kf2xYZ8z');
 
 const EditDish = () => {
 	let {id, dishId} = useParams();
+	let navigate = useNavigate();
 	const [serverMessage, setServerMessage] = useState<string | undefined>(undefined);
-	const [changedOption, setChangedOption] = useState<string | undefined>(undefined);
+	const [changedOption, setChangedOption] = useState<boolean | undefined>(undefined);
 	const [photoUrl, setPhotoUrl] = useState<string>('');
 	const [optionAdded, setOptionAdded] = useState<Boolean>(false);
-	let navigate = useNavigate();
-	const [newOption, setNewOption] = useState<DishOptionInput[] | any>();
+	const [newOption, setNewOption] = useState<DishOptionInput[] | undefined | null>();
 	const [dish, setDish] = useState<any>(null);
 	const {
 		register,
 		getValues,
-
 		formState: {errors, isValid},
 		handleSubmit,
 		setError,
 	} = useForm<CreateDishInput>({
-		mode: 'onChange',
+		mode: 'onSubmit',
 		defaultValues: {
 			name: dish?.name,
 			price: dish?.price,
@@ -59,7 +58,9 @@ const EditDish = () => {
 		}
 		if (data && !loadingDish && !error) {
 			setDish(data.getDish.dish);
-			setNewOption(data?.getDish?.dish?.options);
+			if (data?.getDish?.dish?.options) {
+				setNewOption(data?.getDish?.dish?.options);
+			}
 		}
 	}, [data]);
 
@@ -71,11 +72,10 @@ const EditDish = () => {
 		if (options) {
 			setNewOption(options);
 		}
-	}, [getValues, setNewOption, optionAdded]);
+	}, [setNewOption, optionAdded]);
 
 	useEffect(() => {
 		const {options} = getValues();
-		console.log('hi');
 		if (options) {
 			setNewOption(options);
 		}
@@ -105,7 +105,7 @@ const EditDish = () => {
 		const optionsItem: DishOptionInput | any = [];
 		setNewOption((current) => {
 			optionsItem.push({id: randomId, name: '', extra: 0, quantity: 0});
-			return [...current, ...optionsItem];
+			return current?.concat(optionsItem);
 		});
 	};
 
