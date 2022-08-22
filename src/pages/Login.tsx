@@ -29,6 +29,7 @@ const Login = () => {
 	});
 
 	const onCompleted = (data: LoginMutation) => {
+		console.log(data);
 		const {ok, message, token} = data?.login;
 		if (!ok) {
 			setError('email', {message});
@@ -68,8 +69,8 @@ const Login = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onBlur={clearEmailErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onBlur={clearLoginErrors} />
 
 					<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
 						{!loading && 'Login'}
