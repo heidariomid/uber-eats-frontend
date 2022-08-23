@@ -37,6 +37,15 @@ export const EDIT_USER_PROFILE = gql`
 	}
 `;
 
+export const CREATE_CATEGORY = gql`
+	mutation CreateCategory($data: CreateCategoryInput!) {
+		createCategory(data: $data) {
+			ok
+			message
+		}
+	}
+`;
+
 export const CREATE_RESTAURANT = gql`
 	mutation CreateRestaurant($data: CreateRestaurantInput!) {
 		createRestaurant(data: $data) {

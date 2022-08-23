@@ -21,7 +21,8 @@ const Login = () => {
 		setError,
 		clearErrors,
 	} = useForm<LoginInput>({
-		mode: 'onChange',
+		mode: 'onSubmit',
+		reValidateMode: 'onBlur' || 'onChange',
 		defaultValues: {
 			email: state?.email || '',
 			password: state?.password || '',
@@ -29,7 +30,6 @@ const Login = () => {
 	});
 
 	const onCompleted = (data: LoginMutation) => {
-		console.log(data);
 		const {ok, message, token} = data?.login;
 		if (!ok) {
 			setError('email', {message});
@@ -46,7 +46,7 @@ const Login = () => {
 	const onValidSubmit = () => {
 		if (loading) return;
 		const {email, password} = getValues();
-		console.log({email, password});
+
 		loginHandler({variables: {data: {email, password}}});
 	};
 	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -70,10 +70,10 @@ const Login = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onBlur={clearEmailErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onBlur={clearLoginErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
 
-					<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
+					<button className={'mt-5 py-2 btn'} type='submit' disabled={loading}>
 						{!loading && 'Login'}
 						{loading && (
 							<div className='flex flex-row space-x-16 items-center justify-center'>

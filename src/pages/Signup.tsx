@@ -69,10 +69,10 @@ const Signup = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('firstName', firstNameRegister)} type='text' placeholder='First Name' onBlur={clearFirstNameErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('lastName', lastNameRegister)} type='text' placeholder='Last Name' onBlur={clearLastNameErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onBlur={clearEmailErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onBlur={clearLoginErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('firstName', firstNameRegister)} type='text' placeholder='First Name' onKeyDown={clearFirstNameErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('lastName', lastNameRegister)} type='text' placeholder='Last Name' onKeyDown={clearLastNameErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
+					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
 					<div className=' my-5 focus:ring-0 focus:border-gray-400 '>
 						<PhoneInputWithCountry name='phoneInputWithCountrySelect' control={control} rules={{required: true}} placeholder='Enter phone number' value={mobile} onChange={setMobile} defaultCountry='IR' />
 					</div>
@@ -83,7 +83,7 @@ const Signup = () => {
 							</option>
 						))}
 					</select>
-					<button className={!isValid ? 'bg-gray-300 btn mt-5' : 'btn mt-5'} type='submit' disabled={!isValid || loading}>
+					<button className={'btn mt-5'} type='submit' disabled={loading}>
 						{loading ? 'Loading...' : 'Sign Up'}
 					</button>
 				</form>

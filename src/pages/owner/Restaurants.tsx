@@ -1,14 +1,14 @@
 import {useQuery, useReactiveVar} from '@apollo/client';
 import {useState} from 'react';
-import ErrorSpan from '../../components/custom/ErrorSpan';
 import Loading from '../../components/loading/Loading';
-import {RESTAURANTS_OWNER} from '../../graphql/queries';
-import {RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables} from '../../graphql/schemaTypes';
+import {CATEGORIES, RESTAURANTS_OWNER} from '../../graphql/queries';
+import {CategoriesQuery, CategoriesQueryVariables, RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables} from '../../graphql/schemaTypes';
 import Pagination from '../../components/pagination/Pagination';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import restaurantBg from '../../images/dining.svg';
 import RestaurantOwnerCover from '../../components/restaurant/owner/RestaurantOwnerCover';
 import {Link} from 'react-router-dom';
+import Category from '../../components/restaurant/Category';
 
 interface IRestaurant {
 	id: number;
@@ -19,6 +19,7 @@ const Restaurants = () => {
 	const isDark = useReactiveVar(isDarkVar);
 	const [errorMessage, setErrorMessage] = useState('');
 	const [page, setPage] = useState(1);
+	const [categories, setCategories] = useState<any>([]);
 	const [restaurants, setRestaurants] = useState<IRestaurant[]>([]);
 
 	const onCompletedRestaurants = (data: RestaurantsOwnerQuery) => {
@@ -32,7 +33,17 @@ const Restaurants = () => {
 	};
 
 	const {loading, error, data} = useQuery<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>(RESTAURANTS_OWNER, {onCompleted: onCompletedRestaurants, variables: {data: {page}}});
+	const onCompletedCategories = (data: CategoriesQuery) => {
+		const {ok, message, categories} = data?.getCategories;
+		if (!ok && message) {
+			setErrorMessage(message);
+		}
+		if (ok && categories) {
+			setCategories(categories);
+		}
+	};
 
+	const {loading: categoriesLoading, error: categoriesError} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
 	return (
 		<>
 			{loading ? (
@@ -49,8 +60,8 @@ const Restaurants = () => {
 										<Link to={'/restaurant/add'} className='text-xl btn mr-4 px-4 bg-green-500'>
 											Add Restaurant
 										</Link>
-										<Link to={'/orders'} className='text-xl bg-black text-center text-white p-2 px-4'>
-											See Orders
+										<Link to={'/category/add'} className='text-xl bg-black text-center text-white p-2 px-4'>
+											Add Category
 										</Link>
 									</div>
 								</div>
@@ -58,8 +69,15 @@ const Restaurants = () => {
 						</div>
 					</div>
 
+					{categories && (
+						<div className='flex flex-row justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-xl  mx-auto mb-8 mt-5 px-5'>
+							{categories.map((category) => (
+								<Category key={category.id} category={category} />
+							))}
+						</div>
+					)}
 					<div className={`h-0.5 m-10 ${!isDark ? 'bg-black' : 'bg-green-500'}`}></div>
-					<section className=' px-10 h-screen'>
+					<section className='md:h-128 px-10'>
 						{!errorMessage ? (
 							<div className='grid md:grid-cols-3 mt-10 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurants && restaurants.map((restaurant) => <RestaurantOwnerCover key={restaurant.id} restaurant={restaurant} />)}</div>
 						) : (

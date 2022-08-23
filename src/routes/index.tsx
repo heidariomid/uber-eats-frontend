@@ -19,6 +19,7 @@ import Orders from '../components/order/Orders';
 import OrderSingle from '../components/order/OrderSingle';
 import EditDish from '../pages/owner/EditDish';
 import EditRestaurant from '../pages/owner/EditRestaurant';
+import AddCategory from '../pages/owner/AddCategory';
 
 const Router = () => {
 	return (
@@ -33,6 +34,7 @@ const Router = () => {
 			<Route path='restaurant/owner/:id/edit-dish/:dishId' element={<EditDish />} />
 			<Route path='restaurant/:id/edit-restaurant' element={<EditRestaurant />} />
 			<Route path='restaurant/add' element={<AddRestaurant />} />
+			<Route path='category/add' element={<AddCategory />} />
 			<Route path='/confirm' element={<Confirm />} />
 			<Route path='/basket' element={<Basket />} />
 			<Route path='/checkout' element={<Checkout />} />

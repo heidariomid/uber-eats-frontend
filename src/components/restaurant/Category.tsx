@@ -1,6 +1,6 @@
 import {Category as ICategory} from '../../graphql/schemaTypes';
 
-const Category = ({category, setSlug, slug}: {category: ICategory; setSlug: any; slug: any}) => {
+const Category = ({category, setSlug, slug}: {category: ICategory; setSlug?: any; slug?: any}) => {
 	return (
 		<div onClick={() => setSlug(category?.slug)} key={category?.id} className='flex flex-col  items-center cursor-pointer  '>
 			<div className={`${slug === category.slug && '  shadow-green-500 shadow-inner'}  rounded-full w-14 h-14 bg-cover  `} style={{backgroundImage: `url(${category?.iconImg})`}}></div>
