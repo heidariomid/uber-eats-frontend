@@ -87,7 +87,7 @@ const Restaurants = () => {
 										<div
 											className={`  hover:bg-green-500  transition-all duration-500 bg-gray-400 flex mx-2 px-2 rounded-full  text-center items-center justify-center  text-white`}
 										>
-											{page}
+											0
 										</div>
 									</button>
 								</div>
