@@ -6,13 +6,13 @@ import {totaldishPrice, totalAllDishPrice} from './Basket';
 import {v4 as uuidv4} from 'uuid';
 import {useReactiveVar} from '@apollo/client';
 import {isDarkVar} from '../../apollo/GlobalVar';
-export const dishOptionsItem: any = [];
 const OrderSummary = () => {
+	const dishOptionsItem: any = [];
 	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
 	const isDark = useReactiveVar(isDarkVar);
+
 	const totaldishOptionsPrice = (dishOptions) => {
 		const dishQuantity: any = [];
-
 		dishOptions?.map((option) => {
 			if (option.quantity) {
 				for (let i = 0; i < option.quantity; i++) {
@@ -30,6 +30,7 @@ const OrderSummary = () => {
 		}, 0);
 		return totalPrice;
 	};
+
 	return (
 		<section aria-labelledby='summary-heading' className=' pt-16 pb-10 px-4 sm:px-6 lg:px-0 lg:pb-16 lg:bg-transparent lg:row-start-1 lg:col-start-2'>
 			<div className='max-w-lg mx-auto lg:max-w-none'>
@@ -143,7 +144,9 @@ const OrderSummary = () => {
 						<div className='max-w-lg mx-auto'>
 							<Popover.Button className='w-full flex items-center py-6 font-medium'>
 								<span className='text-base mr-auto'>Total</span>
-								<span className='text-base mr-2'>${(totalAllDishPrice(basketItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2)}</span>
+								<span className='text-base mr-2'>
+									${(totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2)}
+								</span>
 								<ChevronUpIcon className='w-5 h-5 text-gray-500' aria-hidden='true' />
 							</Popover.Button>
 						</div>

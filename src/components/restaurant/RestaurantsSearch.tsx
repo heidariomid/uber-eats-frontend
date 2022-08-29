@@ -67,10 +67,10 @@ const RestaurantsSearch = () => {
 
 	return (
 		<div className='w-full flex flex-col items-center justify-center bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurantBg})`}}>
-			<div className='flex w-full items-center text-center text-white h-8 justify-center bg-   text-4xl'>
-				<span>Uber Eats </span>
+			<div className='flex w-full items-center text-center text-white h-8 justify-center  text-4xl'>
+				<span>Uber Eats</span>
 			</div>
-			<div className='flex px-4 mt-4 items-center text-center border-t-2 border-white  text-white h-8 justify-center  text-2xl'>
+			<div className='flex px-2 mt-4 items-center text-center border-t-2 border-white  text-white h-8 justify-center  text-2xl'>
 				<span className='mt-2'>Get the food you want</span>
 			</div>
 

@@ -49,8 +49,8 @@ const OrderSingle = () => {
 	return order ? (
 		<div className='flex flex-col  items-center h-screen mt-10'>
 			<OrderDetails order={order} />
-			<div className='mt-10'>
-				<Link to={'/orders'} className='hidden text-lg font-medium text-green-500 hover:text-green-600 sm:block'>
+			<div>
+				<Link to={'/orders'} className='text-lg pb-20 font-medium text-green-500 hover:text-green-600 sm:block'>
 					<span aria-hidden='true'> &larr;</span> orders history
 				</Link>
 			</div>

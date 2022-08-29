@@ -1,7 +1,6 @@
 import {faLock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {totalAllDishPrice} from '../shopping-cart/Basket';
-import {dishOptionsItem} from '../shopping-cart/OrderSummary';
 import Zarinpal from '../../images/zarinpal.png';
 import {useMutation, useReactiveVar} from '@apollo/client';
 import {AddressItem, CreateOrderMutation, CreateOrderMutationVariables} from '../../graphql/schemaTypes';
@@ -16,6 +15,7 @@ import Addresses from '../address/Addresses';
 import useUser from '../../hooks/useUser';
 import {v4 as uuid} from 'uuid';
 const PaymentForms = () => {
+	const dishOptionsItem: any = [];
 	const isDark = useReactiveVar(isDarkVar);
 	const {user} = useUser();
 	const [selectedAddress, setSelectedAddress] = useState<AddressItem | undefined>(undefined);
@@ -62,7 +62,17 @@ const PaymentForms = () => {
 		});
 		const totalPrice = (totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2);
 
-		createOrderHandler({variables: {data: {userAddress: selectedAddress ? selectedAddress : addedAddress, dishQuantity: dishQuantityObject, dishOptionQuantity: dishOptionQuantityObject, restaurantId: basketItem.restaurantId, totalPrice: Number(totalPrice)}}});
+		createOrderHandler({
+			variables: {
+				data: {
+					userAddress: selectedAddress ? selectedAddress : addedAddress,
+					dishQuantity: dishQuantityObject,
+					dishOptionQuantity: dishOptionQuantityObject,
+					restaurantId: basketItem.restaurantId,
+					totalPrice: Number(totalPrice),
+				},
+			},
+		});
 	};
 
 	const totaldishOptionsPrice = (dishOptions) => {
@@ -121,14 +131,23 @@ const PaymentForms = () => {
 
 					<div className='my-10 flex space-x-2'>
 						<div className='flex items-center h-5'>
-							<input id='same-as-shipping' name='same-as-shipping' type='checkbox' defaultChecked className='h-4 w-4 border-gray-300 rounded text-green-600 focus:ring-green-500' />
+							<input
+								id='same-as-shipping'
+								name='same-as-shipping'
+								type='checkbox'
+								defaultChecked
+								className='h-4 w-4 border-gray-300 rounded text-green-600 focus:ring-green-500'
+							/>
 						</div>
 						<label htmlFor='same-as-shipping' className={`block text-sm font-medium  ${isDark ? 'text-white' : 'text-gray-900'}`}>
 							Billing address is the same as shipping address
 						</label>
 					</div>
 
-					<button type='submit' className='w-full flex items-center justify-center bg-green-400 border border-transparent text-white rounded-md py-2 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'>
+					<button
+						type='submit'
+						className='w-full flex items-center justify-center bg-green-400 border border-transparent text-white rounded-md py-2 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'
+					>
 						<span className='text-black font-bold px-2'>Pay with</span>
 						<img className='h-5 w-auto' src={Zarinpal} alt='zarinpal-logo' />
 					</button>
@@ -149,16 +168,16 @@ const PaymentForms = () => {
 						Payment details stored in plain text
 					</p>
 				</div>
-			</form>
-			<div className='flex flex-col mt-5 px-20 '>
-				{/* {state?.message !== undefined ? <span className='bg-green-600 span text-white'>{state?.message}</span> : null}
+				<div className='flex flex-col mt-5 px-20 '>
+					{/* {state?.message !== undefined ? <span className='bg-green-600 span text-white'>{state?.message}</span> : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null} */}
-				{errors?.address?.message && <ErrorSpan message={errors?.address?.message} />}
-				{errors?.city?.message && <ErrorSpan message={errors?.city?.message} />}
-				{errors?.region?.message && <ErrorSpan message={errors?.region?.message} />}
-				{errors?.apartment?.message && <ErrorSpan message={errors?.apartment?.message} />}
-				{errors?.postalCode?.message && <ErrorSpan message={errors?.postalCode?.message} />}
-			</div>
+					{errors?.address?.message && <ErrorSpan message={errors?.address?.message} />}
+					{errors?.city?.message && <ErrorSpan message={errors?.city?.message} />}
+					{errors?.region?.message && <ErrorSpan message={errors?.region?.message} />}
+					{errors?.apartment?.message && <ErrorSpan message={errors?.apartment?.message} />}
+					{errors?.postalCode?.message && <ErrorSpan message={errors?.postalCode?.message} />}
+				</div>
+			</form>
 		</>
 	);
 };

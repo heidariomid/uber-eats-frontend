@@ -66,7 +66,7 @@ const PaymentSuccess = () => {
 				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
 					<div className='grid grid-cols-2'>
 						<div>
-							<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 sm:hidden'>
+							<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 '>
 								View Order Details<span aria-hidden='true'> &rarr;</span>
 							</Link>
 						</div>
