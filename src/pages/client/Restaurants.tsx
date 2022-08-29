@@ -51,11 +51,10 @@ const Restaurants = () => {
 	};
 	return (
 		<>
-			{error && <ErrorSpan message={errorMessage} />}
-			{categoriesError && <ErrorSpan message={errorMessage} />}
-			{categoriesLoading && <Loading />}
-
 			<>
+				{error && <ErrorSpan message={errorMessage} />}
+				{categoriesError && <ErrorSpan message={errorMessage} />}
+				{categoriesLoading && <Loading />}
 				<RestaurantsSearch />
 				<div className='max-h-full '>
 					<div>

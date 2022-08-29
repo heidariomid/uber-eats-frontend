@@ -86,7 +86,11 @@ const DishCover = ({setIsSelected, dish}) => {
 					<div className='mt-12 w-full py-3 px-8 flex items-center justify-center text-base font-medium '>
 						<NumericInput changeQuantity={changeQuantity} quantity={quantity} dishId={dish.id} />
 					</div>
-					<button onClick={() => removeFromBasket(dish.id)} type='button' className='text-red-500 mt-12 w-1/3  py-3 px-8 flex items-center justify-center text-base font-medium '>
+					<button
+						onClick={() => removeFromBasket(dish.id)}
+						type='button'
+						className='text-red-500 mt-12 w-1/3  py-3 px-8 flex items-center justify-center text-base font-medium '
+					>
 						<span>
 							<FontAwesomeIcon icon={faTrash} />
 						</span>
@@ -95,7 +99,13 @@ const DishCover = ({setIsSelected, dish}) => {
 			);
 		} else {
 			return (
-				<button onClick={addToBasketHandler} type='button' className={`mt-12 w-full ${isDark ? 'bg-green-500 text-white' : 'bg-black text-white'}  border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium  hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}>
+				<button
+					onClick={addToBasketHandler}
+					type='button'
+					className={`mt-12 w-full ${
+						isDark ? 'bg-green-500 text-white' : 'bg-black text-white'
+					}  border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium  hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
+				>
 					<span>
 						<FontAwesomeIcon icon={faAdd} />
 					</span>
@@ -116,14 +126,34 @@ const DishCover = ({setIsSelected, dish}) => {
 					}, 500)
 				}
 			>
-				<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0' enterTo='opacity-100' leave='ease-in duration-200' leaveFrom='opacity-100' leaveTo='opacity-0'>
+				<Transition.Child
+					as={Fragment}
+					enter='ease-out duration-300'
+					enterFrom='opacity-0'
+					enterTo='opacity-100'
+					leave='ease-in duration-200'
+					leaveFrom='opacity-100'
+					leaveTo='opacity-0'
+				>
 					<div className='hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block' />
 				</Transition.Child>
 				<div className='fixed z-10 inset-0 overflow-y-auto transition-all'>
 					<div className='flex items-stretch md:items-center justify-center min-h-full text-center md:px-2 lg:px-4'>
-						<Transition.Child as={Fragment} enter='ease-out duration-300' enterFrom='opacity-0 translate-y-4 md:translate-y-0 md:scale-95' enterTo='opacity-100 translate-y-0 md:scale-100' leave='ease-in duration-200' leaveFrom='opacity-100 translate-y-0 md:scale-100' leaveTo='opacity-0 translate-y-4 md:translate-y-0 md:scale-95'>
+						<Transition.Child
+							as={Fragment}
+							enter='ease-out duration-300'
+							enterFrom='opacity-0 translate-y-4 md:translate-y-0 md:scale-95'
+							enterTo='opacity-100 translate-y-0 md:scale-100'
+							leave='ease-in duration-200'
+							leaveFrom='opacity-100 translate-y-0 md:scale-100'
+							leaveTo='opacity-0 translate-y-4 md:translate-y-0 md:scale-95'
+						>
 							<Dialog.Panel className='flex text-base  text-left transform transition w-full md:max-w-2xl md:px-4 md:my-8 lg:max-w-4xl'>
-								<div className={`w-full relative flex items-center ${isDark ? 'bg-black ' : 'bg-white '} px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8`}>
+								<div
+									className={`w-full relative flex items-center ${
+										isDark ? 'bg-black ' : 'bg-white '
+									} px-4 pt-14 pb-8 overflow-hidden shadow-2xl sm:px-6 sm:pt-8 md:p-6 lg:p-8`}
+								>
 									<button
 										type='button'
 										className='absolute top-4 right-4 text-gray-400 hover:text-gray-500 sm:top-8 sm:right-6 md:top-6 md:right-6 lg:top-8 lg:right-8'
@@ -154,11 +184,18 @@ const DishCover = ({setIsSelected, dish}) => {
 													<div className='flex items-center'>
 														<div className='flex items-center'>
 															{[0, 1, 2, 3, 4].map((rating) => (
-																<StarIcon key={rating} className={classNames(dish?.rating > rating ? 'text-gray-900' : 'text-yellow-400', 'h-5 w-5 flex-shrink-0')} aria-hidden='true' />
+																<StarIcon
+																	key={rating}
+																	className={classNames(dish?.rating > rating ? 'text-gray-900' : 'text-yellow-400', 'h-5 w-5 flex-shrink-0')}
+																	aria-hidden='true'
+																/>
 															))}
 														</div>
 														<p className='sr-only'>{dish?.rating} out of 5 stars</p>
-														<div onClick={() => setIsReviewsShow((c) => !c)} className='cursor-pointer ml-3 text-sm font-medium text-green-500 hover:text-green-600'>
+														<div
+															onClick={() => setIsReviewsShow((c) => !c)}
+															className='cursor-pointer ml-3 text-sm font-medium text-green-500 hover:text-green-600'
+														>
 															{dish?.reviewCount}
 															<span className='mb-4 '>{isReviewsShow ? 'Hide Reviews' : 'See Reviews'}</span>
 														</div>
@@ -185,14 +222,23 @@ const DishCover = ({setIsSelected, dish}) => {
 															<h4 className={`text-sm ${isDark ? 'text-white' : 'text-gray-900'} font-bold mb-5`}>Options</h4>
 															<div className='grid grid-cols-1'>
 																{dish?.options?.map((item, i) => {
-																	const quantity = basketItem?.items ? basketItem?.dishOptionQuantity[item.id] || 0 : state?.basket?.dishOptionQuantity[item?.id] || 0;
+																	const quantity = basketItem?.items
+																		? basketItem?.dishOptionQuantity[item.id] || 0
+																		: state?.basket?.dishOptionQuantity[item?.id] || 0;
 
 																	return (
 																		<div key={item.id} className='grid grid-cols-3 py-1 '>
 																			<p className={`text-sm    ${isDark ? ' text-white' : 'text-gray-900'}`}>{item.name}</p>
 																			<span className={`text-sm ml-3 ${isDark ? ' text-white' : 'text-gray-900'}`}>${item.extra}</span>
 
-																			{user?.role === UserRole.Client && <NumericOptions quantity={quantity} changeDishOptionQuantity={changeDishOptionQuantity} optionId={item.id} dishId={dish.id} />}
+																			{user?.role === UserRole.Client && (
+																				<NumericOptions
+																					quantity={quantity}
+																					changeDishOptionQuantity={changeDishOptionQuantity}
+																					optionId={item.id}
+																					dishId={dish.id}
+																				/>
+																			)}
 																		</div>
 																	);
 																})}
@@ -201,9 +247,14 @@ const DishCover = ({setIsSelected, dish}) => {
 													) : (
 														<div className='py-12'></div>
 													)}
-													{user?.role === UserRole.Client && addtoOrderButton()}
+													{addtoOrderButton()}
 													{user?.role === UserRole.Owner && (
-														<Link to={`edit-dish/${dish.id}`} className={`mt-12 w-full ${isDark ? ' bg-green-500 text-white' : 'bg-black'} border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}>
+														<Link
+															to={`edit-dish/${dish.id}`}
+															className={`mt-12 w-full ${
+																isDark ? ' bg-green-500 text-white' : 'bg-black'
+															} border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
+														>
 															<span>
 																<FontAwesomeIcon icon={faEdit} />
 															</span>

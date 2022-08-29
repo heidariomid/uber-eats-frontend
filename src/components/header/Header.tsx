@@ -76,20 +76,16 @@ const Header = () => {
 									</Link>
 								</div>
 							)}
-							{user?.role === UserRole.Client && (
-								<div
-									onClick={basketHandler}
-									className={`py-1 mx-0.5 cursor-pointer mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-green-500'} `}
-								>
-									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
-									{totalQuantity && (
-										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>
-											{totalQuantity}
-										</div>
-									)}
-									{/* {totalQuantity && <span className=' px-2 py-1 text-white rounded-full bg-green-500'>{totalQuantity}</span>} */}
-								</div>
-							)}
+
+							<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-lime-700'} `}>
+								<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
+								{totalQuantity && (
+									<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full '>
+										{totalQuantity}
+									</div>
+								)}
+								{/* {totalQuantity && <span className=' px-2 py-1 text-white rounded-full bg-green-500'>{totalQuantity}</span>} */}
+							</div>
 
 							{user && (
 								<Link to='/orders' className={`py-1 mx-0.5 cursor-pointer  hover:text-green-600 `}>
