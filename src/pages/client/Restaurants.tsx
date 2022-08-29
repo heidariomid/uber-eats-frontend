@@ -68,7 +68,7 @@ const Restaurants = () => {
 						</div>
 						{!loading && <div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-100'}`}></div>}
 
-						<section className='lg:h-128 px-10 mt-12'>
+						<section className='max-h-screen overflow-scroll lg:h-128 px-10 mt-12'>
 							{!errorMessage || !loading ? (
 								<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
 							) : (
