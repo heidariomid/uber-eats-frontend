@@ -54,7 +54,8 @@ const Restaurants = () => {
 	return (
 		<>
 			{categoriesLoading && <Loading />}
-			{error || categoriesError ? (
+			{categoriesError && <ErrorSpan message={errorMessage} />}
+			{error ? (
 				<ErrorPage errorCode='Access Denied' title='This site can not be reached' message={'Please Turn on your VPN'} icon={faLock} />
 			) : (
 				<>
