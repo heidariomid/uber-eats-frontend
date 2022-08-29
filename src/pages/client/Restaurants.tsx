@@ -66,10 +66,10 @@ const Restaurants = () => {
 								{categories && categories.map((category) => <Category key={category.id} category={category} slug={slug} setSlug={setSlug} />)}
 							</div>
 						</div>
-						<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-100'}`}></div>
+						{!loading && <div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-100'}`}></div>}
 
 						<section className='lg:h-128 px-10 mt-12'>
-							{!errorMessage ? (
+							{!errorMessage || !loading ? (
 								<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
 							) : (
 								<div role={'alert'} className='bg-gray-600 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
