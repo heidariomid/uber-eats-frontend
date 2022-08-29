@@ -4,7 +4,6 @@ import {Transition} from '@headlessui/react';
 import {CheckCircleIcon, MinusCircleIcon} from '@heroicons/react/outline';
 import {XIcon} from '@heroicons/react/solid';
 import {useStateValue} from '../../store/context/ContextManager';
-import Basket from '../shopping-cart/Basket';
 
 const Notification = ({message}) => {
 	const [show, setShow] = useState(false);

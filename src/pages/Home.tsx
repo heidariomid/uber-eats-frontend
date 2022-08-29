@@ -29,7 +29,7 @@ const Home = () => {
 		<div>
 			{!loading ? (
 				<div className='font-[Rubik]'>
-					{!user?.verified && user && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />}
+					{/* {!user?.verified && user && <Banner text={'please click on the link that we sent to your email'} color={'white'} bgcolor={'red'} />} */}
 					{homeHandler()}
 					<Footer />
 				</div>

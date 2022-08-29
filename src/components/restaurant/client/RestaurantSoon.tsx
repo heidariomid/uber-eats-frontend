@@ -15,10 +15,10 @@ const RestaurantSoon = ({restaurant}) => {
 
 				<div className={`absolute text-center flex justify-center items-center  text-5xl font-semibold ${isDark ? 'bg-black' : 'bg-white'} bg-opacity-50   py-10 px-20 `}>
 					<div className='pl-14 py-2 '>
-						<h1 className='font-bold mt-2 mb-10 text-7xl'>Coming Soon</h1>
-						<h2 className='font-bold mt-2 text-4xl text-left mb-5'>{restaurant?.name}</h2>
-						<div className='text-2xl mt-4 text-left uppercase mb-5'>{restaurant?.category?.name}</div>
-						<div className='text-2xl text-left '>{restaurant?.address}</div>
+						<h1 className='font-bold mt-2 mb-10 text-3xl md:text-7xl'>Coming Soon</h1>
+						<h2 className='font-bold mt-2 md:text-4xl text-2xl text-left mb-5'>{restaurant?.name}</h2>
+						<div className='md:text-2xl text-lg mt-4 text-left uppercase mb-5'>{restaurant?.category?.name}</div>
+						<div className='md:text-2xl text-lg text-left '>{restaurant?.address}</div>
 						<div className=' mt-10 mx-auto'>
 							<Link to={`/`} className='text-lg font-medium text-black hover:text-green-500 '>
 								<span aria-hidden='true'> &larr;</span> Go Back

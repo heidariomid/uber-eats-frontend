@@ -57,11 +57,11 @@ const Header = () => {
 				<header className='flex items-center justify-start text-center py-4 w-full mx-auto'>
 					<div className='w-full px-5 xl:-x-0 max-w-screen-xl mx-auto flex justify-between items-center'>
 						<Link to={'/'}>
-							{!isDark && <img className='w-40 p-1 cursor-pointer' src={Logo} alt='logo' />}
-							{isDark && <img className='w-40 p-1  cursor-pointer' src={LogoWhite} alt='logo' />}
+							{!isDark && <img className='w-36 md:w-40 p-1 cursor-pointer' src={Logo} alt='logo' />}
+							{isDark && <img className='w-36 md:w-40 p-1  cursor-pointer' src={LogoWhite} alt='logo' />}
 						</Link>
 
-						<div className='flex flex-row  '>
+						<div className='flex  '>
 							{user?.role === UserRole.Owner && (
 								<div className='mx-10'>
 									<Link
@@ -77,8 +77,11 @@ const Header = () => {
 								</div>
 							)}
 
-							<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-lime-700'} `}>
-								<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
+							<div
+								onClick={basketHandler}
+								className={`py-1 mx-0.5 cursor-pointer mr-2 md:mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-lime-700'} `}
+							>
+								<FontAwesomeIcon className='text-xl  md:px-2' icon={faBasketShopping} />
 								{totalQuantity && (
 									<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full '>
 										{totalQuantity}
@@ -89,28 +92,28 @@ const Header = () => {
 
 							{user && (
 								<Link to='/orders' className={`py-1 mx-0.5 cursor-pointer  hover:text-green-600 `}>
-									<FontAwesomeIcon className=' text-xl px-4 text-center' icon={faUser} />
+									<FontAwesomeIcon className=' text-xl px-1 md:px-4 text-center' icon={faUser} />
 								</Link>
 							)}
 
 							{!isDark && (
 								<button className=' py-1 mx-0.5 cursor-pointer' onClick={() => themeHandler(false)}>
-									<FontAwesomeIcon className='  text-xl px-2' icon={faMoon} />
+									<FontAwesomeIcon className='  text-xl px-1 md:px-2' icon={faMoon} />
 								</button>
 							)}
 							{isDark && (
 								<button className=' py-1  mx-0.5 cursor-pointer ' onClick={() => themeHandler(true)}>
-									<FontAwesomeIcon className='  text-xl px-2' icon={faSun} />
+									<FontAwesomeIcon className='  text-xl  md:px-2' icon={faSun} />
 								</button>
 							)}
 
 							{user ? (
 								<span className=' py-1  mx-0.5 cursor-pointer' onClick={userLoggedOut}>
-									<FontAwesomeIcon className='  text-xl px-2' icon={faSignOut} />
+									<FontAwesomeIcon className='  text-xl md:px-2' icon={faSignOut} />
 								</span>
 							) : (
-								<Link to='/auth/login' className=' py-1  mx-4 cursor-pointer'>
-									<span className='text-xl px-4 btn'>Login</span>
+								<Link to='/auth/login' className=' py-1  ml-2 md:mx-4 cursor-pointer'>
+									<span className='text-sm md:text-xl px-2  md:px-4 btn'>Login</span>
 								</Link>
 							)}
 						</div>
