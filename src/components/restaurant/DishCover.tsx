@@ -231,14 +231,12 @@ const DishCover = ({setIsSelected, dish}) => {
 																			<p className={`text-sm    ${isDark ? ' text-white' : 'text-gray-900'}`}>{item.name}</p>
 																			<span className={`text-sm ml-3 ${isDark ? ' text-white' : 'text-gray-900'}`}>${item.extra}</span>
 
-																			{user?.role === UserRole.Client && (
-																				<NumericOptions
-																					quantity={quantity}
-																					changeDishOptionQuantity={changeDishOptionQuantity}
-																					optionId={item.id}
-																					dishId={dish.id}
-																				/>
-																			)}
+																			<NumericOptions
+																				quantity={quantity}
+																				changeDishOptionQuantity={changeDishOptionQuantity}
+																				optionId={item.id}
+																				dishId={dish.id}
+																			/>
 																		</div>
 																	);
 																})}
@@ -265,7 +263,7 @@ const DishCover = ({setIsSelected, dish}) => {
 											</section>
 										</div>
 										{/* Reviews */}
-										{user?.role === UserRole.Client && isReviewsShow && <Reviews />}
+										{isReviewsShow && <Reviews />}
 									</div>
 								</div>
 							</Dialog.Panel>
