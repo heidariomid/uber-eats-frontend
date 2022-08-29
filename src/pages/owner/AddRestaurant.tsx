@@ -51,7 +51,10 @@ const AddRestaurant = () => {
 			setCategories(categories);
 		}
 	};
-	const [dispatch, {loading}] = useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CREATE_RESTAURANT, {onCompleted, refetchQueries: [{query: RESTAURANTS_OWNER}]});
+	const [dispatch, {loading}] = useMutation<CreateRestaurantMutation, CreateRestaurantMutationVariables>(CREATE_RESTAURANT, {
+		onCompleted,
+		refetchQueries: [{query: RESTAURANTS_OWNER}],
+	});
 	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
 
 	const onValidSubmit = async () => {
@@ -88,21 +91,37 @@ const AddRestaurant = () => {
 						{serverMessage && <span className='span bg-green-500 text-white'>{serverMessage}</span>}
 					</div>
 					<form className='flex flex-col w-full mt-5 px-10 bg-white ' onSubmit={handleSubmit(onValidSubmit)}>
-						<input {...register('name', restaurantNameRegister)} className='input mb-3' type='text' placeholder='Restaurant Name' onKeyDown={clearNameErrors} />
-						<input {...register('address', addressRegister)} className='input mb-3' type='text' placeholder='Restaurant Address' onKeyDown={clearAddressErrors} />
-						<select {...register('categoryId', categoryRegister)} className='input mb-3' onKeyDown={clearCategoryErrors}>
-							<option>Select Category</option>
+						<input
+							{...register('name', restaurantNameRegister)}
+							className='input mb-3  text-black'
+							type='text'
+							placeholder='Restaurant Name'
+							onKeyDown={clearNameErrors}
+						/>
+						<input
+							{...register('address', addressRegister)}
+							className='input mb-3  text-black'
+							type='text'
+							placeholder='Restaurant Address'
+							onKeyDown={clearAddressErrors}
+						/>
+						<select {...register('categoryId', categoryRegister)} className='input mb-3  text-black' onKeyDown={clearCategoryErrors}>
+							<option className=' text-black'>Select Category</option>
 							{categories &&
 								categories
 									.filter((category) => category.name !== 'All')
 									.map((category) => (
-										<option key={category?.id} value={category?.id}>
+										<option className=' text-black' key={category?.id} value={category?.id}>
 											{category?.name}
 										</option>
 									))}
 						</select>
 						{!photoUrl ? (
-							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
+							<button
+								onClick={() => uploadPhotoHandler(setPhotoUrl)}
+								type={'button'}
+								className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'
+							>
 								Upload Photo
 							</button>
 						) : (
@@ -116,7 +135,11 @@ const AddRestaurant = () => {
 							</div>
 						)}
 
-						<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
+						<button
+							className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'}
+							type='submit'
+							disabled={!isValid || loading}
+						>
 							{!loading && 'Add Restaurant'}
 							{loading && (
 								<div className='flex flex-row space-x-16 items-center justify-center'>

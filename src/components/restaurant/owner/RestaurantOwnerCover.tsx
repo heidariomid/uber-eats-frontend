@@ -15,7 +15,7 @@ const RestaurantOwnerCover = ({restaurant}) => {
 						!isDark && 'group-hover:bg-green-500'
 					} h-0.5 w-20 text-center justify-center items-center bg-center `}
 				></div>
-				<span className='text-sm'>{restaurant?.category?.name}</span>
+				<span className='text-sm uppercase'>{restaurant?.category?.name}</span>
 			</Link>
 		</div>
 	);

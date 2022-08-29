@@ -4,7 +4,17 @@ import {Link, useNavigate, useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faCircleCheck, faSpinner} from '@fortawesome/free-solid-svg-icons';
 import {EDIT_RESTAURANT} from '../../graphql/mutations';
-import {CategoriesQuery, CategoriesQueryVariables, CategoryInput, EditRestaurantMutation, EditRestaurantMutationVariables, Restaurant, RestaurantOwnerQuery, RestaurantOwnerQueryVariables, UserRole} from '../../graphql/schemaTypes';
+import {
+	CategoriesQuery,
+	CategoriesQueryVariables,
+	CategoryInput,
+	EditRestaurantMutation,
+	EditRestaurantMutationVariables,
+	Restaurant,
+	RestaurantOwnerQuery,
+	RestaurantOwnerQueryVariables,
+	UserRole,
+} from '../../graphql/schemaTypes';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import {CATEGORIES, RESTAURANTS_OWNER, RESTAURANT_OWNER} from '../../graphql/queries';
 import {useEffect, useState} from 'react';
@@ -78,7 +88,10 @@ const EditRestaurant = () => {
 			setCategories(categories);
 		}
 	};
-	const [dispatch, {loading}] = useMutation<EditRestaurantMutation, EditRestaurantMutationVariables>(EDIT_RESTAURANT, {onCompleted, refetchQueries: [{query: RESTAURANT_OWNER, variables: {data: {restaurantId: Number(id)}}}]});
+	const [dispatch, {loading}] = useMutation<EditRestaurantMutation, EditRestaurantMutationVariables>(EDIT_RESTAURANT, {
+		onCompleted,
+		refetchQueries: [{query: RESTAURANT_OWNER, variables: {data: {restaurantId: Number(id)}}}],
+	});
 	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
 
 	useEffect(() => {
@@ -126,16 +139,35 @@ const EditRestaurant = () => {
 							{serverMessage && <span className='span bg-green-500 text-white'>{serverMessage}</span>}
 						</div>
 						<form className='flex flex-col w-full mt-5 px-10 bg-white ' onSubmit={handleSubmit(onValidSubmit)}>
-							<input defaultValue={restaurant.name} {...register('name')} className='input mb-3' type='text' placeholder='Restaurant Name' onKeyDown={clearNameErrors} />
-							<input defaultValue={restaurant.address} {...register('address')} className='input mb-3' type='text' placeholder='Restaurant Address' onKeyDown={clearAddressErrors} />
+							<input
+								defaultValue={restaurant.name}
+								{...register('name')}
+								className='input mb-3 text-black'
+								type='text'
+								placeholder='Restaurant Name'
+								onKeyDown={clearNameErrors}
+							/>
+							<input
+								defaultValue={restaurant.address}
+								{...register('address')}
+								className='input mb-3 text-black'
+								type='text'
+								placeholder='Restaurant Address'
+								onKeyDown={clearAddressErrors}
+							/>
 
-							<select defaultValue={restaurant.category.id} {...register('category', {onChange: () => setChangedCategory((c) => (c ? false : true))})} className='input mb-3' onKeyDown={clearCategoryErrors}>
+							<select
+								defaultValue={restaurant.category.id}
+								{...register('category', {onChange: () => setChangedCategory((c) => (c ? false : true))})}
+								className='input mb-3 text-black uppercase'
+								onKeyDown={clearCategoryErrors}
+							>
 								{categories &&
 									categories
 										.filter((category) => category.name !== 'All')
 										.map((category) => {
 											return (
-												<option key={category?.id} value={category?.id} selected={category.id === restaurant.category.id}>
+												<option className='uppercase text-black' key={category?.id} value={category?.id} selected={category.id === restaurant.category.id}>
 													{category?.name}
 												</option>
 											);
@@ -144,14 +176,18 @@ const EditRestaurant = () => {
 
 							{!photoUrl ? (
 								<div className='flex flex-row justify-center items-center mt-10'>
-									<img className='w-40 h-40 mr-10 bg-no-repeat bg-center   ' src={restaurant.coverImg} alt='restaurantImg' />
-									<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className='border-4 border-dotted border-gray-200 text-center px-20 py-5 my-6 text-black'>
+									<img className='w-20 h-20 md:w-40 md:h-40 mr-10 bg-no-repeat bg-center   ' src={restaurant.coverImg} alt='restaurantImg' />
+									<button
+										onClick={() => uploadPhotoHandler(setPhotoUrl)}
+										type={'button'}
+										className='border-4 border-dotted border-gray-200 text-center px-10 md:px-20 py-5 my-6 text-black'
+									>
 										Change Photo
 									</button>
 								</div>
 							) : (
 								<div className='flex flex-row justify-center items-center mt-10 '>
-									<img className='w-40 h-40 mr-10 bg-no-repeat bg-center   ' src={photoUrl ? photoUrl : ''} alt='restaurantImg' />
+									<img className=' w-20 h-20  md:w-40 md:h-40 mr-10 bg-no-repeat bg-center   ' src={photoUrl ? photoUrl : ''} alt='restaurantImg' />
 									<span className='border-2 border-green-500  text-center px-20 py-5 my-6  text-green-600'>
 										Photo Uploaded
 										<span className='pl-5 '>

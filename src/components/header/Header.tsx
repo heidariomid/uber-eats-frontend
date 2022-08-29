@@ -1,7 +1,7 @@
 import Logo from '../../images/uber-eats.svg';
 import LogoWhite from '../../images/uber-eats-white.svg';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faBasketShopping, faMoon, faReorder, faSignOut, faSun, faUser} from '@fortawesome/free-solid-svg-icons';
+import {faBasketShopping, faMoon, faPizzaSlice, faReorder, faSignOut, faSun, faUser} from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 import {themeHandler, userLoggedOut} from '../../apollo';
 import {useQuery, useReactiveVar} from '@apollo/client';
@@ -65,33 +65,32 @@ const Header = () => {
 						<div className='flex  '>
 							{user?.role === UserRole.Owner && (
 								<div className='mx-10'>
-									<Link
-										to={'/orders'}
-										className=' mx-0.5 cursor-pointer inline-flex relative items-center p-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-black dark:bg-black dark:hover:bg-black dark:focus:ring-black'
-									>
-										<FontAwesomeIcon icon={faReorder} />
+									<Link to={'/orders'} className=' mx-0.5 cursor-pointer inline-flex relative items-center p-2 text-sm font-medium text-center'>
+										<FontAwesomeIcon icon={faPizzaSlice} size={'lg'} />
 										<span className='sr-only'>Notifications</span>
-										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>
+										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full '>
 											{orders?.length}
 										</div>
 									</Link>
 								</div>
 							)}
 
-							<div
-								onClick={basketHandler}
-								className={`py-1 mx-0.5 cursor-pointer mr-4 md:mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-lime-700'} `}
-							>
-								<FontAwesomeIcon className='text-xl  md:px-2' icon={faBasketShopping} />
-								{totalQuantity && (
-									<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full '>
-										{totalQuantity}
-									</div>
-								)}
-								{/* {totalQuantity && <span className=' px-2 py-1 text-white rounded-full bg-green-500'>{totalQuantity}</span>} */}
-							</div>
+							{user?.role === UserRole.Client && (
+								<div
+									onClick={basketHandler}
+									className={`py-1 mx-0.5 cursor-pointer mr-4 md:mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-lime-700'} `}
+								>
+									<FontAwesomeIcon className='text-xl  md:px-2' icon={faBasketShopping} />
+									{totalQuantity && (
+										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full '>
+											{totalQuantity}
+										</div>
+									)}
+									{/* {totalQuantity && <span className=' px-2 py-1 text-white rounded-full bg-green-500'>{totalQuantity}</span>} */}
+								</div>
+							)}
 
-							{user && (
+							{user?.role === UserRole.Client && (
 								<Link to='/orders' className={`py-1 mx-0.5 cursor-pointer mr-2 hover:text-green-600 `}>
 									<FontAwesomeIcon className=' text-xl px-1 md:px-4 text-center' icon={faUser} />
 								</Link>

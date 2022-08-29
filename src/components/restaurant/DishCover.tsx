@@ -230,13 +230,14 @@ const DishCover = ({setIsSelected, dish}) => {
 																		<div key={item.id} className='grid grid-cols-3 py-1 '>
 																			<p className={`text-sm    ${isDark ? ' text-white' : 'text-gray-900'}`}>{item.name}</p>
 																			<span className={`text-sm ml-3 ${isDark ? ' text-white' : 'text-gray-900'}`}>${item.extra}</span>
-
-																			<NumericOptions
-																				quantity={quantity}
-																				changeDishOptionQuantity={changeDishOptionQuantity}
-																				optionId={item.id}
-																				dishId={dish.id}
-																			/>
+																			{user?.role === UserRole.Client && (
+																				<NumericOptions
+																					quantity={quantity}
+																					changeDishOptionQuantity={changeDishOptionQuantity}
+																					optionId={item.id}
+																					dishId={dish.id}
+																				/>
+																			)}
 																		</div>
 																	);
 																})}
@@ -245,7 +246,7 @@ const DishCover = ({setIsSelected, dish}) => {
 													) : (
 														<div className='py-12'></div>
 													)}
-													{addtoOrderButton()}
+													{user?.role === UserRole.Client && addtoOrderButton()}
 													{user?.role === UserRole.Owner && (
 														<Link
 															to={`edit-dish/${dish.id}`}

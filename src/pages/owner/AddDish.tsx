@@ -94,10 +94,16 @@ const AddDish = () => {
 						{serverMessage && <span className='span bg-green-500 text-white'>{serverMessage}</span>}
 					</div>
 					<form className='flex flex-col w-full mt-5 px-10 bg-white ' onSubmit={handleSubmit(onValidSubmit)}>
-						<input {...register('name', restaurantNameRegister)} className='input mb-3' type='text' placeholder='Name' onKeyDown={clearNameErrors} />
-						<input {...register('price', priceRegister)} className='input mb-3' type='text' placeholder='Price' onKeyDown={clearPriceErrors} />
-						<input {...register('description', descriptionRegister)} className='input mb-3' type='text' placeholder='Description' onKeyDown={clearDescriptionErrors} />
-						<span onClick={() => AddOptionHandler()} className='cursor-pointer w-1/3  py-1 px2 my-5 border-2 border-dotted border-gray-400'>
+						<input {...register('name', restaurantNameRegister)} className='input mb-3  text-black' type='text' placeholder='Name' onKeyDown={clearNameErrors} />
+						<input {...register('price', priceRegister)} className='input mb-3  text-black' type='text' placeholder='Price' onKeyDown={clearPriceErrors} />
+						<input
+							{...register('description', descriptionRegister)}
+							className='input mb-3  text-black'
+							type='text'
+							placeholder='Description'
+							onKeyDown={clearDescriptionErrors}
+						/>
+						<span onClick={() => AddOptionHandler()} className='cursor-pointer w-1/2 md:w-1/3  text-black  py-1 px2 my-5 border-2 border-dotted border-gray-400'>
 							Add Option
 							<FontAwesomeIcon icon={faAdd} className='ml-2' />
 						</span>
@@ -105,20 +111,26 @@ const AddDish = () => {
 						{optionNumber?.length > 0 &&
 							optionNumber.map((id, i) => {
 								return (
-									<div key={i} className='w-full mx-auto px-10  justify-center items-center flex '>
+									<div key={i} className='w-full flex flex-row mt-2'>
 										{/* @ts-ignore */}
-										<input {...register(`dishOptionName-${id}`, restaurantNameRegister)} className='input mb-3 ' type='text' placeholder='name' />
+										<input
+											/* @ts-ignore */
+											{...register(`dishOptionName-${id}`, restaurantNameRegister)}
+											className='w-40 md:w-1/2 input mb-3 mx-auto  text-black'
+											type='text'
+											placeholder='name'
+										/>
 										{/* @ts-ignore */}
 										<input
 											/* @ts-ignore */
 											{...register(`dishOptionExtra-${id}`, restaurantNameRegister)}
-											className='input mb-3 w-1/2 mx-10'
+											className='w-16 md:w-1/3 input mb-3  mx-auto text-black'
 											type='number'
 											min={0}
 											placeholder='price'
 										/>
 
-										<button type='button' className='text-white px-2 py-1  bg-rose-600' onClick={() => deleteOptionHndler(id)}>
+										<button type='button' className='text-white ml-4 px-2 py-1 w-8 h-8 mt-2  bg-rose-600' onClick={() => deleteOptionHndler(id)}>
 											X
 										</button>
 									</div>

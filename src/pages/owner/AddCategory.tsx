@@ -79,10 +79,14 @@ const AddCategory = () => {
 						{serverMessage && <span className='span bg-green-500 text-white'>{serverMessage}</span>}
 					</div>
 					<form className='flex flex-col w-full mt-5 px-10 bg-white ' onSubmit={handleSubmit(onValidSubmit)}>
-						<input {...register('name', categoryNameRegister)} className='input mb-3' type='text' placeholder='Category Name' onKeyDown={clearNameErrors} />
+						<input {...register('name', categoryNameRegister)} className='input mb-3  text-black' type='text' placeholder='Category Name' onKeyDown={clearNameErrors} />
 
 						{!photoUrl ? (
-							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'>
+							<button
+								onClick={() => uploadPhotoHandler(setPhotoUrl)}
+								type={'button'}
+								className='border-4 border-dotted border-gray-200 text-center flex justify-center px-20 py-5 my-6 text-black'
+							>
 								Upload Photo
 							</button>
 						) : (
@@ -96,7 +100,11 @@ const AddCategory = () => {
 							</div>
 						)}
 
-						<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
+						<button
+							className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'}
+							type='submit'
+							disabled={!isValid || loading}
+						>
 							{!loading && 'Add Category'}
 							{loading && (
 								<div className='flex flex-row space-x-16 items-center justify-center'>

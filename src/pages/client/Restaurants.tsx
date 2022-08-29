@@ -12,7 +12,7 @@ import {isDarkVar} from '../../apollo/GlobalVar';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 import ErrorPage from '../../components/custom/ErrorPage';
-import {faLocation, faLock} from '@fortawesome/free-solid-svg-icons';
+import {faLock} from '@fortawesome/free-solid-svg-icons';
 
 const Restaurants = () => {
 	const [state, dispatch] = useStateValue();
@@ -72,7 +72,7 @@ const Restaurants = () => {
 							{!errorMessage || !loading ? (
 								<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
 							) : (
-								<div role={'alert'} className='bg-gray-600 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
+								<div role={'alert'} className='bg-zinc-700  mt-10 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
 									{errorMessage}
 								</div>
 							)}
