@@ -12,12 +12,12 @@ interface IErrorPageProps {
 const ErrorPage: React.FC<IErrorPageProps> = ({errorCode, title, message, icon}) => {
 	return (
 		<div className='h-screen w-full text-white flex flex-col items-center justify-center space-y-6 bg-cover bg-center ' style={{backgroundImage: `url(${restaurantBg})`}}>
-			<div className='animate-wiggle text-7xl'>
+			<div className='animate-wiggle text-5xl md:text-7xl'>
 				<FontAwesomeIcon icon={icon ? icon : faSadTear} />
 			</div>
-			<h1 className='text-5xl font-bold'>{errorCode}</h1>
-			<h1 className='text-3xl font-bold'>{title}</h1>
-			<p className='text-xl '>{message}</p>
+			<h1 className='text-2xl md:text-5xl font-bold'>{errorCode}</h1>
+			<h1 className='text-xl md:text-3xl font-bold'>{title}</h1>
+			<p className='text-lg md:text-xl '>{message}</p>
 			<Link className='hover:underline' to={'/'}>
 				&larr; Go back home
 			</Link>

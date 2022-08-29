@@ -1,5 +1,6 @@
 import {Link, useLocation} from 'react-router-dom';
 import PreaperFood from '../../images/preaper.svg';
+import PreaperFoodBlack from '../../images/preaperBlack.svg';
 import OrderSuccessImg from '../../images/order-success.svg';
 import {useQuery, useReactiveVar} from '@apollo/client';
 import {GET_ORDER_BY_ID} from '../../graphql/queries';
@@ -62,7 +63,7 @@ const PaymentSuccess = () => {
 
 	return order && order.id === orderId ? (
 		<>
-			<div className='flex justify-center items-center h-screen '>
+			<div className='flex justify-center items-center h-screen mt-20'>
 				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8 '>
 					<div className='grid grid-cols-2'>
 						<div>
@@ -85,7 +86,7 @@ const PaymentSuccess = () => {
 						</h2>
 
 						<div className='space-y-8'>
-							<div key={orderId} className='bg-black border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg'>
+							<div key={orderId} className={` ${isDark ? 'bg-black' : 'bg-white'} border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg`}>
 								<div className='py-6 px-4 sm:px-6 '>
 									<div className='flex flex-col md:flex-row justify-center items-center'>
 										<img
@@ -96,35 +97,33 @@ const PaymentSuccess = () => {
 										/>
 
 										<div className='mt-6 sm:mt-0 sm:ml-6'>
-											<h2 className='text-2xl font-medium text-gray-700'>Thanks for Your Order</h2>
+											<h2 className={`text-2xl font-medium ${isDark ? 'text-white' : 'text-gray-700'}`}>Thanks for Your Order</h2>
 											<h3 className='text-lg mt-2 font-extrabold tracking-tight text-green-600 sm:text-2xl'>Order #{order.id}</h3>
-											<h6 className='text-md mt-2  text-gray-600'>
+											<h6 className={`text-md mt-2  ${isDark ? 'text-white' : 'text-gray-700'}`}>
 												Total : <span className='font-extrabold'>${order.totalPrice}</span>
 											</h6>
 										</div>
 									</div>
 								</div>
-								<section>
-									<img src={PreaperFood} alt='preapering-food' />
-								</section>
+								<section>{isDark ? <img src={PreaperFoodBlack} alt='preapering-food' /> : <img src={PreaperFood} alt='preapering-food' />}</section>
 								<div className='border-t border-gray-200 py-6 px-4 sm:px-6 lg:p-8'>
 									<h4 className='sr-only'>Status</h4>
-									<p className='text-sm font-medium text-gray-700'>
+									<p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-700'}`}>
 										Order Status: <span className='text-green-600 font-extrabold text-lg'>{order.status}</span>
 									</p>
 									<div className='mt-6' aria-hidden='true'>
 										<div className='bg-gray-200 rounded-full overflow-hidden'>
 											<div className='h-2 bg-green-600 rounded-full' style={{width: orderStatusWidthCal()}} />
 										</div>
-										<div className='hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 mt-6'>
-											<div>Order placed</div>
-											<div className={classNames(order.status === OrderStatus.Cooking ? 'text-green-600 animate-wiggle' : '', 'text-center')}>
+										<div className=' grid grid-cols-4 text-sm font-medium text-gray-600 mt-6'>
+											<div className='text-green-600'>Order placed</div>
+											<div className={classNames(order.status === OrderStatus.Cooking ? 'text-green-600 animate-wiggle' : 'text-gray-400', 'text-center')}>
 												{OrderStatus.Cooking}
 											</div>
-											<div className={classNames(order.status === OrderStatus.Cooked ? 'text-green-600 animate-wiggle' : '', 'text-center')}>
+											<div className={classNames(order.status === OrderStatus.Cooked ? 'text-green-600 animate-wiggle' : 'text-gray-400', 'text-center')}>
 												{OrderStatus.Cooked}
 											</div>
-											<div className={classNames(order.status === OrderStatus.Delivered ? 'text-green-600 animate-wiggle' : '', 'text-right')}>
+											<div className={classNames(order.status === OrderStatus.Delivered ? 'text-green-600 animate-wiggle' : 'text-gray-400', 'text-right')}>
 												{OrderStatus.Delivered}
 											</div>
 										</div>
