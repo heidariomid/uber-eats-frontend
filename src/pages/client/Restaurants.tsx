@@ -11,6 +11,8 @@ import Pagination from '../../components/pagination/Pagination';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
+import ErrorPage from '../../components/custom/ErrorPage';
+import {faLocation, faLock} from '@fortawesome/free-solid-svg-icons';
 
 const Restaurants = () => {
 	const [state, dispatch] = useStateValue();
@@ -51,46 +53,48 @@ const Restaurants = () => {
 	};
 	return (
 		<>
-			<>
-				{error && <ErrorSpan message={errorMessage} />}
-				{categoriesError && <ErrorSpan message={errorMessage} />}
-				{categoriesLoading && <Loading />}
-				<RestaurantsSearch />
-				<div className='max-h-full '>
-					<div>
-						<div className='lg:flex lg:flex-row grid grid-cols-4 gap-y-8  justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-xl  mx-auto mb-8 mt-5 px-5 '>
-							{categories && categories.map((category) => <Category key={category.id} category={category} slug={slug} setSlug={setSlug} />)}
+			{categoriesLoading && <Loading />}
+			{error || categoriesError ? (
+				<ErrorPage errorCode='Access Denied' title='This site can not be reached' message={'Please Turn on your VPN'} icon={faLock} />
+			) : (
+				<>
+					<RestaurantsSearch />
+					<div className='max-h-full '>
+						<div>
+							<div className='lg:flex lg:flex-row grid grid-cols-4 gap-y-8  justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-xl  mx-auto mb-8 mt-5 px-5 '>
+								{categories && categories.map((category) => <Category key={category.id} category={category} slug={slug} setSlug={setSlug} />)}
+							</div>
 						</div>
-					</div>
-					<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-100'}`}></div>
+						<div className={`h-0.5 ${!isDark ? 'bg-black' : 'bg-green-100'}`}></div>
 
-					<section className='lg:h-128 px-10 mt-12'>
-						{!errorMessage ? (
-							<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
+						<section className='lg:h-128 px-10 mt-12'>
+							{!errorMessage ? (
+								<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>{restaurantsHandler()}</div>
+							) : (
+								<div role={'alert'} className='bg-gray-600 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
+									{errorMessage}
+								</div>
+							)}
+						</section>
+						<div className='h-24 '></div>
+						{!loading ? (
+							<Pagination totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
 						) : (
-							<div role={'alert'} className='bg-gray-600 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>
-								{errorMessage}
+							<div className='text-center justify-center'>
+								<div className='flex flex-row justify-center items-center mb-20 '>
+									<button>
+										<div
+											className={`  hover:bg-green-500  transition-all duration-500 bg-gray-400 flex mx-2 px-2 rounded-full  text-center items-center justify-center  text-white`}
+										>
+											{page}
+										</div>
+									</button>
+								</div>
 							</div>
 						)}
-					</section>
-					<div className='h-24 '></div>
-					{!loading ? (
-						<Pagination totalPages={data?.getRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
-					) : (
-						<div className='text-center justify-center'>
-							<div className='flex flex-row justify-center items-center mb-20 '>
-								<button>
-									<div
-										className={`  hover:bg-green-500  transition-all duration-500 bg-gray-400 flex mx-2 px-2 rounded-full  text-center items-center justify-center  text-white`}
-									>
-										{page}
-									</div>
-								</button>
-							</div>
-						</div>
-					)}
-				</div>
-			</>
+					</div>
+				</>
+			)}
 		</>
 	);
 };

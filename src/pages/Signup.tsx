@@ -1,18 +1,20 @@
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import 'react-phone-number-input/style.css';
 import PhoneInputWithCountry from 'react-phone-number-input/react-hook-form';
 import {SIGN_UP_MUTATION} from '../graphql/mutations';
+import LogoWhite from '../images/uber-eats-white.svg';
 import Logo from '../images/uber-eats.svg';
 import {CreateAccountInput, CreateAccountMutation, CreateAccountMutationVariables, UserRole} from '../graphql/schemaTypes';
 import ErrorSpan from '../components/custom/ErrorSpan';
 import {useState} from 'react';
+import {isDarkVar} from '../apollo/GlobalVar';
 const Signup = () => {
 	const {state}: {state: any} = useLocation();
 	const [mobile, setMobile] = useState<any>('+98');
 	let navigate = useNavigate();
-
+	const isDark = useReactiveVar(isDarkVar);
 	const {
 		register,
 		getValues,
@@ -67,9 +69,10 @@ const Signup = () => {
 	return (
 		<div className='container flex flex-col h-screen items-center justify-center mx-auto'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
-				<img src={Logo} alt='logo' className='w-48 mb-10' />
-				<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10'>Welcome to Uber</h3>
-				<span className=' text-gray-600 text-left w-full pl-10'>Sign up with your information.</span>
+				{!isDark && <img className='w-40 md:w-48 p-1 cursor-pointer' src={Logo} alt='logo' />}
+				{isDark && <img className='w-40 md:w-48 p-1  cursor-pointer' src={LogoWhite} alt='logo' />}
+				<h3 className={`font-bold text-lg ${isDark ? 'text-white' : 'text-gray-800'} text-left mt-8  w-full pl-10`}>Welcome to Uber</h3>
+				<span className={` ${isDark ? 'text-white' : 'text-gray-600'} text-left w-full pl-10`}>Sign up with your information.</span>
 				<div className='flex flex-col mt-5 px-20 '>
 					{state?.message !== undefined ? <span className='bg-green-600 span'>{state?.message}</span> : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
@@ -78,21 +81,21 @@ const Signup = () => {
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
 					<input
-						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						className='input mb-3 focus:ring-0 focus:border-gray-400 text-black lowercase'
 						{...register('firstName', firstNameRegister)}
 						type='text'
 						placeholder='First Name'
 						onKeyDown={clearFirstNameErrors}
 					/>
 					<input
-						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						className='input mb-3 focus:ring-0 focus:border-gray-400 text-black lowercase'
 						{...register('lastName', lastNameRegister)}
 						type='text'
 						placeholder='Last Name'
 						onKeyDown={clearLastNameErrors}
 					/>
 					<input
-						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						className='input mb-3 focus:ring-0 focus:border-gray-400 text-black lowercase'
 						{...register('email', emailRegister)}
 						type='text'
 						placeholder='Email'
@@ -105,7 +108,7 @@ const Signup = () => {
 						placeholder='Password'
 						onKeyDown={clearLoginErrors}
 					/>
-					<div className=' my-5 focus:ring-0 focus:border-gray-400 '>
+					<div className=' my-5 focus:ring-0 focus:border-gray-400 text-black lowercase '>
 						<PhoneInputWithCountry
 							name='phoneInputWithCountrySelect'
 							control={control}
@@ -116,14 +119,14 @@ const Signup = () => {
 							defaultCountry='IR'
 						/>
 					</div>
-					<select className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
+					<select className='input mb-3 focus:ring-0 focus:border-gray-400 text-black ' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
 						{Object.keys(UserRole).map((role, key) => (
 							<option key={key} value={role}>
 								{role}
 							</option>
 						))}
 					</select>
-					<button className={'btn mt-5'} type='submit' disabled={loading}>
+					<button className={`btn mt-5 ${isDark ? 'bg-green-500 text-black' : 'bg-black'}`} type='submit' disabled={loading}>
 						{loading ? 'Loading...' : 'Sign Up'}
 					</button>
 				</form>

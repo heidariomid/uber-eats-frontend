@@ -1,10 +1,11 @@
-import {useMutation} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
-import {authToken, isLoginVar} from '../apollo/GlobalVar';
+import {authToken, isDarkVar, isLoginVar} from '../apollo/GlobalVar';
 import ErrorSpan from '../components/custom/ErrorSpan';
 import {LOGIN_MUTATION} from '../graphql/mutations';
 import Logo from '../images/uber-eats.svg';
+import LogoWhite from '../images/uber-eats-white.svg';
 import {LoginInput, LoginMutation, LoginMutationVariables} from '../graphql/schemaTypes';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSpinner} from '@fortawesome/free-solid-svg-icons';
@@ -12,7 +13,7 @@ import {faSpinner} from '@fortawesome/free-solid-svg-icons';
 const Login = () => {
 	const {state}: {state: any} = useLocation();
 	let navigate = useNavigate();
-
+	const isDark = useReactiveVar(isDarkVar);
 	const {
 		register,
 		getValues,
@@ -64,10 +65,11 @@ const Login = () => {
 		<div className='container flex flex-col mx-auto h-screen items-center justify-center'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
 				<Link to={'/'} className='flex mb-20 relative'>
-					<img src={Logo} alt='logo' className='w-48 mr-4 mb-10 z-10 ' />
+					{!isDark && <img className='w-40 md:w-48 p-1 cursor-pointer' src={Logo} alt='logo' />}
+					{isDark && <img className='w-40 md:w-48 p-1  cursor-pointer' src={LogoWhite} alt='logo' />}
 				</Link>
-				<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>Welcome Back</h3>
-				<span className=' text-gray-600 text-left w-full pl-10'>Sign in with your email address and password.</span>
+				<h3 className={`font-bold text-lg ${isDark ? 'text-white' : 'text-gray-800'} text-left w-full pl-10 `}>Welcome Back</h3>
+				<span className={` ${isDark ? 'text-white' : 'text-gray-600'} text-xs md:text-base text-left w-full pl-10`}>Sign in with your email address and password.</span>
 				<div className='flex flex-col mt-5 px-20 '>
 					{state?.message !== undefined ? <span className='bg-green-600 span text-white'>{state?.message}</span> : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
@@ -75,23 +77,24 @@ const Login = () => {
 					{errors?.email?.message && <ErrorSpan message={errors?.email?.message} />}
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
+
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
 					<input
-						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						className={`input mb-3 focus:ring-0 focus:border-gray-400 text-black lowercase`}
 						{...register('email', emailRegister)}
 						type='text'
 						placeholder='Email'
 						onKeyDown={clearEmailErrors}
 					/>
 					<input
-						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						className='input mb-3 focus:ring-0 focus:border-gray-400 text-black'
 						{...register('password', passwordRegister)}
 						type='password'
 						placeholder='Password'
 						onKeyDown={clearLoginErrors}
 					/>
 
-					<button className={'mt-5 py-2 btn'} type='submit' disabled={loading}>
+					<button className={`mt-5 py-2 btn ${isDark ? 'bg-green-500 text-black' : 'bg-black'} `} type='submit' disabled={loading}>
 						{!loading && 'Login'}
 						{loading && (
 							<div className='flex flex-row space-x-16 items-center justify-center'>
@@ -103,9 +106,9 @@ const Login = () => {
 						)}
 					</button>
 				</form>
-				<div className='mt-5'>
+				<div className='mt-8'>
 					<span className=' font-medium'>New to Uber?</span>
-					<Link className='pl-2 text-lime-600 font-medium hover:underline' to={'/auth/signup'}>
+					<Link className='pl-2 text-green-500 font-medium hover:underline' to={'/auth/signup'}>
 						Create an account
 					</Link>
 				</div>

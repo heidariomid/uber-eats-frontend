@@ -62,8 +62,8 @@ const PaymentSuccess = () => {
 
 	return order && order.id === orderId ? (
 		<>
-			<div className='flex justify-center items-center h-screen'>
-				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
+			<div className='flex justify-center items-center h-screen '>
+				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8 '>
 					<div className='grid grid-cols-2'>
 						<div>
 							<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 '>
@@ -85,7 +85,7 @@ const PaymentSuccess = () => {
 						</h2>
 
 						<div className='space-y-8'>
-							<div key={orderId} className='bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg'>
+							<div key={orderId} className='bg-black border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg'>
 								<div className='py-6 px-4 sm:px-6 '>
 									<div className='flex flex-col md:flex-row justify-center items-center'>
 										<img
