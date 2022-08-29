@@ -20,7 +20,7 @@ const RestaurantSoon = ({restaurant}) => {
 						<div className='md:text-2xl text-lg mt-4 text-left uppercase mb-5'>{restaurant?.category?.name}</div>
 						<div className='md:text-2xl text-lg text-left '>{restaurant?.address}</div>
 						<div className=' mt-10 mx-auto'>
-							<Link to={`/`} className='text-lg font-medium text-black hover:text-green-500 '>
+							<Link to={`/`} className='text-lg font-medium  hover:text-green-500 '>
 								<span aria-hidden='true'> &larr;</span> Go Back
 							</Link>
 						</div>
