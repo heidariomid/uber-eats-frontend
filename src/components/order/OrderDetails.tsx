@@ -32,8 +32,8 @@ const OrderDetails = ({order}: {order: Order}) => {
 						<div key={order.id} className={` ${isDark ? 'bg-black ' : 'bg-white '} border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg`}>
 							<div className='py-6 px-4 sm:px-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:p-8'>
 								<div className='sm:flex lg:col-span-7'>
-									<div className='flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40'>
-										<img src={order.restaurant?.coverImg} alt={'orderImg'} className='w-full h-full object-center object-cover sm:w-full sm:h-full' />
+									<div className='flex-shrink-0 w-full lg:aspect-w-0 lg:aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40'>
+										<img src={order.restaurant?.coverImg} alt={'orderImg'} className='w-full  object-center object-cover lg:w-full lg:h-full' />
 									</div>
 									<div className='mt-6 sm:mt-0 sm:ml-6'>
 										<dt className={`font-medium text-green-500`}>Total Price</dt>

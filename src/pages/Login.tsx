@@ -31,6 +31,7 @@ const Login = () => {
 
 	const onCompleted = (data: LoginMutation) => {
 		const {ok, message, token} = data?.login;
+
 		if (!ok) {
 			setError('email', {message});
 		}
@@ -46,11 +47,16 @@ const Login = () => {
 	const onValidSubmit = () => {
 		if (loading) return;
 		const {email, password} = getValues();
-
-		loginHandler({variables: {data: {email, password}}});
+		const lowerCaseEmail = email.toLowerCase();
+		loginHandler({variables: {data: {email: lowerCaseEmail, password}}});
 	};
 	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	const emailRegister = {required: {value: true, message: 'email is required'}, pattern: {value: emailPattern, message: 'email format is incorrect'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}, validate: (current: any) => current.includes('@')};
+	const emailRegister = {
+		required: {value: true, message: 'email is required'},
+		pattern: {value: emailPattern, message: 'email format is incorrect'},
+		minLength: {value: 5, message: 'email must be more than 5 charachter'},
+		validate: (current: any) => current.includes('@'),
+	};
 	const passwordRegister = {required: {value: true, message: 'password could not be empty'}, minLength: {value: 4, message: 'password should be greater than 4'}};
 	const clearEmailErrors = () => clearErrors('email');
 	const clearLoginErrors = () => clearErrors('password');
@@ -70,8 +76,20 @@ const Login = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
+					<input
+						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						{...register('email', emailRegister)}
+						type='text'
+						placeholder='Email'
+						onKeyDown={clearEmailErrors}
+					/>
+					<input
+						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						{...register('password', passwordRegister)}
+						type='password'
+						placeholder='Password'
+						onKeyDown={clearLoginErrors}
+					/>
 
 					<button className={'mt-5 py-2 btn'} type='submit' disabled={loading}>
 						{!loading && 'Login'}

@@ -7,15 +7,14 @@ import Routes from './routes';
 import {useStateValue} from './store/context/ContextManager';
 const App = () => {
 	const isDark = useReactiveVar(isDarkVar);
-
 	const [state] = useStateValue();
 	const location = useLocation();
-	const checkPath = location.pathname === '/payment/pending' || location.pathname === '/payment/verify/:reserve' || location.pathname === '/auth/login' || location.pathname === '/auth/signup';
+	const checkPath =
+		location.pathname === '/payment/pending' || location.pathname === '/payment/verify/:reserve' || location.pathname === '/auth/login' || location.pathname === '/auth/signup';
 	return (
 		<div className={`h-full ${isDark && 'bg-black text-white'}`}>
 			{!checkPath && <Header />}
 			{state.basket.status && <Basket />}
-
 			<Routes />
 		</div>
 	);

@@ -45,13 +45,15 @@ const Orders = () => {
 								<div className='px-4 py-5 sm:px-6 text-center mx-auto font-extrabold text-2xl'>
 									<h1>Orders History</h1>
 								</div>
-								<div className='px-4 py-5 sm:p-6 mt-10 h-screen'>
+								<div className=' px-4 py-5 sm:p-6 mt-10 h-screen'>
 									<OrdersTable orders={orders} />
 								</div>
 							</>
 						) : (
-							<div className='flex items-center justify-center px-4 py-5 sm:p-6 text-center mx-auto font-extrabold text-2xl h-screen bg-zinc-700 text-white '>
-								<div>No Record for Orders History</div>
+							<div className='h-screen'>
+								<div className='flex items-center  justify-center px-4 py-5 sm:p-6 text-center mx-auto  font-extrabold text-2xl  bg-black text-white '>
+									<div>No Order History Found !</div>
+								</div>
 							</div>
 						)}
 					</div>

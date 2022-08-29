@@ -105,11 +105,18 @@ const AddDish = () => {
 						{optionNumber?.length > 0 &&
 							optionNumber.map((id, i) => {
 								return (
-									<div key={i} className=' w-full'>
+									<div key={i} className='w-full mx-auto px-10  justify-center items-center flex '>
 										{/* @ts-ignore */}
-										<input {...register(`dishOptionName-${id}`, restaurantNameRegister)} className='input mb-3 mx-4' type='text' placeholder='name' />
+										<input {...register(`dishOptionName-${id}`, restaurantNameRegister)} className='input mb-3 ' type='text' placeholder='name' />
 										{/* @ts-ignore */}
-										<input {...register(`dishOptionExtra-${id}`, restaurantNameRegister)} className='input mb-3 mx-4' type='number' min={0} placeholder='extra' />
+										<input
+											/* @ts-ignore */
+											{...register(`dishOptionExtra-${id}`, restaurantNameRegister)}
+											className='input mb-3 w-1/2 mx-10'
+											type='number'
+											min={0}
+											placeholder='price'
+										/>
 
 										<button type='button' className='text-white px-2 py-1  bg-rose-600' onClick={() => deleteOptionHndler(id)}>
 											X
@@ -119,7 +126,11 @@ const AddDish = () => {
 							})}
 
 						{!photoUrl ? (
-							<button onClick={() => uploadPhotoHandler(setPhotoUrl)} type={'button'} className=' border-4 border-dotted border-gray-200 text-center px-20 py-5 my-6 text-black'>
+							<button
+								onClick={() => uploadPhotoHandler(setPhotoUrl)}
+								type={'button'}
+								className=' border-4 border-dotted border-gray-200 text-center px-20 py-5 my-6 text-black'
+							>
 								Upload Photo
 							</button>
 						) : (
@@ -133,7 +144,11 @@ const AddDish = () => {
 								</span>
 							</div>
 						)}
-						<button className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'} type='submit' disabled={!isValid || loading}>
+						<button
+							className={!isValid ? 'bg-gray-300 btn py-2 mt-5 flex text-center justify-center items-center' : 'mt-5 py-2 btn'}
+							type='submit'
+							disabled={!isValid || loading}
+						>
 							{!loading && 'Submit'}
 							{loading && (
 								<div className='flex flex-row space-x-16 items-center justify-center'>

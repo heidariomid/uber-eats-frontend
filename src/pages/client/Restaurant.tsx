@@ -5,6 +5,7 @@ import {useQuery} from '@apollo/client';
 import Loading from '../../components/loading/Loading';
 import Restaurant from '../../components/restaurant/client/Restaurant';
 import ErrorPage from '../../components/custom/ErrorPage';
+import Footer from '../../components/footer/Footer';
 
 const SingleRestaurant = () => {
 	let {id} = useParams();
@@ -14,6 +15,7 @@ const SingleRestaurant = () => {
 			{!loading && data?.getRestaurant.ok && data?.getRestaurant?.restaurant && (
 				<>
 					<Restaurant restaurant={data?.getRestaurant?.restaurant} />
+					<Footer />
 				</>
 			)}
 			{loading && <Loading />}

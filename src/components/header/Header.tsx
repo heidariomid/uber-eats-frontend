@@ -64,17 +64,29 @@ const Header = () => {
 						<div className='flex flex-row  '>
 							{user?.role === UserRole.Owner && (
 								<div className='mx-10'>
-									<Link to={'/orders'} className=' mx-0.5 cursor-pointer inline-flex relative items-center p-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-black dark:bg-black dark:hover:bg-black dark:focus:ring-black'>
+									<Link
+										to={'/orders'}
+										className=' mx-0.5 cursor-pointer inline-flex relative items-center p-2 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-black focus:ring-4 focus:outline-none focus:ring-black dark:bg-black dark:hover:bg-black dark:focus:ring-black'
+									>
 										<FontAwesomeIcon icon={faReorder} />
 										<span className='sr-only'>Notifications</span>
-										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>{orders?.length}</div>
+										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>
+											{orders?.length}
+										</div>
 									</Link>
 								</div>
 							)}
 							{user?.role === UserRole.Client && (
-								<div onClick={basketHandler} className={`py-1 mx-0.5 cursor-pointer mr-5 inline-flex relative  ${basketItem?.items?.length > 0 && 'text-green-500'} `}>
+								<div
+									onClick={basketHandler}
+									className={`py-1 mx-0.5 cursor-pointer mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-green-500'} `}
+								>
 									<FontAwesomeIcon className='text-xl px-2' icon={faBasketShopping} />
-									{totalQuantity && <div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>{totalQuantity}</div>}
+									{totalQuantity && (
+										<div className='inline-flex absolute -top-2 -right-2 justify-center items-center w-6 h-6 text-xs font-bold text-white bg-green-500 rounded-full border-2 border-white dark:border-gray-900'>
+											{totalQuantity}
+										</div>
+									)}
 									{/* {totalQuantity && <span className=' px-2 py-1 text-white rounded-full bg-green-500'>{totalQuantity}</span>} */}
 								</div>
 							)}
@@ -91,7 +103,7 @@ const Header = () => {
 								</button>
 							)}
 							{isDark && (
-								<button className=' py-1  mx-0.5 cursor-pointer' onClick={() => themeHandler(true)}>
+								<button className=' py-1  mx-0.5 cursor-pointer ' onClick={() => themeHandler(true)}>
 									<FontAwesomeIcon className='  text-xl px-2' icon={faSun} />
 								</button>
 							)}

@@ -10,9 +10,9 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 
 	return (
 		<>
-			<div className='h-screen  w-full max-w-screen-xl mx-auto '>
-				<div className='bg-gray-500 bg-blend-soft-light bg-cover bg-center py-36  ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
-					<div className={`${isDark ? 'bg-black' : 'bg-opacity-80 rounded-r-xl bg-white'}   h-56 w-2/4  flex flex-col`}>
+			<div className='h-full mx-auto lg:max-w-screen-xl max-w-screen-sm items-center justify-center'>
+				<div className='bg-gray-500  bg-cover bg-center py-36  ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
+					<div className={`${isDark ? 'bg-black' : 'bg-opacity-90  bg-white'}   h-56 w-2/4  flex flex-col`}>
 						<div className='pl-14 '>
 							<h1 className='font-bold mt-2 text-4xl '>{restaurant?.name}</h1>
 							<div className={`text-xl mt-4 ${isDark ? 'text-white' : 'text-gray-700'} `}>{restaurant?.category?.name}</div>
@@ -22,7 +22,10 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 									Add Dish
 								</Link>
 
-								<Link to={`/restaurant/${restaurant.id}/edit-restaurant`} className={`cursor-pointer py-2 ${isDark ? 'bg-zinc-700 text-white' : 'bg-black text-white'}  mr-4 px-4`}>
+								<Link
+									to={`/restaurant/${restaurant.id}/edit-restaurant`}
+									className={`cursor-pointer py-2 ${isDark ? 'bg-zinc-700 text-white' : 'bg-black text-white'}  mr-4 px-4`}
+								>
 									<span className='mr-2'>Edit Restaurant </span>
 									<FontAwesomeIcon icon={faEdit} />
 								</Link>
@@ -30,17 +33,17 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 						</div>
 					</div>
 				</div>
-				<div>
+				<>
 					{restaurant?.menu?.length === 0 ? (
-						<h1 className='bg-zinc-700  mt-10 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>please upload a dish!</h1>
+						<h1 className='bg-zinc-700  mt-10 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>No Dish Added !</h1>
 					) : (
-						<div className='grid mt-16 md:grid-cols-3 gap-x-3 gap-y-10 mx-10'>
+						<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl mb-20'>
 							{restaurant?.menu?.map((dish, i) => (
 								<Dish key={i} dish={dish} />
 							))}
 						</div>
 					)}
-				</div>
+				</>
 				{/* {restaurant?.menu.length > 0 && <DishChart orders={restaurant?.orders} />} */}
 			</div>
 		</>

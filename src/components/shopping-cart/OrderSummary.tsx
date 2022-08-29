@@ -53,7 +53,7 @@ const OrderSummary = () => {
 
 									return (
 										<li key={dish.id} className='flex py-6'>
-											<div className='h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200'>
+											<div className='h-24 w-24 flex-shrink-0 overflow-hidden '>
 												<img src={dish?.photo} alt={dish?.name} className='h-full w-full object-cover object-center' />
 											</div>
 
@@ -151,10 +151,26 @@ const OrderSummary = () => {
 
 					<Transition.Root as={Fragment}>
 						<div>
-							<Transition.Child as={Fragment} enter='transition-opacity ease-linear duration-300' enterFrom='opacity-0' enterTo='opacity-100' leave='transition-opacity ease-linear duration-300' leaveFrom='opacity-100' leaveTo='opacity-0'>
+							<Transition.Child
+								as={Fragment}
+								enter='transition-opacity ease-linear duration-300'
+								enterFrom='opacity-0'
+								enterTo='opacity-100'
+								leave='transition-opacity ease-linear duration-300'
+								leaveFrom='opacity-100'
+								leaveTo='opacity-0'
+							>
 								<Popover.Overlay className='fixed inset-0 bg-black bg-opacity-25' />
 							</Transition.Child>
-							<Transition.Child as={Fragment} enter='transition ease-in-out duration-300 transform' enterFrom='translate-y-full' enterTo='translate-y-0' leave='transition ease-in-out duration-300 transform' leaveFrom='translate-y-0' leaveTo='translate-y-full'>
+							<Transition.Child
+								as={Fragment}
+								enter='transition ease-in-out duration-300 transform'
+								enterFrom='translate-y-full'
+								enterTo='translate-y-0'
+								leave='transition ease-in-out duration-300 transform'
+								leaveFrom='translate-y-0'
+								leaveTo='translate-y-full'
+							>
 								<Popover.Panel className='relative bg-white px-4 py-6 sm:px-6'>
 									<dl className='max-w-lg mx-auto space-y-6'>
 										<div className='flex items-center justify-between'>

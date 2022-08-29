@@ -64,21 +64,18 @@ const PaymentSuccess = () => {
 		<>
 			<div className='flex justify-center items-center h-screen'>
 				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8'>
-					<div className='px-4 space-y-2 sm:px-0 sm:flex sm:items-baseline sm:justify-between sm:space-y-0'>
-						<div className='flex sm:items-baseline sm:space-x-4'>
-							<Link to={`/order/${order.id}`} className='hidden text-sm font-medium text-green-500 hover:text-green-600 sm:block'>
+					<div className='grid grid-cols-2'>
+						<div>
+							<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 sm:hidden'>
 								View Order Details<span aria-hidden='true'> &rarr;</span>
 							</Link>
 						</div>
-						<p className={`text-sm mx-2 ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
+						<div>
 							Order placed:
 							<time dateTime='2021-03-22' className={`pl-2 font-medium ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
 								{new Date(order.createdAt).toLocaleDateString()}
 							</time>
-						</p>
-						<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 sm:hidden'>
-							View Order Details<span aria-hidden='true'> &rarr;</span>
-						</Link>
+						</div>
 					</div>
 
 					{/* Products */}
@@ -90,10 +87,14 @@ const PaymentSuccess = () => {
 						<div className='space-y-8'>
 							<div key={orderId} className='bg-white border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg'>
 								<div className='py-6 px-4 sm:px-6 '>
-									<div className='flex justify-center items-center'>
-										<div className='flex-shrink-0 w-full aspect-w-1 aspect-h-1 rounded-lg overflow-hidden sm:aspect-none sm:w-40 sm:h-40'>
-											<img src={OrderSuccessImg} alt='order-success' className='w-full h-full object-center object-cover sm:w-full sm:h-full' />
-										</div>
+									<div className='flex flex-col md:flex-row justify-center items-center'>
+										<img
+											src={OrderSuccessImg}
+											alt='order-success'
+											className='object-center object-cover w-1/2 md:w-1/3 h-full md:h-auto
+								'
+										/>
+
 										<div className='mt-6 sm:mt-0 sm:ml-6'>
 											<h2 className='text-2xl font-medium text-gray-700'>Thanks for Your Order</h2>
 											<h3 className='text-lg mt-2 font-extrabold tracking-tight text-green-600 sm:text-2xl'>Order #{order.id}</h3>
@@ -117,9 +118,15 @@ const PaymentSuccess = () => {
 										</div>
 										<div className='hidden sm:grid grid-cols-4 text-sm font-medium text-gray-600 mt-6'>
 											<div>Order placed</div>
-											<div className={classNames(order.status === OrderStatus.Cooking ? 'text-green-600 animate-wiggle' : '', 'text-center')}>{OrderStatus.Cooking}</div>
-											<div className={classNames(order.status === OrderStatus.Cooked ? 'text-green-600 animate-wiggle' : '', 'text-center')}>{OrderStatus.Cooked}</div>
-											<div className={classNames(order.status === OrderStatus.Delivered ? 'text-green-600 animate-wiggle' : '', 'text-right')}>{OrderStatus.Delivered}</div>
+											<div className={classNames(order.status === OrderStatus.Cooking ? 'text-green-600 animate-wiggle' : '', 'text-center')}>
+												{OrderStatus.Cooking}
+											</div>
+											<div className={classNames(order.status === OrderStatus.Cooked ? 'text-green-600 animate-wiggle' : '', 'text-center')}>
+												{OrderStatus.Cooked}
+											</div>
+											<div className={classNames(order.status === OrderStatus.Delivered ? 'text-green-600 animate-wiggle' : '', 'text-right')}>
+												{OrderStatus.Delivered}
+											</div>
 										</div>
 									</div>
 								</div>

@@ -38,14 +38,20 @@ const OrderStatusBar = ({order}) => {
 
 				{user?.role === UserRole.Owner && (
 					<div className='group'>
-						<button onClick={changeStatusHandler} className='flex flex-row w-1/3 mb-5 mx-auto  sm:items-baseline sm:space-x-4  rounded-lg px-4 justify-end items-end group-hover:text-white group-hover:bg-green-400 border-green-300 border-2  '>
-							<p className='text-lg font-extrabold tracking-tight  sm:text-lg'>Mark as {order?.status === OrderStatus.Cooking ? OrderStatus.Cooked : OrderStatus.Cooking}</p>
+						<button
+							onClick={changeStatusHandler}
+							className='flex mb-5 mx-auto  sm:items-baseline sm:space-x-4 bg-zinc-500  text-white  rounded-lg p-4   group-hover:text-white group-hover:bg-green-600   '
+						>
+							<p className='text-lg font-extrabold tracking-tight  sm:text-lg'>
+								Mark as {order?.status === OrderStatus.Cooking ? OrderStatus.Cooked : OrderStatus.Cooking}
+							</p>
 							<div className='text-2xl text-green-500 group-hover:text-white'>
 								<FontAwesomeIcon icon={faCheckCircle} />
 							</div>
 						</button>
 					</div>
 				)}
+
 				<p className={`text-sm font-medium ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
 					Order Status: <span className='text-green-500 font-extrabold text-lg'>{order.status}</span>
 				</p>
@@ -61,7 +67,9 @@ const OrderStatusBar = ({order}) => {
 					</div>
 
 					<div className='flex items-center justify-center '>
-						{order.status === OrderStatus.Cooking && <img src={`${isDark ? PreaperFoodDark : PreaperFood}`} alt='order-cooking' className='mt-5 object-center object-cover sm:w-1/2 ' />}
+						{order.status === OrderStatus.Cooking && (
+							<img src={`${isDark ? PreaperFoodDark : PreaperFood}`} alt='order-cooking' className='mt-5 object-center object-cover sm:w-1/2 ' />
+						)}
 						{order.status === OrderStatus.Cooked && <img src={Dining} alt='order-cooked' className='object-center  object-cover sm:w-1/2 ' />}
 					</div>
 				</div>

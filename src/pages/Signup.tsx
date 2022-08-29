@@ -43,10 +43,18 @@ const Signup = () => {
 		if (loading) return;
 		const {email, password, role, firstName, lastName} = getValues();
 
-		signupHandler({variables: {data: {email, password, role, firstName, lastName, mobile}}});
+		const lowerCaseEmail = email.toLowerCase();
+		const lowerCaseFirstName = firstName.toLowerCase();
+		const lowerCaseLastName = lastName.toLowerCase();
+
+		signupHandler({variables: {data: {email: lowerCaseEmail, password, role, firstName: lowerCaseFirstName, lastName: lowerCaseLastName, mobile}}});
 	};
 	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-	const emailRegister = {required: {value: true, message: 'email is required'}, pattern: {value: emailPattern, message: 'email format is incorrect'}, minLength: {value: 5, message: 'email must be more than 5 charachter'}};
+	const emailRegister = {
+		required: {value: true, message: 'email is required'},
+		pattern: {value: emailPattern, message: 'email format is incorrect'},
+		minLength: {value: 5, message: 'email must be more than 5 charachter'},
+	};
 	const passwordRegister = {required: {value: true, message: 'password could not be empty'}, minLength: {value: 4, message: 'password should be greater than 4'}};
 	const roleRegister = {required: {value: true, message: 'role could not be empty'}};
 	const firstNameRegister = {required: {value: true, message: 'firstName could not be empty'}};
@@ -69,12 +77,44 @@ const Signup = () => {
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
 				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('firstName', firstNameRegister)} type='text' placeholder='First Name' onKeyDown={clearFirstNameErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('lastName', lastNameRegister)} type='text' placeholder='Last Name' onKeyDown={clearLastNameErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('email', emailRegister)} type='text' placeholder='Email' onKeyDown={clearEmailErrors} />
-					<input className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('password', passwordRegister)} type='password' placeholder='Password' onKeyDown={clearLoginErrors} />
+					<input
+						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						{...register('firstName', firstNameRegister)}
+						type='text'
+						placeholder='First Name'
+						onKeyDown={clearFirstNameErrors}
+					/>
+					<input
+						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						{...register('lastName', lastNameRegister)}
+						type='text'
+						placeholder='Last Name'
+						onKeyDown={clearLastNameErrors}
+					/>
+					<input
+						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						{...register('email', emailRegister)}
+						type='text'
+						placeholder='Email'
+						onKeyDown={clearEmailErrors}
+					/>
+					<input
+						className='input mb-3 focus:ring-0 focus:border-gray-400'
+						{...register('password', passwordRegister)}
+						type='password'
+						placeholder='Password'
+						onKeyDown={clearLoginErrors}
+					/>
 					<div className=' my-5 focus:ring-0 focus:border-gray-400 '>
-						<PhoneInputWithCountry name='phoneInputWithCountrySelect' control={control} rules={{required: true}} placeholder='Enter phone number' value={mobile} onChange={setMobile} defaultCountry='IR' />
+						<PhoneInputWithCountry
+							name='phoneInputWithCountrySelect'
+							control={control}
+							rules={{required: true}}
+							placeholder='Enter phone number'
+							value={mobile}
+							onChange={setMobile}
+							defaultCountry='IR'
+						/>
 					</div>
 					<select className='input mb-3 focus:ring-0 focus:border-gray-400' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
 						{Object.keys(UserRole).map((role, key) => (

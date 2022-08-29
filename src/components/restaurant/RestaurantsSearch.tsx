@@ -67,19 +67,38 @@ const RestaurantsSearch = () => {
 
 	return (
 		<div className='w-full flex flex-col items-center justify-center bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurantBg})`}}>
-			<div className='flex w-full items-center text-center text-white h-8 justify-center   text-4xl'>
+			<div className='flex w-full items-center text-center text-white h-8 justify-center bg-   text-4xl'>
 				<span>Uber Eats </span>
 			</div>
 			<div className='flex px-4 mt-4 items-center text-center border-t-2 border-white  text-white h-8 justify-center  text-2xl'>
 				<span className='mt-2'>Get the food you want</span>
 			</div>
 
-			<form onSubmit={handleSubmit(onValidSubmit)} className='w-full max-w-screen-md md:max-w-screen-xl flex items-center justify-center font-bold text-lg  text-center py-14 my-4'>
-				<input id='searchInput' className='input border-0 w-3/6' type='search' {...register('restaurantName', {})} placeholder='Search Restaurants...' onKeyDown={clearSearchErrors} />
+			<form
+				onSubmit={handleSubmit(onValidSubmit)}
+				className='w-full max-w-screen-md md:max-w-screen-xl flex items-center justify-center font-bold text-lg  text-center py-14 my-4'
+			>
+				<input
+					id='searchInput'
+					className='input border-0 w-3/6  placeholder:text-sm md:placeholder:text-lg'
+					type='search'
+					{...register('restaurantName', {})}
+					placeholder='Search Restaurants...'
+					onKeyDown={clearSearchErrors}
+				/>
 				<button className='bg-black border-0 text-white py-2 px-4 '>Find</button>
 			</form>
 			{message && (
-				<Transition show={show} as={Fragment} enter='transform ease-out duration-300 transition' enterFrom='translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2' enterTo='translate-y-0 opacity-100 sm:translate-x-0' leave='transition ease-in duration-100' leaveFrom='opacity-100' leaveTo='opacity-0'>
+				<Transition
+					show={show}
+					as={Fragment}
+					enter='transform ease-out duration-300 transition'
+					enterFrom='translate-y-2 opacity-0 sm:translate-y-0 sm:translate-x-2'
+					enterTo='translate-y-0 opacity-100 sm:translate-x-0'
+					leave='transition ease-in duration-100'
+					leaveFrom='opacity-100'
+					leaveTo='opacity-0'
+				>
 					<p className=' flex justify-center items-center rounded-lg text-white bg-red-500 px-5 absolute'>{message}</p>
 				</Transition>
 			)}
