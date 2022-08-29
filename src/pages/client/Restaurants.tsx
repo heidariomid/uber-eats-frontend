@@ -85,7 +85,7 @@ const Restaurants = () => {
 								<div className='flex flex-row justify-center items-center mb-20 '>
 									<button>
 										<div
-											className={`  hover:bg-green-500  transition-all duration-500 bg-gray-400 flex mx-2 px-2 rounded-full  text-center items-center justify-center  text-white`}
+											className={`  hover:bg-green-500 transition-all duration-500 bg-gray-400 flex mx-2 px-2 rounded-full  text-center items-center justify-center  text-white`}
 										>
 											{page}
 										</div>
