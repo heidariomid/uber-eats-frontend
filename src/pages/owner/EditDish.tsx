@@ -160,7 +160,7 @@ const EditDish = () => {
 
 											{/* @ts-ignore */}
 											<input
-												className='input mb-3 mx-auto text-black'
+												className='input mb-3 mx-2 md:mx-5 text-black'
 												type='text'
 												placeholder='name'
 												defaultValue={option.name}
@@ -170,8 +170,8 @@ const EditDish = () => {
 
 											{/* @ts-ignore */}
 											<input
-												className='input mb-3 w-16 text-center  text-black'
-												type={'number'}
+												className='input mb-3  w-16  text-center  text-black'
+												type='number'
 												min={0}
 												placeholder='extra'
 												defaultValue={Number(option.extra)}

@@ -75,7 +75,7 @@ const Header = () => {
 								</div>
 							)}
 
-							{user?.role === UserRole.Client && (
+							{user?.role !== UserRole.Owner && (
 								<div
 									onClick={basketHandler}
 									className={`py-1 mx-0.5 cursor-pointer mr-4 md:mr-5 inline-flex relative   ${basketItem?.items?.length > 0 && 'text-lime-700'} `}

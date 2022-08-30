@@ -167,7 +167,7 @@ const DishCover = ({setIsSelected, dish}) => {
 									</button>
 
 									<div className='w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8'>
-										<div className='aspect-w-3 aspect-h-4  overflow-hidden sm:col-span-4 lg:col-span-5'>
+										<div className='aspect-w-3 aspect-h-2 md:aspect-h-4  overflow-hidden sm:col-span-4 lg:col-span-5'>
 											<img src={dish.photo} alt={dish.name} className='object-center object-contain' />
 										</div>
 										<div className='sm:col-span-8 lg:col-span-7'>
@@ -230,7 +230,7 @@ const DishCover = ({setIsSelected, dish}) => {
 																		<div key={item.id} className='grid grid-cols-3 py-1 '>
 																			<p className={`text-sm    ${isDark ? ' text-white' : 'text-gray-900'}`}>{item.name}</p>
 																			<span className={`text-sm ml-3 ${isDark ? ' text-white' : 'text-gray-900'}`}>${item.extra}</span>
-																			{user?.role === UserRole.Client && (
+																			{user?.role !== UserRole.Owner && (
 																				<NumericOptions
 																					quantity={quantity}
 																					changeDishOptionQuantity={changeDishOptionQuantity}
@@ -246,7 +246,7 @@ const DishCover = ({setIsSelected, dish}) => {
 													) : (
 														<div className='py-12'></div>
 													)}
-													{user?.role === UserRole.Client && addtoOrderButton()}
+													{user?.role !== UserRole.Owner && addtoOrderButton()}
 													{user?.role === UserRole.Owner && (
 														<Link
 															to={`edit-dish/${dish.id}`}
