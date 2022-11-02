@@ -9,7 +9,7 @@ import {authToken} from './GlobalVar';
 // const url = process.env.NODE_ENV === 'production' ? 'wss://uber-eats-back.herokuapp.com/graphql' : 'ws://localhost:4000/graphql';
 const url =
 	process.env.NODE_ENV === 'production'
-		? 'wss://ubereats-heidariomid.herokuapp.com/graphql'
+		? 'wss://uber-back.iran.liara.run/graphql'
 		: 'ws://localhost:4000/graphql';
 const wsLink = new GraphQLWsLink(
 	createClient({
@@ -22,7 +22,7 @@ const wsLink = new GraphQLWsLink(
 // const uri = process.env.NODE_ENV === 'production' ? 'https://uber-eats-back.herokuapp.com/graphql' : 'http://localhost:4000/graphql';
 const uri =
 	process.env.NODE_ENV === 'production'
-		? 'https://ubereats-heidariomid.herokuapp.com/graphql'
+		? 'https://uber-back.iran.liara.run/graphql'
 		: 'http://localhost:4000/graphql';
 const httpLink = createHttpLink({
 	uri,
