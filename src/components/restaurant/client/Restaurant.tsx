@@ -24,11 +24,20 @@ const Restaurant = ({restaurant}) => {
 				<div className='h-full mx-auto lg:max-w-screen-2xl max-w-screen-sm items-center justify-center'>
 					{state.basket.message && showNotificationBasket()}
 					<div className='justify-center items-center flex'>
-						<div className=' bg-cover bg-center py-36 w-full ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
-							<div className={`${isDark ? 'bg-black' : 'bg-white bg-opacity-90'} h-52 w-full lg:w-1/2  flex flex-col`}>
+						<div
+							className=' bg-cover bg-center py-36 w-full '
+							style={{backgroundImage: `url(${restaurant?.coverImg})`}}
+						>
+							<div
+								className={`${
+									isDark ? 'bg-black/80' : 'bg-white bg-opacity-90'
+								} h-52 w-full lg:w-1/2  flex flex-col`}
+							>
 								<div className='pl-14 py-2 '>
 									<h1 className='font-bold mt-2 text-4xl '>{restaurant?.name}</h1>
-									<div className='text-2xl mt-4'>{restaurant?.category?.name}</div>
+									<div className='text-2xl mt-4'>
+										{restaurant?.category?.name}
+									</div>
 									<div className='text-2xl '>{restaurant?.address}</div>
 								</div>
 							</div>

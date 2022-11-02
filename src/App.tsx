@@ -10,7 +10,10 @@ const App = () => {
 	const [state] = useStateValue();
 	const location = useLocation();
 	const checkPath =
-		location.pathname === '/payment/pending' || location.pathname === '/payment/verify/:reserve' || location.pathname === '/auth/login' || location.pathname === '/auth/signup';
+		location.pathname === '/payment/pending' ||
+		location.pathname === '/payment/verify/:reserve' ||
+		location.pathname === '/auth/login' ||
+		location.pathname === '/auth/signup';
 	return (
 		<div className={`h-full ${isDark && 'bg-black text-white'}`}>
 			{!checkPath && <Header />}
