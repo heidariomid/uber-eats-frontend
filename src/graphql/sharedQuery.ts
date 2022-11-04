@@ -7,6 +7,7 @@ export const RESTAURANT_FEAGMENT = gql`
 		isPromoted
 		address
 		coverImg
+		isOpen
 		category {
 			id
 			name

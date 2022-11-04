@@ -6,7 +6,12 @@ import PhoneInputWithCountry from 'react-phone-number-input/react-hook-form';
 import {SIGN_UP_MUTATION} from '../graphql/mutations';
 import LogoWhite from '../images/uber-eats-white.svg';
 import Logo from '../images/uber-eats.svg';
-import {CreateAccountInput, CreateAccountMutation, CreateAccountMutationVariables, UserRole} from '../graphql/schemaTypes';
+import {
+	CreateAccountInput,
+	CreateAccountMutation,
+	CreateAccountMutationVariables,
+	UserRole,
+} from '../graphql/schemaTypes';
 import ErrorSpan from '../components/custom/ErrorSpan';
 import {useState} from 'react';
 import {isDarkVar} from '../apollo/GlobalVar';
@@ -39,7 +44,10 @@ const Signup = () => {
 			navigate('/auth/login', {replace: true, state: {message, email, password}});
 		}
 	};
-	const [signupHandler, {loading}] = useMutation<CreateAccountMutation, CreateAccountMutationVariables>(SIGN_UP_MUTATION, {onCompleted});
+	const [signupHandler, {loading}] = useMutation<
+		CreateAccountMutation,
+		CreateAccountMutationVariables
+	>(SIGN_UP_MUTATION, {onCompleted});
 
 	const onValidSubmit = () => {
 		if (loading) return;
@@ -49,15 +57,30 @@ const Signup = () => {
 		const lowerCaseFirstName = firstName.toLowerCase();
 		const lowerCaseLastName = lastName.toLowerCase();
 
-		signupHandler({variables: {data: {email: lowerCaseEmail, password, role, firstName: lowerCaseFirstName, lastName: lowerCaseLastName, mobile}}});
+		signupHandler({
+			variables: {
+				data: {
+					email: lowerCaseEmail,
+					password,
+					role,
+					firstName: lowerCaseFirstName,
+					lastName: lowerCaseLastName,
+					mobile,
+				},
+			},
+		});
 	};
-	const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+	const emailPattern =
+		/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 	const emailRegister = {
 		required: {value: true, message: 'email is required'},
 		pattern: {value: emailPattern, message: 'email format is incorrect'},
 		minLength: {value: 5, message: 'email must be more than 5 charachter'},
 	};
-	const passwordRegister = {required: {value: true, message: 'password could not be empty'}, minLength: {value: 4, message: 'password should be greater than 4'}};
+	const passwordRegister = {
+		required: {value: true, message: 'password could not be empty'},
+		minLength: {value: 4, message: 'password should be greater than 4'},
+	};
 	const roleRegister = {required: {value: true, message: 'role could not be empty'}};
 	const firstNameRegister = {required: {value: true, message: 'firstName could not be empty'}};
 	const lastNameRegister = {required: {value: true, message: 'lastName could not be empty'}};
@@ -69,17 +92,42 @@ const Signup = () => {
 	return (
 		<div className='container flex flex-col h-screen items-center justify-center mx-auto'>
 			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
-				{!isDark && <img className='w-40 md:w-48 p-1 cursor-pointer' src={Logo} alt='logo' />}
-				{isDark && <img className='w-40 md:w-48 p-1  cursor-pointer' src={LogoWhite} alt='logo' />}
-				<h3 className={`font-bold text-lg ${isDark ? 'text-white' : 'text-gray-800'} text-left mt-8  w-full pl-10`}>Welcome to Uber</h3>
-				<span className={` ${isDark ? 'text-white' : 'text-gray-600'} text-left w-full pl-10`}>Sign up with your information.</span>
+				<Link to={'/'} className='flex mb-20 relative'>
+					{!isDark && (
+						<img className='w-40 md:w-48 p-1 cursor-pointer' src={Logo} alt='logo' />
+					)}
+					{isDark && (
+						<img
+							className='w-40 md:w-48 p-1  cursor-pointer'
+							src={LogoWhite}
+							alt='logo'
+						/>
+					)}
+				</Link>
+				<h3
+					className={`font-bold text-lg ${
+						isDark ? 'text-white' : 'text-gray-800'
+					} text-left mt-8  w-full pl-10`}
+				>
+					Welcome to Uber
+				</h3>
+				<span
+					className={` ${isDark ? 'text-white' : 'text-gray-600'} text-left w-full pl-10`}
+				>
+					Sign up with your information.
+				</span>
 				<div className='flex flex-col mt-5 px-20 '>
-					{state?.message !== undefined ? <span className='bg-green-600 span'>{state?.message}</span> : null}
+					{state?.message !== undefined ? (
+						<span className='bg-green-600 span'>{state?.message}</span>
+					) : null}
 					{state?.error !== undefined ? <ErrorSpan message={state?.error} /> : null}
 					{errors?.email?.message && <ErrorSpan message={errors?.email?.message} />}
 					{errors?.password?.message && <ErrorSpan message={errors?.password?.message} />}
 				</div>
-				<form className='flex flex-col w-full mt-5 px-10' onSubmit={handleSubmit(onValidSubmit)}>
+				<form
+					className='flex flex-col w-full mt-5 px-10'
+					onSubmit={handleSubmit(onValidSubmit)}
+				>
 					<input
 						className='input mb-3 focus:ring-0 focus:border-gray-400 text-black lowercase'
 						{...register('firstName', firstNameRegister)}
@@ -119,14 +167,22 @@ const Signup = () => {
 							defaultCountry='IR'
 						/>
 					</div>
-					<select className='input mb-3 focus:ring-0 focus:border-gray-400 text-black ' {...register('role', roleRegister)} onKeyDown={clearRoleErrors}>
+					<select
+						className='input mb-3 focus:ring-0 focus:border-gray-400 text-black '
+						{...register('role', roleRegister)}
+						onKeyDown={clearRoleErrors}
+					>
 						{Object.keys(UserRole).map((role, key) => (
 							<option key={key} value={role}>
 								{role}
 							</option>
 						))}
 					</select>
-					<button className={`btn mt-5 ${isDark ? 'bg-green-500 text-black' : 'bg-black'}`} type='submit' disabled={loading}>
+					<button
+						className={`btn mt-5 ${isDark ? 'bg-green-500 text-black' : 'bg-black'}`}
+						type='submit'
+						disabled={loading}
+					>
 						{loading ? 'Loading...' : 'Sign Up'}
 					</button>
 				</form>
