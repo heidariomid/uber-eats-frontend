@@ -10,10 +10,7 @@ interface IErrorPageProps {
 }
 const ErrorPage: React.FC<IErrorPageProps> = ({title, message, icon}) => {
 	return (
-		<div
-			className='h-screen w-full text-white flex flex-col items-center justify-center space-y-6 bg-cover bg-center '
-			style={{backgroundImage: `url(${restaurantBg})`}}
-		>
+		<div className='h-screen w-full text-white flex flex-col items-center justify-center space-y-6 bg-cover bg-center ' style={{backgroundImage: `url(${restaurantBg})`}}>
 			<div className='animate-wiggle text-5xl md:text-7xl'>
 				<FontAwesomeIcon icon={icon ? icon : faSadTear} />
 			</div>

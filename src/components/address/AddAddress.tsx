@@ -30,7 +30,15 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 					Address
 				</label>
 				<div className='mt-1'>
-					<input {...register('address', addressRegister)} onKeyDown={clearAddressErrors} type='text' id='address' name='address' autoComplete='street-address' className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input
+						{...register('address', addressRegister)}
+						onKeyDown={clearAddressErrors}
+						type='text'
+						id='address'
+						name='address'
+						autoComplete='street-address'
+						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+					/>
 				</div>
 			</div>
 
@@ -39,7 +47,14 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 					Apartment, suite, etc.
 				</label>
 				<div className='mt-1'>
-					<input {...register('apartment', apartmentRegister)} onKeyDown={clearApartmentErrors} type='text' id='apartment' name='apartment' className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input
+						{...register('apartment', apartmentRegister)}
+						onKeyDown={clearApartmentErrors}
+						type='text'
+						id='apartment'
+						name='apartment'
+						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+					/>
 				</div>
 			</div>
 
@@ -48,7 +63,15 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 					City
 				</label>
 				<div className='mt-1'>
-					<input {...register('city', cityRegister)} onKeyDown={clearCityErrors} type='text' id='city' name='city' autoComplete='address-level2' className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input
+						{...register('city', cityRegister)}
+						onKeyDown={clearCityErrors}
+						type='text'
+						id='city'
+						name='city'
+						autoComplete='address-level2'
+						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+					/>
 				</div>
 			</div>
 
@@ -57,7 +80,15 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 					State / Province
 				</label>
 				<div className='mt-1'>
-					<input {...register('region', regionRegister)} onKeyDown={clearRegionErrors} type='text' id='region' name='region' autoComplete='address-level1' className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input
+						{...register('region', regionRegister)}
+						onKeyDown={clearRegionErrors}
+						type='text'
+						id='region'
+						name='region'
+						autoComplete='address-level1'
+						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+					/>
 				</div>
 			</div>
 
@@ -66,7 +97,15 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 					Postal code
 				</label>
 				<div className='mt-1'>
-					<input {...register('postalCode', postalCodeRegister)} onKeyDown={clearPostalCodeErrors} type='number' id='postalCode' name='postalCode' autoComplete='postalCode' className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input
+						{...register('postalCode', postalCodeRegister)}
+						onKeyDown={clearPostalCodeErrors}
+						type='number'
+						id='postalCode'
+						name='postalCode'
+						autoComplete='postalCode'
+						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+					/>
 				</div>
 			</div>
 		</div>

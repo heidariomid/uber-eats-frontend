@@ -30,7 +30,11 @@ const Addresses = ({selectedAddress, setSelectedAddress, addAddressSelected}) =>
 									value={address}
 									className={({active, checked}) => {
 										let checking = addAddressSelected ? checked === false : checked === true;
-										return classNames(checking && active && !addAddressSelected && 'bg-green-100', checking && !addAddressSelected && 'bg-green-100', 'relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none');
+										return classNames(
+											checking && active && !addAddressSelected && 'bg-green-100',
+											checking && !addAddressSelected && 'bg-green-100',
+											'relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none',
+										);
 									}}
 								>
 									{({checked}) => {
@@ -47,8 +51,19 @@ const Addresses = ({selectedAddress, setSelectedAddress, addAddressSelected}) =>
 														</RadioGroup.Description>
 													</div>
 												</div>
-												<FontAwesomeIcon icon={faCheckCircle} className={classNames(!checked || addAddressSelected ? 'invisible' : '', 'h-5 w-5 text-green-600')} aria-hidden='true' />
-												<div className={classNames(checking && !addAddressSelected ? 'border' : 'border-2', checking && !addAddressSelected ? 'border-green-500' : 'border-transparent', 'absolute -inset-px rounded-lg pointer-events-none')} aria-hidden='true' />
+												<FontAwesomeIcon
+													icon={faCheckCircle}
+													className={classNames(!checked || addAddressSelected ? 'invisible' : '', 'h-5 w-5 text-green-600')}
+													aria-hidden='true'
+												/>
+												<div
+													className={classNames(
+														checking && !addAddressSelected ? 'border' : 'border-2',
+														checking && !addAddressSelected ? 'border-green-500' : 'border-transparent',
+														'absolute -inset-px rounded-lg pointer-events-none',
+													)}
+													aria-hidden='true'
+												/>
 											</>
 										);
 									}}
