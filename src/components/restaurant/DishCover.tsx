@@ -168,7 +168,7 @@ const DishCover = ({setIsSelected, dish}) => {
 
 									<div className='w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8'>
 										<div className='aspect-w-3 aspect-h-2 md:aspect-h-4  overflow-hidden sm:col-span-4 lg:col-span-5'>
-											<img src={dish.photo} alt={dish.name} className='object-center object-contain' />
+											<img src={dish.photo} alt={dish.name} className='object-center object-cover' />
 										</div>
 										<div className='sm:col-span-8 lg:col-span-7'>
 											<h2 className={`text-2xl font-extrabold ${isDark ? ' text-white' : 'text-gray-900'} sm:pr-12`}>{dish.name}</h2>

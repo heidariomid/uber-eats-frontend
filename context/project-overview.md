@@ -100,7 +100,9 @@ kept, not rewritten.
 1. `../uber-eats/context/features/spec1-clean-baseline.md`
 2. `context/features/spec1-clean-baseline.md`
 3. `context/features/spec2-libraries-react18.md`
-4. `context/features/spec3-next16-react19.md`
-5. `context/features/spec4-tailwind-4.md`
-6. `../uber-eats/context/features/spec2-nest12-typeorm1.md`
-7. A host spec, written after step 6
+4. `context/features/spec5-demo-images.md` (after spec 2, before or
+   after specs 3 and 4)
+5. `context/features/spec3-next16-react19.md`
+6. `context/features/spec4-tailwind-4.md`
+7. `../uber-eats/context/features/spec2-nest12-typeorm1.md`
+8. A host spec, written after step 7

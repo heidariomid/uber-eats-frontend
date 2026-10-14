@@ -44,7 +44,7 @@ const Restaurant = ({restaurant}) => {
 						</div>
 					</div>
 
-					<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl mb-20'>
+					<div className='grid mt-16 grid-cols-2 md:grid-cols-3 gap-x-5 gap-y-10 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl mb-20'>
 						{restaurant?.menu?.map((dish, i) => (
 							<Dish key={i} dish={dish} />
 						))}

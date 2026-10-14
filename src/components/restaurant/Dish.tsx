@@ -14,7 +14,7 @@ const Dish = ({dish}: {dish: IDish}) => {
 		<>
 			<div key={dish?.id} className='cursor-pointer text-center group p-4 '>
 				<div onClick={orderHandler}>
-					<div className='py-36 bg-contain bg-no-repeat bg-center my-2 ' style={{backgroundImage: `url(${dish?.photo})`}}></div>
+					<img src={dish?.photo} alt={dish?.name} className='w-full h-auto my-2' />
 					<div className='flex flex-col items-center justify-center '>
 						<div>
 							<span className='font-bold  text-2xl '>{dish?.name}</span>

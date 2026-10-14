@@ -8,10 +8,7 @@ const Restaurant = ({restaurant}) => {
 	return (
 		<div key={restaurant?.id} className='cursor-pointer text-center group '>
 			<Link to={`/restaurant/${restaurant.id}`}>
-				<div
-					className=' py-24 bg-cover bg-no-repeat bg-center mb-2'
-					style={{backgroundImage: `url(${restaurant?.coverImg})`}}
-				></div>
+				<img src={restaurant?.coverImg} alt={restaurant?.name} className='w-full h-auto mb-2' />
 
 				<h3 className='relative font-bold text-lg'>{restaurant?.name}</h3>
 				<div
