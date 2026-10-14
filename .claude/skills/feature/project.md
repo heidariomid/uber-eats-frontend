@@ -48,9 +48,12 @@ Same feature → update its file. Do not create a second one.
   the owner's screens or Apollo Sandbox
 - **Test account:** one client and one owner on the local API.
   Emails in `.env.local` as `QA_CLIENT_EMAIL` and `QA_OWNER_EMAIL`
-- **Known QA story:** the owner's live order update depends on the
-  `graphql-ws` socket sending `authToken`. A page that loads fine can
-  still have a dead subscription. Check it with two windows
+- **Known QA story:** the only live update is `updateOrders`: the
+  client's `/order/[id]` shows the owner's status change without a
+  reload. Nothing subscribes to `pendingOrders`, so the owner's
+  `/orders` list never updates live for a new order; spec 1's
+  baseline mistook that for a broken socket. Check the real story in
+  two windows
 
 ## Git
 

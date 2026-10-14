@@ -90,7 +90,8 @@ A. Product (every feature)
 
 - Renders at 375px and 1280px, light and dark
 - Every route on the spec 1 baseline list keeps its result
-- The order story: client places an order, the owner's view updates
+- The order story: client places an order and opens `/order/[id]`,
+  the owner changes its status, and the client's page updates
   without a reload, in two windows
 - Forms: valid submit and invalid submit
 - Console clean on the pages you touched, no hydration warning

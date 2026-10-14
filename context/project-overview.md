@@ -3,7 +3,8 @@
 A food-delivery demo. A client browses restaurants, opens one, adds
 dishes to a basket, checks out through Zarinpal, and follows the
 order. A restaurant owner adds restaurants, categories, and dishes,
-and sees new orders arrive live. A driver sees a map. Success for
+and changes an order's status, which the client's order page shows
+live. A driver sees a map. Success for
 this round is the same app on the current stack, running against the
 API on `localhost:4000`.
 
@@ -88,7 +89,8 @@ kept, not rewritten.
 ## Success criteria
 
 1. Every route above renders at the same URL on Next 16 and React 19
-2. A client places an order and the owner sees it without a reload
+2. A client places an order, and the owner's status change shows on
+   the client's order page without a reload
 3. No secret is tracked, and nothing is deployed before the host spec
 
 ---

@@ -48,11 +48,14 @@ today on Create React App 5 and React 18. "Done" is that list in
     renders with a console error, or fails. Use a client account for
     client routes and an owner account for `restaurant/owner/*`,
     `restaurant/add`, and `category/add`
-  - The order story: a client opens a restaurant, adds a dish,
-    checks out, and the owner's order view updates without a reload
-    (the `graphql-ws` subscription). Write down how far it gets.
-    Zarinpal is reached in sandbox mode only, or written down as not
-    reached
+  - The order story: a client opens a restaurant, adds a dish, and
+    checks out. With the client on `/order/[id]`, the owner changes
+    that order's status, and the client's page shows the new status
+    without a reload (the `updateOrders` subscription). Write down
+    how far it gets. Zarinpal is reached in sandbox mode only, or
+    written down as not reached. No page subscribes to
+    `pendingOrders`, so the owner's `/orders` list does not update
+    live for a new order; that is not a regression
 
   Later specs are judged against this list. A screen that is already
   broken is written down as broken, not fixed here

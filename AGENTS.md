@@ -50,7 +50,7 @@ sessions that do not.)
 
 ## Memory
 
-- **Product:** A food-delivery demo: clients order from restaurants and pay through Zarinpal, owners manage restaurants and dishes and see orders arrive live, drivers see a map. This round is a stack upgrade with the same screens. No redesign, no new features.
+- **Product:** A food-delivery demo: clients order from restaurants and pay through Zarinpal, owners manage restaurants and dishes and change order status, which the client's `/order/[id]` shows live (`updateOrders`), drivers see a map. No page subscribes to `pendingOrders`. This round is a stack upgrade with the same screens. No redesign, no new features.
 - **Package / slug:** `uber-front`.
 - **Path:** `/Users/omid/Developer/Github/uberEats/uber-eats-frontend`. The API is `../uber-eats`, its own git repo with its own specs.
 - **Hosting / production URL:** None working. The Vercel project `uber-eats-frontend` (https://uberfooddelivery.vercel.app/) still serves the old Create React App build. Do not create a second project. `ubereats.vercel.app` and `uber-eats-frontend.vercel.app` are other people's sites. `heidariomid.com` and Liara are gone. A host is chosen only after `../uber-eats` spec 2.
@@ -59,7 +59,7 @@ sessions that do not.)
 - **UI:** The existing black-and-white Tailwind look with `lime` and the app's own dark mode. Tokens in `tailwind.config.js`, then `@theme` in `src/app/globals.css` from spec 4.
 - **Process:** `context/` + `/feature` skill. Specs 1 to 4 in `context/features/`, in order, after `../uber-eats` spec 1. Superseded drafts are in `context/archive/`. Cleanup as above.
 - **Backend:** NestJS GraphQL on `http://localhost:4000/graphql`, subscriptions over `graphql-ws` with `connectionParams.authToken`.
-- **Not built:** Everything in specs 1 to 4. The host spec.
-- **QA:** Localhost, Playwright at 375px and 1280px, one client and one owner account on the local API. Known story: the owner's live order update needs the `graphql-ws` socket; check it in two windows.
-- **Secrets:** `.env` with an Apollo Studio key is tracked until spec 1. No code reads the key. The user revokes it.
+- **Not built:** Spec 1 is done. Specs 2 to 4 and the host spec are not built.
+- **QA:** Localhost, Playwright at 375px and 1280px. A client and an owner exist on the local API; emails and passwords are in `.env.local` (`QA_CLIENT_EMAIL`, `QA_OWNER_EMAIL`). The API allows CORS from `http://localhost:3000` only. Known story: the only live update is the client's `/order/[id]` following the owner's status change; check it in two windows. The owner's `/orders` list does not update live for a new order, and never did.
+- **Secrets:** `.env` is untracked. The Apollo Studio key is gone from the local file and remains in git history. No code reads the key. The user revokes it. `.env.example` lists the QA account names.
 - **Git:** Do not commit unless asked. Commits have no `Co-authored-by` trailer. `/feature complete` merges the feature branch into `main` and deletes that branch. Do not push: the Vercel project may deploy `main`.

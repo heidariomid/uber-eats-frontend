@@ -31,6 +31,12 @@ the spec 1 baseline list behaving the same.
     unchanged
   - `graphql-ws` stays on 5. Apollo 4 accepts 5 and 6, and the API
     picks the major in its spec 2
+  - `connectionParams: { authToken }` sends the `authToken` reactive
+    variable itself, a function, so the socket never carries the
+    token. Make it `connectionParams: () => ({ authToken: authToken() })`,
+    so the value is read when the socket connects, after login.
+    Today only `updateOrders`, which needs no auth, is used, so no
+    screen changes
 - **GraphQL codegen 2 to current.** `@graphql-codegen/cli` is 7.x on
   npm. Keep the `typescript`, `typescript-operations`, and
   `typescript-react-apollo` plugins in `codegen.yml` if the generated
@@ -74,7 +80,8 @@ the spec 1 baseline list behaving the same.
 
 - Every route on the spec 1 baseline list has the result it had
 - The order story from spec 1 gets as far as it did, including the
-  owner's live update
+  client's `/order/[id]` showing the owner's status change without a
+  reload
 - The basket dialog, the basket popover, the order summary, and the
   address radio group open, close, and work with the keyboard: Tab,
   arrow keys, Enter, Escape

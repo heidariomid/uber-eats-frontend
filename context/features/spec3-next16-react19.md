@@ -92,8 +92,9 @@ the new stack, against the API still on `localhost:4000`.
 - An unknown URL shows the `404` error page
 - Logged out, `/auth/login` renders. Logging in as the client and
   the owner works, and a reload keeps the session
-- The order story matches the baseline: the client places an order
-  and the owner's view updates without a reload, in two browser
+- The order story matches the baseline: the client places an order,
+  and with the client on `/order/[id]` the owner changes its status;
+  the client's page shows it without a reload, in two browser
   windows
 - The driver map renders on a driver account, if the baseline had
   one
