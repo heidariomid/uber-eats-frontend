@@ -63,3 +63,13 @@ sessions that do not.)
 - **QA:** Localhost, Playwright at 375px and 1280px. A client and an owner exist on the local API; emails and passwords are in `.env.local` (`QA_CLIENT_EMAIL`, `QA_OWNER_EMAIL`). The API allows CORS from `http://localhost:3000` only. Known story: the only live update is the client's `/order/[id]` following the owner's status change; check it in two windows. The owner's `/orders` list does not update live for a new order, and never did.
 - **Secrets:** `.env` is untracked. The Apollo Studio key is gone from the local file and remains in git history. No code reads the key. The user revokes it. `.env.example` lists the QA account names.
 - **Git:** Do not commit unless asked. Commits have no `Co-authored-by` trailer. `/feature complete` merges the feature branch into `main` and deletes that branch. Do not push: the Vercel project may deploy `main`.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+## This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

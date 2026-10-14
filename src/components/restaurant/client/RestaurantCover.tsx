@@ -6,9 +6,9 @@ const Restaurant = ({restaurant}) => {
 	const isDark = useReactiveVar(isDarkVar);
 
 	return (
-		<div key={restaurant?.id} className='cursor-pointer text-center group '>
+		<div key={restaurant?.id} className='cursor-pointer text-center group min-w-0'>
 			<Link href={`/restaurant/${restaurant.id}`}>
-				<img src={restaurant?.coverImg} alt={restaurant?.name} className='w-full h-auto mb-2' />
+				<img src={restaurant?.coverImg} alt={restaurant?.name} className='w-full max-w-full h-auto mb-2' />
 
 				<h3 className='relative font-bold text-lg'>{restaurant?.name}</h3>
 				<div

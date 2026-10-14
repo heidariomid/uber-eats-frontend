@@ -103,9 +103,9 @@ const Restaurants = () => {
 									></div>
 								)}
 
-								<section className=' lg:h-128 px-10 mt-12'>
+								<section className=' lg:h-128 px-4 sm:px-10 mt-12'>
 									{!errorMessage || !loading ? (
-										<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-(--breakpoint-md) mx-auto md:max-w-(--breakpoint-md) lg:max-w-(--breakpoint-xl)'>
+										<div className=' grid grid-cols-2 md:grid-cols-3 gap-y-8 gap-x-4 md:gap-y-10 md:gap-x-5 max-w-(--breakpoint-md) mx-auto md:max-w-(--breakpoint-md) lg:max-w-(--breakpoint-xl)'>
 											{restaurantsHandler()}
 										</div>
 									) : (
