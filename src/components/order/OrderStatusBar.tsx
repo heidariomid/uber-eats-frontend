@@ -68,9 +68,9 @@ const OrderStatusBar = ({order}) => {
 
 					<div className='flex items-center justify-center '>
 						{order.status === OrderStatus.Cooking && (
-							<img src={`${isDark ? PreaperFoodDark : PreaperFood}`} alt='order-cooking' className='mt-5 object-center object-cover sm:w-1/2 ' />
+							<img src={isDark ? PreaperFoodDark.src : PreaperFood.src} alt='order-cooking' className='mt-5 object-center object-cover sm:w-1/2 ' />
 						)}
-						{order.status === OrderStatus.Cooked && <img src={Dining} alt='order-cooked' className='object-center  object-cover sm:w-1/2 ' />}
+						{order.status === OrderStatus.Cooked && <img src={Dining.src} alt='order-cooked' className='object-center  object-cover sm:w-1/2 ' />}
 					</div>
 				</div>
 			</div>

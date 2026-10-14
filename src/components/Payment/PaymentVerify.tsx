@@ -1,11 +1,11 @@
 import {useEffect} from 'react';
 import {useMutation} from '@apollo/client/react';
 import {VERIFY_PAYMENT} from '../../graphql/mutations';
-import {useNavigate} from 'react-router-dom';
+import {useGo} from '@/lib/navigate';
 import Loading from '../loading/Loading';
 
 const PaymentVerify = () => {
-	const navigate = useNavigate();
+	const navigate = useGo();
 	const update = (_, result) => {
 		const {ok, message, orderId} = result?.data?.verifyPayment;
 		if (ok && orderId && !loading) {

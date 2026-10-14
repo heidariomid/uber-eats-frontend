@@ -10,7 +10,7 @@ import {
 	faSun,
 	faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {themeHandler, userLoggedOut} from '../../apollo';
 import {useQuery, useReactiveVar} from '@apollo/client/react';
 import {isDarkVar} from '../../apollo/GlobalVar';
@@ -26,7 +26,7 @@ import {SunIcon} from '@heroicons/react/24/solid';
 const Header = () => {
 	const isDark = useReactiveVar(isDarkVar);
 
-	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+	const basketItem: any = (typeof window === 'undefined' ? {} : JSON.parse(sessionStorage.getItem('basket') || '{}'));
 
 	const [_, dispatch] = useStateValue();
 	const {user, loading} = useUser();
@@ -65,18 +65,18 @@ const Header = () => {
 			{!loading ? (
 				<header className='flex items-center justify-start text-center py-4 w-full mx-auto'>
 					<div className='w-full px-5 xl:-x-0 max-w-screen-xl mx-auto flex justify-between items-center'>
-						<Link to={'/'}>
+						<Link href={'/'}>
 							{!isDark && (
 								<img
 									className='w-36 md:w-40 p-1 cursor-pointer'
-									src={Logo}
+									src={Logo.src}
 									alt='logo'
 								/>
 							)}
 							{isDark && (
 								<img
 									className='w-36 md:w-40 p-1  cursor-pointer'
-									src={LogoWhite}
+									src={LogoWhite.src}
 									alt='logo'
 								/>
 							)}
@@ -86,7 +86,7 @@ const Header = () => {
 							{user?.role === UserRole.Owner && (
 								<div className='mx-10'>
 									<Link
-										to={'/orders'}
+										href={'/orders'}
 										className=' mx-0.5 cursor-pointer inline-flex relative items-center p-2 text-sm font-medium text-center'
 									>
 										<FontAwesomeIcon icon={faPizzaSlice} size={'lg'} />
@@ -120,7 +120,7 @@ const Header = () => {
 
 							{user?.role === UserRole.Client && (
 								<Link
-									to='/orders'
+									href='/orders'
 									className={`py-1 mx-0.5 cursor-pointer mr-2 hover:text-green-600 `}
 								>
 									<FontAwesomeIcon
@@ -183,7 +183,7 @@ const Header = () => {
 								</span>
 							) : (
 								<Link
-									to='/auth/login'
+									href='/auth/login'
 									className=' py-1  ml-2 md:mx-4 cursor-pointer'
 								>
 									<span className='text-sm md:text-xl px-2  md:px-4 btn border-2 border-white'>

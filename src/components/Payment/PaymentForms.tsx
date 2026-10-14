@@ -5,7 +5,7 @@ import Zarinpal from '../../images/zarinpal.png';
 import {useMutation, useReactiveVar} from '@apollo/client/react';
 import {AddressItem, CreateOrderMutation, CreateOrderMutationVariables} from '../../graphql/schemaTypes';
 import {CREATE_ORDER} from '../../graphql/mutations';
-import {useNavigate} from 'react-router-dom';
+import {useGo} from '@/lib/navigate';
 import {useState} from 'react';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {useForm} from 'react-hook-form';
@@ -21,7 +21,7 @@ const PaymentForms = () => {
 	const [selectedAddress, setSelectedAddress] = useState<AddressItem | undefined>(undefined);
 	const [addAddressSelected, setAddAddressSelected] = useState<boolean>(false);
 
-	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+	const basketItem: any = (typeof window === 'undefined' ? {} : JSON.parse(sessionStorage.getItem('basket') || '{}'));
 	const [serverMessage, setServerMessage] = useState<string | null>(null);
 	const {
 		register,
@@ -34,7 +34,7 @@ const PaymentForms = () => {
 		mode: 'onChange',
 	});
 
-	let navigate = useNavigate();
+	const navigate = useGo();
 	const update = (_, result) => {
 		const {ok, message, orderId} = result?.data?.createOrder;
 		if (!ok) {
@@ -149,7 +149,7 @@ const PaymentForms = () => {
 						className='w-full flex items-center justify-center bg-green-400 border border-transparent text-white rounded-md py-2 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'
 					>
 						<span className='text-black font-bold px-2'>Pay with</span>
-						<img className='h-5 w-auto' src={Zarinpal} alt='zarinpal-logo' />
+						<img className='h-5 w-auto' src={Zarinpal.src} alt='zarinpal-logo' />
 					</button>
 					{/* <div className='relative my-4'>
 						<div className='absolute inset-0 flex items-center' aria-hidden='true'>

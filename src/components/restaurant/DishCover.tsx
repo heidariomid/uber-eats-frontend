@@ -2,7 +2,8 @@ import {Fragment, useEffect, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
 import {StarIcon} from '@heroicons/react/24/solid';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
+import {useParams} from 'next/navigation';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 import useUser from '../../hooks/useUser';
@@ -28,13 +29,14 @@ const DishCover = ({setIsSelected, dish}) => {
 
 	const [basket, setBasket] = useState<any>({});
 	const [dishOptionId, setDishOptionId] = useState<number | null>(null);
-	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+	const basketItem: any = (typeof window === 'undefined' ? {} : JSON.parse(sessionStorage.getItem('basket') || '{}'));
 
 	useEffect(() => {
 		setBasket(basketItem);
 	}, [basketItem?.items?.length]);
 
 	const {user} = useUser();
+	const {id} = useParams();
 	const restaurant = useRestaurant();
 	const changeQuantity = (id, opration) => {
 		dispatch({
@@ -249,7 +251,7 @@ const DishCover = ({setIsSelected, dish}) => {
 													{user?.role !== UserRole.Owner && addtoOrderButton()}
 													{user?.role === UserRole.Owner && (
 														<Link
-															to={`edit-dish/${dish.id}`}
+															href={`/restaurant/owner/${id}/edit-dish/${dish.id}`}
 															className={`mt-12 w-full ${
 																isDark ? ' bg-green-500 text-white' : 'bg-black'
 															} border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}

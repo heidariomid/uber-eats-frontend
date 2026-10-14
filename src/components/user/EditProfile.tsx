@@ -1,6 +1,7 @@
 import {useMutation} from '@apollo/client/react';
 import {useForm} from 'react-hook-form';
-import {Link, useNavigate} from 'react-router-dom';
+import Link from 'next/link';
+import {useGo} from '@/lib/navigate';
 import {EditUserProfileMutation, EditUserProfileMutationVariables, UpdateUserInput, UserRole} from '../../graphql/schemaTypes';
 import useUser from '../../hooks/useUser';
 import {EDIT_USER_PROFILE} from '../../graphql/mutations';
@@ -14,7 +15,7 @@ const EditProfile = () => {
 	const [serverMessage, setServerMessage] = useState('');
 	const [inputPassword, setInputPassword] = useState(false);
 	const [inputEmail, setInputEmail] = useState(true);
-	let navigate = useNavigate();
+	const navigate = useGo();
 	const {user, refetch} = useUser();
 	const {
 		register,
@@ -129,7 +130,7 @@ const EditProfile = () => {
 					</form>
 					<div className='mt-5'>
 						<span className=' font-medium'>Go Back?</span>
-						<Link className='pl-2 text-lime-600 font-medium hover:underline' to={'/'}>
+						<Link className='pl-2 text-lime-600 font-medium hover:underline' href={'/'}>
 							Click here
 						</Link>
 					</div>

@@ -4,7 +4,7 @@ import {actions} from '../../actions';
 // basket: {items: [], message: '',hasError: false, errorMessages: '',status:false,dishQuantity: {},dishOptionQuantity: {},restaurantId: ''}
 
 const reducer = (userState, action) => {
-	const basket = JSON.parse(sessionStorage.getItem('basket') || 'null');
+	const basket = typeof window === 'undefined' ? null : JSON.parse(sessionStorage.getItem('basket') || 'null');
 	const isBasket = Boolean(basket);
 
 	let result = userState;

@@ -6,21 +6,12 @@ with the overlay below, **This repo** wins.
 ## This repo
 
 - Package manager is npm. The repo already has a lockfile
-- Until spec 3 merges, the app is still Create React App. Commands
-  before spec 3:
-
-```bash
-npm start                # localhost:3000
-npm run build
-npm run graphql:gen      # needs the API on localhost:4000
-```
-
-- Commands from spec 3 on:
+- This branch is the Next.js app. Commands:
 
 ```bash
 npm run dev
 npm run build
-npx next start -p 3200
+npx next start -p 3000   # the API's CORS allows only localhost:3000
 npm run lint
 npx tsc --noEmit
 npm run graphql:gen

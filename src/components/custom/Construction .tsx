@@ -4,9 +4,9 @@ import logo from '../../images/uber-eats.svg';
 const Construction = () => {
 	return (
 		<section className='  flex flex-col justify-center items-center h-screen w-full'>
-			<img className=' w-96' src={logo} alt='logo' />
+			<img className=' w-96' src={logo.src} alt='logo' />
 			<div className='flex relative w-full items-center justify-center max-w-7xl mx-auto mt-16 text-center '>
-				<img src={construction} alt='construction' />
+				<img src={construction.src} alt='construction' />
 			</div>
 			<h1 className='text-4xl font-bold tracking-tight text-left text-gray-900 sm:text-5xl md:text-6xl md:text-center'>
 				<span className='block'>

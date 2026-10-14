@@ -1,13 +1,13 @@
 import {useReactiveVar} from '@apollo/client/react';
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {isDarkVar} from '../../../apollo/GlobalVar';
 import {Restaurant} from '../../../graphql/schemaTypes';
 import RestaurantSoon from '../client/RestaurantSoon';
 import Dish from '../Dish';
 const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
-	let isDark = useReactiveVar(isDarkVar);
+	const isDark = useReactiveVar(isDarkVar);
 
 	return (
 		<>
@@ -22,12 +22,12 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 								<div className={`text-xl mt-4 ${isDark ? 'text-white' : 'text-gray-700'} `}>{restaurant?.category?.name}</div>
 								<div className={`text-xl mt-2 ${isDark ? 'text-white' : 'text-gray-700'} `}>{restaurant?.address}</div>
 								<div className='mt-10 '>
-									<Link to={'add-dish'} className='py-2 text-white bg-green-500 mr-4 px-10'>
+									<Link href={`/restaurant/owner/${restaurant.id}/add-dish`} className='py-2 text-white bg-green-500 mr-4 px-10'>
 										Add Dish
 									</Link>
 
 									<Link
-										to={`/restaurant/${restaurant.id}/edit-restaurant`}
+										href={`/restaurant/${restaurant.id}/edit-restaurant`}
 										className={`cursor-pointer py-2 ${isDark ? 'bg-zinc-700 text-white' : 'bg-black text-white'}  mr-4 px-4`}
 									>
 										<span className='mr-2'>Edit Restaurant </span>

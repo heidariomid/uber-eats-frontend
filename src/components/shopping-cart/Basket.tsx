@@ -2,7 +2,7 @@
 import {Fragment, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import {XMarkIcon} from '@heroicons/react/24/outline';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -34,7 +34,7 @@ export const totaldishPrice = (dish, basket) => {
 const Basket = () => {
 	const isDark = useReactiveVar(isDarkVar);
 	const isBasket = useReactiveVar<boolean>(isBasketItemVar);
-	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+	const basketItem: any = (typeof window === 'undefined' ? {} : JSON.parse(sessionStorage.getItem('basket') || '{}'));
 	const [_, dispatch] = useStateValue();
 	const [open, setOpen] = useState(true);
 
@@ -143,7 +143,7 @@ const Basket = () => {
 																						}`}
 																					>
 																						<h3>
-																							<Link to={dish?.name}> {dish?.name} </Link>
+																							<Link href={dish?.name}> {dish?.name} </Link>
 																						</h3>
 
 																						{isBasket ? (
@@ -177,7 +177,7 @@ const Basket = () => {
 														) : (
 															<div className='flex justify-center items-center  h-screen '>
 																<div className='text-center'>
-																	<img className='w-full' src={EmptyBasket} alt='no-item' />
+																	<img className='w-full' src={EmptyBasket.src} alt='no-item' />
 
 																	<p className={`lg:text-2xl p-4 rounded-2xl ${isDark ? 'text-white ' : 'text-gray-900 '}`}>No Item Added </p>
 																</div>
@@ -197,7 +197,7 @@ const Basket = () => {
 												<p className={`mt-0.5 text-sm ${isDark ? 'text-white ' : 'text-gray-500 '}`}>Shipping and taxes calculated at checkout.</p>
 												<div className='mt-6' onClick={() => setOpen(false)}>
 													<Link
-														to='/checkout'
+														href='/checkout'
 														className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'
 													>
 														Checkout

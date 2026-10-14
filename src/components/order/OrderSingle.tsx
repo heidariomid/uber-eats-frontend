@@ -1,4 +1,5 @@
-import {Link, useParams} from 'react-router-dom';
+import Link from 'next/link';
+import {useParams} from 'next/navigation';
 import {GetOrderByIdQuery, GetOrderByIdQueryVariables, OrderStatus, UpdateOrdersSubscription} from '../../graphql/schemaTypes';
 import Loading from '../loading/Loading';
 import {useEffect, useState} from 'react';
@@ -55,7 +56,7 @@ const OrderSingle = () => {
 		<div className='flex flex-col  items-center h-screen mt-10'>
 			<OrderDetails order={order} />
 			<div>
-				<Link to={'/orders'} className='text-lg pb-20 font-medium text-green-500 hover:text-green-600 sm:block'>
+				<Link href={'/orders'} className='text-lg pb-20 font-medium text-green-500 hover:text-green-600 sm:block'>
 					<span aria-hidden='true'> &larr;</span> orders history
 				</Link>
 			</div>

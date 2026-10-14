@@ -1,9 +1,9 @@
 import {useReactiveVar} from '@apollo/client/react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {isDarkVar} from '../../../apollo/GlobalVar';
 
 const RestaurantSoon = ({restaurant}) => {
-	let isDark = useReactiveVar(isDarkVar);
+	const isDark = useReactiveVar(isDarkVar);
 	return (
 		<>
 			<div className='relative flex items-center justify-center mt-20 h-screen'>
@@ -20,7 +20,7 @@ const RestaurantSoon = ({restaurant}) => {
 						<div className='md:text-2xl text-lg mt-4 text-left uppercase mb-5'>{restaurant?.category?.name}</div>
 						<div className='md:text-2xl text-lg text-left '>{restaurant?.address}</div>
 						<div className=' mt-10 mx-auto'>
-							<Link to={`/`} className='text-lg font-medium  hover:text-green-500 '>
+							<Link href={`/`} className='text-lg font-medium  hover:text-green-500 '>
 								<span aria-hidden='true'> &larr;</span> Go Back
 							</Link>
 						</div>

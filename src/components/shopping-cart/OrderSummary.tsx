@@ -1,14 +1,14 @@
 import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
 import {ChevronUpIcon} from '@heroicons/react/24/solid';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {totaldishPrice, totalAllDishPrice} from './Basket';
 import {v4 as uuidv4} from 'uuid';
 import {useReactiveVar} from '@apollo/client/react';
 import {isDarkVar} from '../../apollo/GlobalVar';
 const OrderSummary = () => {
 	const dishOptionsItem: any = [];
-	const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || '{}');
+	const basketItem: any = (typeof window === 'undefined' ? {} : JSON.parse(sessionStorage.getItem('basket') || '{}'));
 	const isDark = useReactiveVar(isDarkVar);
 
 	const totaldishOptionsPrice = (dishOptions) => {
@@ -62,7 +62,7 @@ const OrderSummary = () => {
 												<div>
 													<div className={`flex justify-between text-base font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>
 														<h3>
-															<Link to={dish?.name}> {dish?.name} </Link>
+															<Link href={dish?.name}> {dish?.name} </Link>
 														</h3>
 
 														<p className='ml-4'>${totaldishPrice(dish, basketItem) + totaldishOptionsPrice(dishOptions)}</p>

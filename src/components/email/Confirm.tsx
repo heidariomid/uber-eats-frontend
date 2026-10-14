@@ -1,6 +1,6 @@
 import {useMutation} from '@apollo/client/react';
 import {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useGo} from '@/lib/navigate';
 import {VALIDATE_EMAIL} from '../../graphql/mutations';
 import {ValidateEmailMutation, ValidateEmailMutationVariables} from '../../graphql/schemaTypes';
 import useUser from '../../hooks/useUser';
@@ -48,7 +48,7 @@ const Confirm = () => {
 		}
 	};
 
-	let navigate = useNavigate();
+	const navigate = useGo();
 
 	const [validateEmailHandler] = useMutation<ValidateEmailMutation, ValidateEmailMutationVariables>(VALIDATE_EMAIL, {update});
 	useEffect(() => {

@@ -1,11 +1,17 @@
 import {makeVar} from '@apollo/client';
-const token = localStorage.getItem('token');
-export const isLoginVar = makeVar(Boolean(token));
 
-export const basketItem: any = JSON.parse(sessionStorage.getItem('basket') || 'null');
+export const isLoginVar = makeVar(false);
+export const authToken = makeVar<string | null>(null);
+export const basketItemVar = makeVar<unknown>(null);
+export const isBasketItemVar = makeVar(false);
+export const isDarkVar = makeVar(false);
 
-export const basketItemVar = makeVar(basketItem);
-export const isBasketItemVar = makeVar(Boolean(basketItem));
-
-export const authToken = makeVar(token);
-export const isDarkVar = makeVar(Boolean(localStorage.getItem('dark')));
+export function hydrateBrowserState() {
+	const token = localStorage.getItem('token');
+	authToken(token);
+	isLoginVar(Boolean(token));
+	isDarkVar(Boolean(localStorage.getItem('dark')));
+	const basket = JSON.parse(sessionStorage.getItem('basket') || 'null');
+	basketItemVar(basket);
+	isBasketItemVar(Boolean(basket));
+}

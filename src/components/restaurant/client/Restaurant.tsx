@@ -6,7 +6,7 @@ import Dish from '../Dish';
 import RestaurantSoon from './RestaurantSoon';
 
 const Restaurant = ({restaurant}) => {
-	let isDark = useReactiveVar(isDarkVar);
+	const isDark = useReactiveVar(isDarkVar);
 	const [state] = useStateValue();
 	const showNotificationBasket = () => {
 		return (

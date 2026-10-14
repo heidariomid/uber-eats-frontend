@@ -1,24 +1,26 @@
+'use client';
+
 import {useReactiveVar} from '@apollo/client/react';
-import {useLocation} from 'react-router-dom';
+import {usePathname} from 'next/navigation';
 import {isDarkVar} from './apollo/GlobalVar';
 import Header from './components/header/Header';
 import Basket from './components/shopping-cart/Basket';
-import Routes from './routes';
 import {useStateValue} from './store/context/ContextManager';
-const App = () => {
+
+const App = ({children}: {children: React.ReactNode}) => {
 	const isDark = useReactiveVar(isDarkVar);
 	const [state] = useStateValue();
-	const location = useLocation();
+	const pathname = usePathname();
 	const checkPath =
-		location.pathname === '/payment/pending' ||
-		location.pathname === '/payment/verify/:reserve' ||
-		location.pathname === '/auth/login' ||
-		location.pathname === '/auth/signup';
+		pathname === '/payment/pending' ||
+		pathname === '/payment/verify/:reserve' ||
+		pathname === '/auth/login' ||
+		pathname === '/auth/signup';
 	return (
 		<div className={`h-full ${isDark && 'bg-black text-white'}`}>
 			{!checkPath && <Header />}
 			{state.basket.status && <Basket />}
-			<Routes />
+			{children}
 		</div>
 	);
 };

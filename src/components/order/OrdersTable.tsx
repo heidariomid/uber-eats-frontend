@@ -1,5 +1,5 @@
 import {useReactiveVar} from '@apollo/client/react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {GetOrdersQuery, OrderStatus} from '../../graphql/schemaTypes';
 
@@ -76,7 +76,7 @@ const OrdersTable = ({orders}: {orders: GetOrdersQuery['getOrders']['orders'] | 
 										</td>
 										<td className={`px-6 py-4 whitespace-nowrap text-sm ${isDark ? 'text-white' : 'text-gray-500'}`}>$ {order.totalPrice}</td>
 										<td className='px-6 py-4 whitespace-nowrap text-right text-sm font-medium'>
-											<Link to={`/order/${order.id}`} className='text-green-500 hover:text-green-900'>
+											<Link href={`/order/${order.id}`} className='text-green-500 hover:text-green-900'>
 												Details
 											</Link>
 										</td>

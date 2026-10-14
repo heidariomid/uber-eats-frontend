@@ -38,7 +38,9 @@ Same feature → update its file. Do not create a second one.
 ## QA
 
 - **Surface:** localhost. Before spec 3, `npm start` on port 3000.
-  From spec 3, `npm run build`, then `npx next start -p 3200`. The
+  From spec 3, `npm run build`, then `npx next start -p 3000`. Port
+  3000 only: the API's CORS allows `http://localhost:3000` and
+  `APP_FRONT_URL`, nothing else. Stop `npm run dev` first. The
   API from `../uber-eats` on port 4000
 - **Browser tool:** Playwright, at 375px and 1280px. Two windows for
   the order story

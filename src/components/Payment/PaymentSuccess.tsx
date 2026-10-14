@@ -1,4 +1,5 @@
-import {Link, useLocation} from 'react-router-dom';
+import Link from 'next/link';
+import {useRouteState} from '@/lib/navigate';
 import PreaperFood from '../../images/preaper.svg';
 import PreaperFoodBlack from '../../images/preaperBlack.svg';
 import OrderSuccessImg from '../../images/order-success.svg';
@@ -15,7 +16,7 @@ function classNames(...classes) {
 }
 const PaymentSuccess = () => {
 	const isDark = useReactiveVar(isDarkVar);
-	const {state}: {state: any} = useLocation();
+	const state = useRouteState();
 	const orderId = state.orderId;
 	const [order, setOrder] = useState<GetOrderByIdQuery['getOrderById']['order'] | null>(null);
 
@@ -72,7 +73,7 @@ const PaymentSuccess = () => {
 				<main className='max-w-2xl mx-auto pt-8 pb-24 sm:pt-16 sm:px-6 lg:max-w-7xl lg:px-8 '>
 					<div className='grid grid-cols-2'>
 						<div>
-							<Link to={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 '>
+							<Link href={`/orders`} className='text-sm font-medium text-green-500 hover:text-green-600 '>
 								View Order Details<span aria-hidden='true'> &rarr;</span>
 							</Link>
 						</div>
@@ -95,7 +96,7 @@ const PaymentSuccess = () => {
 								<div className='py-6 px-4 sm:px-6 '>
 									<div className='flex flex-col md:flex-row justify-center items-center'>
 										<img
-											src={OrderSuccessImg}
+											src={OrderSuccessImg.src}
 											alt='order-success'
 											className='object-center object-cover w-1/2 md:w-1/3 h-full md:h-auto
 								'
@@ -110,7 +111,7 @@ const PaymentSuccess = () => {
 										</div>
 									</div>
 								</div>
-								<section>{isDark ? <img src={PreaperFoodBlack} alt='preapering-food' /> : <img src={PreaperFood} alt='preapering-food' />}</section>
+								<section>{isDark ? <img src={PreaperFoodBlack.src} alt='preapering-food' /> : <img src={PreaperFood.src} alt='preapering-food' />}</section>
 								<div className='border-t border-gray-200 py-6 px-4 sm:px-6 lg:p-8'>
 									<h4 className='sr-only'>Status</h4>
 									<p className={`text-sm font-medium ${isDark ? 'text-white' : 'text-gray-700'}`}>

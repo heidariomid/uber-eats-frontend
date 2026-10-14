@@ -3,11 +3,11 @@ import {Fragment, useRef, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faLock} from '@fortawesome/free-solid-svg-icons';
-import {useNavigate} from 'react-router-dom';
+import {useGo} from '@/lib/navigate';
 
 export default function Example() {
 	const [open, setOpen] = useState(true);
-	let navigate = useNavigate();
+	const navigate = useGo();
 	const cancelButtonRef = useRef(null);
 
 	return (

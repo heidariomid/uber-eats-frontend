@@ -1,5 +1,5 @@
 import {useReactiveVar} from '@apollo/client/react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 import {isDarkVar} from '../../../apollo/GlobalVar';
 
 const RestaurantOwnerCover = ({restaurant}) => {
@@ -7,7 +7,7 @@ const RestaurantOwnerCover = ({restaurant}) => {
 
 	return (
 		<div key={restaurant?.id} className='cursor-pointer text-center group '>
-			<Link to={`/restaurant/owner/${restaurant.id}`}>
+			<Link href={`/restaurant/owner/${restaurant.id}`}>
 				<div className='py-24  bg-cover bg-no-repeat bg-center mb-2' style={{backgroundImage: `url(${restaurant?.coverImg})`}}></div>
 				<h3 className='font-bold'>{restaurant?.name}</h3>
 				<div

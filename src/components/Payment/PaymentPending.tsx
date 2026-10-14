@@ -1,12 +1,12 @@
 import {useMutation, useReactiveVar} from '@apollo/client/react';
 import {useEffect} from 'react';
-import {useLocation} from 'react-router-dom';
+import {useRouteState} from '@/lib/navigate';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {CREATE_PAYMENT} from '../../graphql/mutations';
 import {CreatePaymentMutation, CreatePaymentMutationVariables} from '../../graphql/schemaTypes';
 
 const PaymentPending = () => {
-	const {state}: {state: any} = useLocation();
+	const state = useRouteState();
 	const isDark = useReactiveVar(isDarkVar);
 	const orderId = state.orderId;
 	const update = (_, result) => {
@@ -19,6 +19,7 @@ const PaymentPending = () => {
 	};
 	const [createPaymentHandler] = useMutation<CreatePaymentMutation, CreatePaymentMutationVariables>(CREATE_PAYMENT, {update});
 	useEffect(() => {
+		if (typeof orderId !== 'number') return;
 		createPaymentHandler({variables: {data: {orderId, payment_method: 'online'}}});
 	}, []);
 

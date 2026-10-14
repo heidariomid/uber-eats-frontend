@@ -5,10 +5,7 @@ import {getMainDefinition} from '@apollo/client/utilities';
 import {createClient} from 'graphql-ws';
 import {authToken, isDarkVar, isLoginVar} from './GlobalVar';
 
-const url =
-	process.env.NODE_ENV === 'production'
-		? 'wss://uber-back.iran.liara.run/graphql'
-		: 'ws://localhost:4000/graphql';
+const url = process.env.NEXT_PUBLIC_GRAPHQL_WS_URL || 'ws://localhost:4000/graphql';
 const wsLink = new GraphQLWsLink(
 	createClient({
 		url,
@@ -17,10 +14,7 @@ const wsLink = new GraphQLWsLink(
 		}),
 	}),
 );
-const uri =
-	process.env.NODE_ENV === 'production'
-		? 'https://uber-back.iran.liara.run/graphql'
-		: 'http://localhost:4000/graphql';
+const uri = process.env.NEXT_PUBLIC_GRAPHQL_URL || 'http://localhost:4000/graphql';
 const httpLink = new HttpLink({
 	uri,
 });
@@ -33,7 +27,7 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
 });
 const httpLinkWithErrorHandling = ApolloLink.from([cleanTypeName, httpLink]);
 const authLink = new SetContextLink((prevContext) => {
-	const token = localStorage.getItem('token');
+	const token = typeof window === 'undefined' ? null : localStorage.getItem('token');
 	return {
 		headers: {
 			...prevContext.headers,
@@ -66,7 +60,7 @@ export const userLoggedOut = () => {
 	window.location.replace('/auth/login');
 	isLoginVar(false);
 };
-export const themeHandler = (currentTheme: any) => {
+export const themeHandler = (currentTheme: boolean) => {
 	if (!currentTheme) {
 		localStorage.setItem('dark', 'true');
 	}

@@ -70,7 +70,7 @@ const RestaurantsSearch = () => {
 	}, [message]);
 
 	return (
-		<div className='w-full flex flex-col items-center justify-center bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurantBg})`}}>
+		<div className='w-full flex flex-col items-center justify-center bg-cover bg-center py-36 ' style={{backgroundImage: `url(${restaurantBg.src})`}}>
 			<div className='flex w-full items-center text-center text-white h-8 justify-center  text-4xl'>
 				<span>Uber Eats</span>
 			</div>

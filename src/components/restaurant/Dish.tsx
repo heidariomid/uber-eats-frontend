@@ -4,8 +4,8 @@ import {isDarkVar} from '../../apollo/GlobalVar';
 import {Dish as IDish} from '../../graphql/schemaTypes';
 import DishCover from './DishCover';
 const Dish = ({dish}: {dish: IDish}) => {
-	let isDark = useReactiveVar(isDarkVar);
-	const [isOrderSelected, setIsOrderSelected] = useState<Boolean>(false);
+	const isDark = useReactiveVar(isDarkVar);
+	const [isOrderSelected, setIsOrderSelected] = useState<boolean>(false);
 	const orderHandler = () => {
 		setIsOrderSelected((current) => !current);
 	};

@@ -1,7 +1,7 @@
 /* This example requires Tailwind CSS v2.0+ */
 import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
-import {Link} from 'react-router-dom';
+import Link from 'next/link';
 
 const products = [
 	{
@@ -52,7 +52,7 @@ const BasketPopOver = () => {
 							</button>
 
 							<p className='mt-6 text-center'>
-								<Link to='#' className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
+								<Link href='#' className='text-sm font-medium text-indigo-600 hover:text-indigo-500'>
 									View Shopping Bag
 								</Link>
 							</p>
