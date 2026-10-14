@@ -21,3 +21,12 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Process kit
+.env
+.env*.local
+!.env.example
+.next/
+.vercel/
+cypress/videos/
+cypress/screenshots/
