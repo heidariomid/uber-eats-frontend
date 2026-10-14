@@ -29,7 +29,7 @@ const RestaurantFind = () => {
 					{!data?.searchRestaurants.ok && <div className='w-full flex flex-col h-screen items-center justify-center font-bold text-lg space-y-10 text-black text-center py-2 my-4'>{data?.searchRestaurants?.message ? <ErrorPage message={data?.searchRestaurants?.message} /> : <ErrorPage message={'SomeThing Goes Wrong!'} />}</div>}
 					{data?.searchRestaurants.ok && (
 						<div className='min-h-screen'>
-							<div className='grid md:grid-cols-3 mt-20  gap-x-5 gap-y-10 max-w-screen-md mx-auto'>
+							<div className='grid md:grid-cols-3 mt-20  gap-x-5 gap-y-10 max-w-(--breakpoint-md) mx-auto'>
 								{data?.searchRestaurants?.restaurants?.map((restaurant) => (
 									<RestaurantCover key={restaurant.id} restaurant={restaurant} />
 								))}

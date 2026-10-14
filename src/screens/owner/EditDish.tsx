@@ -133,7 +133,7 @@ const EditDish = () => {
 		<>
 			{dish ? (
 				<div className='container flex flex-col h-screen items-center justify-center mx-auto '>
-					<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center bg-white '>
+					<div className='w-full max-w-(--breakpoint-sm) flex flex-col items-center py-10 px-5 text-center bg-white '>
 						<h3 className='font-bold text-lg text-gray-800 text-left w-full pl-10 '>{`Edit Dish #${id}`}</h3>
 
 						<div className='flex flex-col mt-5 px-20 '>

@@ -64,7 +64,7 @@ const Login = () => {
 	const clearLoginErrors = () => clearErrors('password');
 	return (
 		<div className='container flex flex-col mx-auto h-screen items-center justify-center'>
-			<div className='w-full max-w-screen-sm flex flex-col items-center py-10 px-5 text-center '>
+			<div className='w-full max-w-(--breakpoint-sm) flex flex-col items-center py-10 px-5 text-center '>
 				<Link href={'/'} className='flex mb-20 relative'>
 					{!isDark && <img className='w-40 md:w-48 p-1 cursor-pointer' src={Logo.src} alt='logo' />}
 					{isDark && <img className='w-40 md:w-48 p-1  cursor-pointer' src={LogoWhite.src} alt='logo' />}

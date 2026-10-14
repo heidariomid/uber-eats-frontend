@@ -85,7 +85,7 @@ const Restaurants = () => {
 							<RestaurantsSearch />
 							<div className='max-h-full '>
 								<div>
-									<div className='lg:flex lg:flex-row grid grid-cols-4 gap-y-8  justify-between max-w-screen-sm md:max-w-screen-md lg:max-w-screen-xl  mx-auto mb-8 mt-5 px-5 '>
+									<div className='lg:flex lg:flex-row grid grid-cols-4 gap-y-8  justify-between max-w-(--breakpoint-sm) md:max-w-(--breakpoint-md) lg:max-w-(--breakpoint-xl)  mx-auto mb-8 mt-5 px-5 '>
 										{categories &&
 											categories.map((category) => (
 												<Category
@@ -105,7 +105,7 @@ const Restaurants = () => {
 
 								<section className=' lg:h-128 px-10 mt-12'>
 									{!errorMessage || !loading ? (
-										<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl'>
+										<div className=' grid md:grid-cols-3 gap-y-10  gap-x-5 max-w-(--breakpoint-md) mx-auto md:max-w-(--breakpoint-md) lg:max-w-(--breakpoint-xl)'>
 											{restaurantsHandler()}
 										</div>
 									) : (

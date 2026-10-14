@@ -26,8 +26,7 @@ accent, and a light and dark mode switched by the app's own
 
 ## Tokens
 
-Defined once in `tailwind.config.js` until spec 4, then under
-`@theme` in `src/app/globals.css`. Pages never write a hex. A missing
+Defined once under `@theme` in `src/app/globals.css`. Pages never write a hex. A missing
 colour is a new token, listed here in the same change.
 
 | Token | Value | Use |

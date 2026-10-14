@@ -106,7 +106,7 @@ const DishCover = ({setIsSelected, dish}) => {
 					type='button'
 					className={`mt-12 w-full ${
 						isDark ? 'bg-green-500 text-white' : 'bg-black text-white'
-					}  border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium  hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
+					}  border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium  hover:bg-green-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
 				>
 					<span>
 						<FontAwesomeIcon icon={faAdd} />
@@ -137,7 +137,7 @@ const DishCover = ({setIsSelected, dish}) => {
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='hidden fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity md:block' />
+					<div className='hidden fixed inset-0 bg-gray-500/75 transition-opacity md:block' />
 				</Transition.Child>
 				<div className='fixed z-10 inset-0 overflow-y-auto transition-all'>
 					<div className='flex items-stretch md:items-center justify-center min-h-full text-center md:px-2 lg:px-4'>
@@ -169,8 +169,8 @@ const DishCover = ({setIsSelected, dish}) => {
 									</button>
 
 									<div className='w-full grid grid-cols-1 gap-y-8 gap-x-6 items-start sm:grid-cols-12 lg:gap-x-8'>
-										<div className='aspect-w-3 aspect-h-2 md:aspect-h-4  overflow-hidden sm:col-span-4 lg:col-span-5'>
-											<img src={dish.photo} alt={dish.name} className='object-center object-cover' />
+										<div className='aspect-3/2 md:aspect-3/4 overflow-hidden sm:col-span-4 lg:col-span-5'>
+											<img src={dish.photo} alt={dish.name} className='h-full w-full object-center object-cover' />
 										</div>
 										<div className='sm:col-span-8 lg:col-span-7'>
 											<h2 className={`text-2xl font-extrabold ${isDark ? ' text-white' : 'text-gray-900'} sm:pr-12`}>{dish.name}</h2>
@@ -188,7 +188,7 @@ const DishCover = ({setIsSelected, dish}) => {
 															{[0, 1, 2, 3, 4].map((rating) => (
 																<StarIcon
 																	key={rating}
-																	className={classNames(dish?.rating > rating ? 'text-gray-900' : 'text-yellow-400', 'h-5 w-5 flex-shrink-0')}
+																	className={classNames(dish?.rating > rating ? 'text-gray-900' : 'text-yellow-400', 'h-5 w-5 shrink-0')}
 																	aria-hidden='true'
 																/>
 															))}
@@ -254,7 +254,7 @@ const DishCover = ({setIsSelected, dish}) => {
 															href={`/restaurant/owner/${id}/edit-dish/${dish.id}`}
 															className={`mt-12 w-full ${
 																isDark ? ' bg-green-500 text-white' : 'bg-black'
-															} border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
+															} border border-transparent rounded-md py-3 px-8 flex items-center justify-center text-base font-medium text-white hover:bg-green-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-green-500`}
 														>
 															<span>
 																<FontAwesomeIcon icon={faEdit} />

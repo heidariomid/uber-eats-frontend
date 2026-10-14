@@ -16,7 +16,7 @@ const SingleCategory = () => {
 				<>
 					<div className='mt-10 h-screen w-full mx-auto'>
 						<section className='md:h-128 px-10'>
-							<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-lg'>{data?.getCategory?.restaurants && data?.getCategory?.restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
+							<div className='grid md:grid-cols-3 md:gap-y-10  gap-x-5 max-w-(--breakpoint-md) mx-auto md:max-w-(--breakpoint-md) lg:max-w-(--breakpoint-lg)'>{data?.getCategory?.restaurants && data?.getCategory?.restaurants.map((restaurant) => <RestaurantCover key={restaurant.id} restaurant={restaurant} />)}</div>
 						</section>
 					</div>
 				</>

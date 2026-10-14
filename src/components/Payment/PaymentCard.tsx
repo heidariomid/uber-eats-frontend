@@ -10,7 +10,7 @@ const PaymentCard = () => {
 					Name on card
 				</label>
 				<div className='mt-1'>
-					<input type='text' id='name-on-card' name='name-on-card' autoComplete='cc-name' className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input type='text' id='name-on-card' name='name-on-card' autoComplete='cc-name' className='block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm' />
 				</div>
 			</div>
 
@@ -19,7 +19,7 @@ const PaymentCard = () => {
 					Card number
 				</label>
 				<div className='mt-1'>
-					<input type='text' id='card-number' name='card-number' autoComplete='cc-number' className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input type='text' id='card-number' name='card-number' autoComplete='cc-number' className='block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm' />
 				</div>
 			</div>
 
@@ -28,7 +28,7 @@ const PaymentCard = () => {
 					Expiration date (MM/YY)
 				</label>
 				<div className='mt-1'>
-					<input type='text' name='expiration-date' id='expiration-date' autoComplete='cc-exp' className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input type='text' name='expiration-date' id='expiration-date' autoComplete='cc-exp' className='block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm' />
 				</div>
 			</div>
 
@@ -37,7 +37,7 @@ const PaymentCard = () => {
 					CVC
 				</label>
 				<div className='mt-1'>
-					<input type='text' name='cvc' id='cvc' autoComplete='csc' className='block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm' />
+					<input type='text' name='cvc' id='cvc' autoComplete='csc' className='block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm' />
 				</div>
 			</div>
 		</div>

@@ -64,7 +64,7 @@ const Header = () => {
 		<div className='flex flex-row content-center items-center justify-start text-center  w-full '>
 			{!loading ? (
 				<header className='flex items-center justify-start text-center py-4 w-full mx-auto'>
-					<div className='w-full px-5 xl:-x-0 max-w-screen-xl mx-auto flex justify-between items-center'>
+					<div className='w-full px-5 xl:-x-0 max-w-(--breakpoint-xl) mx-auto flex justify-between items-center'>
 						<Link href={'/'}>
 							{!isDark && (
 								<img

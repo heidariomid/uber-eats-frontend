@@ -13,7 +13,7 @@ const RestaurantSoon = ({restaurant}) => {
 					alt={restaurant?.name}
 				/>
 
-				<div className={`absolute text-center flex justify-center items-center  text-5xl font-semibold ${isDark ? 'bg-black' : 'bg-white'} bg-opacity-50   py-10 px-20 `}>
+				<div className={`absolute text-center flex justify-center items-center  text-5xl font-semibold ${isDark ? 'bg-black/50' : 'bg-white/50'} py-10 px-20 `}>
 					<div>
 						<h1 className='font-bold mt-2 mb-10 text-3xl md:text-7xl'>Coming Soon</h1>
 						<h2 className='font-bold mt-2 md:text-4xl text-2xl text-left mb-5'>{restaurant?.name}</h2>

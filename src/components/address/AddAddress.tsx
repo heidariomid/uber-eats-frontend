@@ -37,7 +37,7 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 						id='address'
 						name='address'
 						autoComplete='street-address'
-						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+						className='text-black block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -53,7 +53,7 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 						type='text'
 						id='apartment'
 						name='apartment'
-						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+						className='text-black block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -70,7 +70,7 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 						id='city'
 						name='city'
 						autoComplete='address-level2'
-						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+						className='text-black block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -87,7 +87,7 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 						id='region'
 						name='region'
 						autoComplete='address-level1'
-						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+						className='text-black block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm'
 					/>
 				</div>
 			</div>
@@ -104,7 +104,7 @@ const AddAddress = ({clearErrors, register, selectedAddress}) => {
 						id='postalCode'
 						name='postalCode'
 						autoComplete='postalCode'
-						className='text-black block w-full border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500 sm:text-sm'
+						className='text-black block w-full border-gray-300 rounded-md shadow-xs focus:ring-green-500 focus:border-green-500 sm:text-sm'
 					/>
 				</div>
 			</div>

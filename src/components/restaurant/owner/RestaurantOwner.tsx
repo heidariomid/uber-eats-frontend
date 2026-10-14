@@ -14,9 +14,9 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 			{restaurant?.menu?.length === 0 ? (
 				<RestaurantSoon restaurant={restaurant} />
 			) : (
-				<div className='h-full mx-auto lg:max-w-screen-xl max-w-screen-sm items-center justify-center'>
+				<div className='h-full mx-auto lg:max-w-(--breakpoint-xl) max-w-(--breakpoint-sm) items-center justify-center'>
 					<div className=' bg-cover bg-center py-36 w-full  ' style={{backgroundImage: `url(${restaurant?.coverImg})`}}>
-						<div className={`${isDark ? 'bg-black' : 'bg-white '} py-12 w-full bg-opacity-90 lg:w-1/2  flex flex-col`}>
+						<div className={`${isDark ? 'bg-black/90' : 'bg-white/90'} py-12 w-full lg:w-1/2  flex flex-col`}>
 							<div className='pl-14 '>
 								<h1 className='font-bold mt-2 text-4xl '>{restaurant?.name}</h1>
 								<div className={`text-xl mt-4 ${isDark ? 'text-white' : 'text-gray-700'} `}>{restaurant?.category?.name}</div>
@@ -41,7 +41,7 @@ const RestaurantOwner = ({restaurant}: {restaurant: Restaurant}) => {
 						{restaurant?.menu?.length === 0 ? (
 							<h1 className='bg-zinc-700  mt-10 text-white py-10 text-center text-2xl w-full px-4 span rounded-md'>No Dish Added !</h1>
 						) : (
-							<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 max-w-screen-md mx-auto md:max-w-screen-md lg:max-w-screen-xl mb-20'>
+							<div className='grid mt-16 md:grid-cols-3  gap-x-5 gap-y-10 max-w-(--breakpoint-md) mx-auto md:max-w-(--breakpoint-md) lg:max-w-(--breakpoint-xl) mb-20'>
 								{restaurant?.menu?.map((dish, i) => (
 									<Dish key={i} dish={dish} />
 								))}

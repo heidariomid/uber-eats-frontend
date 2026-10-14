@@ -92,7 +92,7 @@ const PaymentSuccess = () => {
 						</h2>
 
 						<div className='space-y-8'>
-							<div key={orderId} className={` ${isDark ? 'bg-black' : 'bg-white'} border-t border-b border-gray-200 shadow-sm sm:border sm:rounded-lg`}>
+							<div key={orderId} className={` ${isDark ? 'bg-black' : 'bg-white'} border-t border-b border-gray-200 shadow-xs sm:border sm:rounded-lg`}>
 								<div className='py-6 px-4 sm:px-6 '>
 									<div className='flex flex-col md:flex-row justify-center items-center'>
 										<img

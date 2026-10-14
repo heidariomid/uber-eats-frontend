@@ -136,7 +136,7 @@ const PaymentForms = () => {
 								name='same-as-shipping'
 								type='checkbox'
 								defaultChecked
-								className='h-4 w-4 border-gray-300 rounded text-green-600 focus:ring-green-500'
+								className='h-4 w-4 border-gray-300 rounded-sm text-green-600 focus:ring-green-500'
 							/>
 						</div>
 						<label htmlFor='same-as-shipping' className={`block text-sm font-medium  ${isDark ? 'text-white' : 'text-gray-900'}`}>
@@ -146,7 +146,7 @@ const PaymentForms = () => {
 
 					<button
 						type='submit'
-						className='w-full flex items-center justify-center bg-green-400 border border-transparent text-white rounded-md py-2 hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'
+						className='w-full flex items-center justify-center bg-green-400 border border-transparent text-white rounded-md py-2 hover:bg-green-500 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-gray-900'
 					>
 						<span className='text-black font-bold px-2'>Pay with</span>
 						<img className='h-5 w-auto' src={Zarinpal.src} alt='zarinpal-logo' />
@@ -160,7 +160,7 @@ const PaymentForms = () => {
 						</div>
 					</div>
 
-					<button type='button' disabled className='w-full bg-gray-300 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
+					<button type='button' disabled className='w-full bg-gray-300 border border-transparent rounded-md shadow-xs py-2 px-4 text-sm font-medium text-white hover:bg-gray-700 focus:outline-hidden focus:ring-2 focus:ring-offset-2 focus:ring-green-500'>
 						Pay $ ${(totalAllDishPrice(basketItem) + totaldishOptionsPrice(dishOptionsItem) + totalAllDishPrice(basketItem) * 0.09).toFixed(2)}
 					</button> */}
 					<p className='flex justify-center text-sm font-medium text-gray-500 mt-6'>

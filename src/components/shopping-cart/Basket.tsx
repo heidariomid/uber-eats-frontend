@@ -82,7 +82,7 @@ const Basket = () => {
 					leaveFrom='opacity-100'
 					leaveTo='opacity-0'
 				>
-					<div className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+					<div className='fixed inset-0 bg-gray-500/75 transition-opacity' />
 				</Transition.Child>
 
 				<div className='fixed inset-0 overflow-hidden'>
@@ -131,7 +131,7 @@ const Basket = () => {
 																	const quantity = basketItem?.dishQuantity[dish.id];
 																	return (
 																		<li key={i} className='flex py-6'>
-																			<div className='h-24 w-24 flex-shrink-0 overflow-hidden '>
+																			<div className='h-24 w-24 shrink-0 overflow-hidden '>
 																				<img src={dish?.photo} alt={dish?.name} className='h-full w-full object-cover object-center' />
 																			</div>
 
@@ -198,7 +198,7 @@ const Basket = () => {
 												<div className='mt-6' onClick={() => setOpen(false)}>
 													<Link
 														href='/checkout'
-														className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700'
+														className='flex items-center justify-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-green-700'
 													>
 														Checkout
 													</Link>

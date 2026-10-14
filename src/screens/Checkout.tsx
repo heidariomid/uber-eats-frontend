@@ -10,12 +10,12 @@ const Checkout = () => {
 	return (
 		<>
 			<div
-				className={`hidden lg:block fixed top-100 left-0 w-1/2 h-full ${
+				className={`hidden lg:block fixed left-0 w-1/2 h-full ${
 					isDark ? 'bg-black' : 'bg-white'
 				} `}
 			/>
 			<div
-				className={`hidden lg:block fixed top-100 right-0 w-1/2 h-full ${
+				className={`hidden lg:block fixed right-0 w-1/2 h-full ${
 					isDark ? 'bg-neutral-900' : 'bg-gray-100'
 				} `}
 			/>

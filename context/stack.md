@@ -68,7 +68,7 @@ zero utilities while base styles still apply:
 
 ```css
 @import 'tailwindcss' source(none);
-@source "../**/*.{ts,tsx}";
+@source "../**/*.{js,jsx,ts,tsx}";
 ```
 
 Dynamic class names must appear as full literals in a scanned file.

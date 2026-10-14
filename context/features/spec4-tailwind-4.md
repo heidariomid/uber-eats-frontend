@@ -16,7 +16,8 @@ looking the same as it did at the end of spec 3.
   `@tailwindcss/postcss` in `postcss.config.mjs`. Delete
   `tailwind.config.js` and `autoprefixer`
 - Pin the source in `src/app/globals.css`, as the `next` overlay in
-  @context/stack.md shows, scanning `src/**/*.{ts,tsx}`
+  @context/stack.md shows, scanning `src/**/*.{js,jsx,ts,tsx}`
+  (`Footer.jsx` is still JSX)
 - The theme goes under `@theme` in `globals.css`: `h-128` (`50rem`),
   `min-h-1/2` (`50%`), `min-h-1*2` (`120%`), and the `wiggle`
   animation with its keyframes. `lime` is in Tailwind 4's default

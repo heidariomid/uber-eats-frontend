@@ -9,7 +9,7 @@ const PaymentFailed = () => {
 		<div className='container mx-auto px-4 sm:px-6 lg:px-8 '>
 			<div className='flex h-screen  justify-center items-center'>
 				<div className='flex p-10 justify-center items-center bg-red-700 shadow-2xl rounded-lg'>
-					<div className='w-24 mr-5 flex-shrink-0 animate-wiggle'>
+					<div className='w-24 mr-5 shrink-0 animate-wiggle'>
 						<img src={OrderFailedImg.src} alt='' />
 					</div>
 					<div>

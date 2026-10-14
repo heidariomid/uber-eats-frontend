@@ -14,7 +14,7 @@ const OrderItems = ({items, options}) => {
 
 					<ul className='mt-6  grid grid-cols-1 gap-5 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 '>
 						{items?.map((dish, i) => (
-							<li key={dish.id} className='col-span-1 flex shadow-sm rounded-md  '>
+							<li key={dish.id} className='col-span-1 flex shadow-xs rounded-md  '>
 								<div className=' flex-1 flex items-center justify-between  shadow-md border-l-8   border-green-500  rounded-r-md truncate pr-10'>
 									<img src={dish?.photo} alt={dish?.name} className='h-24 w-24 object-cover object-center rounded-l-md' />
 									<div className='flex flex-col px-5'>

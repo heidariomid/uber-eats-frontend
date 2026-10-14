@@ -80,7 +80,7 @@ const RestaurantsSearch = () => {
 
 			<form
 				onSubmit={handleSubmit(onValidSubmit)}
-				className='w-full max-w-screen-md md:max-w-screen-xl flex items-center justify-center font-bold text-lg  text-center py-14 my-4'
+				className='w-full max-w-(--breakpoint-md) md:max-w-(--breakpoint-xl) flex items-center justify-center font-bold text-lg  text-center py-14 my-4'
 			>
 				<input
 					id='searchInput'

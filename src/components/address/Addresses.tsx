@@ -33,7 +33,7 @@ const Addresses = ({selectedAddress, setSelectedAddress, addAddressSelected}) =>
 										return classNames(
 											checking && active && !addAddressSelected && 'bg-green-100',
 											checking && !addAddressSelected && 'bg-green-100',
-											'relative bg-white border rounded-lg shadow-sm p-4 flex cursor-pointer focus:outline-none',
+											'relative bg-white border rounded-lg shadow-xs p-4 flex cursor-pointer focus:outline-hidden',
 										);
 									}}
 								>
