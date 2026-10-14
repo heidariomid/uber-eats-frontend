@@ -1,4 +1,4 @@
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {useLocation} from 'react-router-dom';
 import {isDarkVar} from './apollo/GlobalVar';
 import Header from './components/header/Header';

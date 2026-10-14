@@ -4,9 +4,21 @@ documents: 'src/graphql/*.ts'
 generates:
     src/graphql/schemaTypes.ts:
         plugins:
+            - add:
+                  content: '/* eslint-disable import/first */'
             - 'typescript'
             - 'typescript-operations'
             - 'typescript-react-apollo'
         config:
             declarationKind: 'interface'
             maybeValue: 'T'
+            inputMaybeValue: 'T | null'
+            enumType: enum
+            scalars:
+                DateTime: string
+            importSchemaTypesFrom: src/graphql/schemaTypes.ts
+            apolloReactCommonImportFrom: '@apollo/client/react'
+            apolloReactHooksImportFrom: '@apollo/client/react'
+            withHooks: false
+            withMutationFn: false
+            withMutationOptionsType: false

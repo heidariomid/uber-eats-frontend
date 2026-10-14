@@ -2,10 +2,10 @@ import {Link, useLocation} from 'react-router-dom';
 import PreaperFood from '../../images/preaper.svg';
 import PreaperFoodBlack from '../../images/preaperBlack.svg';
 import OrderSuccessImg from '../../images/order-success.svg';
-import {useQuery, useReactiveVar} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client/react';
 import {GET_ORDER_BY_ID} from '../../graphql/queries';
 import {useEffect, useState} from 'react';
-import {Order, OrderStatus} from '../../graphql/schemaTypes';
+import {GetOrderByIdQuery, GetOrderByIdQueryVariables, OrderStatus, UpdateOrdersSubscription} from '../../graphql/schemaTypes';
 import Loading from '../loading/Loading';
 import {NEW_UPDATE_ORDER} from '../../graphql/subscriptions';
 import {isDarkVar} from '../../apollo/GlobalVar';
@@ -17,7 +17,7 @@ const PaymentSuccess = () => {
 	const isDark = useReactiveVar(isDarkVar);
 	const {state}: {state: any} = useLocation();
 	const orderId = state.orderId;
-	const [order, setOrder] = useState<Order | null>(null);
+	const [order, setOrder] = useState<GetOrderByIdQuery['getOrderById']['order'] | null>(null);
 
 	const orderStatusWidthCal = () => {
 		let number = 1;
@@ -25,34 +25,39 @@ const PaymentSuccess = () => {
 		number = order?.status === OrderStatus.Cooked ? 3 : 1;
 		return `calc((1 * 2 + ${number}) / 8 * 100%)`;
 	};
-	const {data, subscribeToMore} = useQuery(GET_ORDER_BY_ID, {variables: {data: {id: Number(orderId)}}});
+	const {data, subscribeToMore} = useQuery<GetOrderByIdQuery, GetOrderByIdQueryVariables>(GET_ORDER_BY_ID, {variables: {data: {id: Number(orderId)}}});
 	useEffect(() => {
 		if (!data?.getOrderById.ok) {
 			setOrder(null);
 		}
 		if (data?.getOrderById.ok && data?.getOrderById.order) {
-			subscribeToMore({
+			subscribeToMore<UpdateOrdersSubscription>({
 				document: NEW_UPDATE_ORDER,
-				updateQuery: (prev, {subscriptionData}) => {
-					if (!subscriptionData.data) {
-						return prev;
+				updateQuery: (_prev, {subscriptionData, complete, previousData}) => {
+					if (!complete || !subscriptionData.data) {
+						return;
 					}
 					const {updateOrders} = subscriptionData.data;
 
 					if (updateOrders.status === OrderStatus.Failed) {
 						return {
+							...previousData,
 							getOrderById: {
+								...previousData.getOrderById,
 								ok: false,
 								message: 'Order cancelled',
-								order: null,
 							},
 						};
 					}
 
 					return {
+						...previousData,
 						getOrderById: {
-							...prev.getOrderById,
-							order: {...updateOrders},
+							...previousData.getOrderById,
+							order: {
+								...previousData.getOrderById.order,
+								status: updateOrders.status,
+							},
 						},
 					};
 				},
@@ -74,7 +79,7 @@ const PaymentSuccess = () => {
 						<div>
 							Order placed:
 							<time dateTime='2021-03-22' className={`pl-2 font-medium ${isDark ? 'text-white ' : 'text-gray-900 '}`}>
-								{new Date(order.createdAt).toLocaleDateString()}
+								{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : ''}
 							</time>
 						</div>
 					</div>

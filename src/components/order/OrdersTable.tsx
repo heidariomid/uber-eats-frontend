@@ -1,9 +1,9 @@
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {Link} from 'react-router-dom';
 import {isDarkVar} from '../../apollo/GlobalVar';
-import {Order, OrderStatus} from '../../graphql/schemaTypes';
+import {GetOrdersQuery, OrderStatus} from '../../graphql/schemaTypes';
 
-const OrdersTable = ({orders}: {orders: Order[] | null}) => {
+const OrdersTable = ({orders}: {orders: GetOrdersQuery['getOrders']['orders'] | null}) => {
 	const isDark = useReactiveVar(isDarkVar);
 
 	const orderStatusStyle = (status) => {
@@ -54,7 +54,7 @@ const OrdersTable = ({orders}: {orders: Order[] | null}) => {
 								</tr>
 							</thead>
 							<tbody className={` ${isDark ? 'bg-black ' : 'bg-white '} divide-y divide-gray-200`}>
-								{orders?.map((order: Order) => (
+								{orders?.map((order) => (
 									<tr key={order.id}>
 										<td className='px-6 py-4 whitespace-nowrap'>
 											<div className='flex items-center'>
@@ -69,7 +69,7 @@ const OrdersTable = ({orders}: {orders: Order[] | null}) => {
 										</td>
 
 										<td className='px-6 py-4 whitespace-nowrap'>
-											<div className='text-sm text-gray-900'>{new Date(order.createdAt).toLocaleDateString()}</div>
+											<div className='text-sm text-gray-900'>{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : ''}</div>
 										</td>
 										<td className='px-6 py-4 whitespace-nowrap'>
 											<span className={`w-16 inline-flex  text-center justify-center text-xs leading-5 font-semibold rounded-full  text-gray-600 ${orderStatusStyle(order.status)}`}>{order.status}</span>

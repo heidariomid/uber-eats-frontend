@@ -1,10 +1,10 @@
 import {Fragment} from 'react';
 import {Popover, Transition} from '@headlessui/react';
-import {ChevronUpIcon} from '@heroicons/react/solid';
+import {ChevronUpIcon} from '@heroicons/react/24/solid';
 import {Link} from 'react-router-dom';
 import {totaldishPrice, totalAllDishPrice} from './Basket';
 import {v4 as uuidv4} from 'uuid';
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {isDarkVar} from '../../apollo/GlobalVar';
 const OrderSummary = () => {
 	const dishOptionsItem: any = [];

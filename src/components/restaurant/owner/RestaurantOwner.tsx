@@ -1,4 +1,4 @@
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {faEdit} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {Link} from 'react-router-dom';

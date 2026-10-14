@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client/react';
 import {useForm} from 'react-hook-form';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -92,7 +92,12 @@ const EditRestaurant = () => {
 		onCompleted,
 		refetchQueries: [{query: RESTAURANT_OWNER, variables: {data: {restaurantId: Number(id)}}}],
 	});
-	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
+	const {data: categoriesData} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES);
+	useEffect(() => {
+		if (categoriesData) {
+			onCompletedCategories(categoriesData);
+		}
+	}, [categoriesData]);
 
 	useEffect(() => {
 		const {category} = getValues();

@@ -1,44 +1,49 @@
 import {Link, useParams} from 'react-router-dom';
-import {Order, OrderStatus} from '../../graphql/schemaTypes';
+import {GetOrderByIdQuery, GetOrderByIdQueryVariables, OrderStatus, UpdateOrdersSubscription} from '../../graphql/schemaTypes';
 import Loading from '../loading/Loading';
 import {useEffect, useState} from 'react';
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import {GET_ORDER_BY_ID} from '../../graphql/queries';
 import OrderDetails from './OrderDetails';
 import {NEW_UPDATE_ORDER} from '../../graphql/subscriptions';
 
 const OrderSingle = () => {
-	const [order, setOrder] = useState<Order | null>(null);
+	const [order, setOrder] = useState<GetOrderByIdQuery['getOrderById']['order'] | null>(null);
 	const orderId = useParams().id;
 
-	const {data, subscribeToMore} = useQuery(GET_ORDER_BY_ID, {variables: {data: {id: Number(orderId)}}});
+	const {data, subscribeToMore} = useQuery<GetOrderByIdQuery, GetOrderByIdQueryVariables>(GET_ORDER_BY_ID, {variables: {data: {id: Number(orderId)}}});
 	useEffect(() => {
 		if (!data?.getOrderById.ok) {
 			setOrder(null);
 		}
 		if (data?.getOrderById.ok && data?.getOrderById.order) {
-			subscribeToMore({
+			subscribeToMore<UpdateOrdersSubscription>({
 				document: NEW_UPDATE_ORDER,
-				updateQuery: (prev, {subscriptionData}) => {
-					if (!subscriptionData.data) {
-						return prev;
+				updateQuery: (_prev, {subscriptionData, complete, previousData}) => {
+					if (!complete || !subscriptionData.data) {
+						return;
 					}
 					const {updateOrders} = subscriptionData.data;
 
 					if (updateOrders.status === OrderStatus.Failed) {
 						return {
+							...previousData,
 							getOrderById: {
+								...previousData.getOrderById,
 								ok: false,
 								message: 'Order cancelled',
-								order: null,
 							},
 						};
 					}
 
 					return {
+						...previousData,
 						getOrderById: {
-							...prev.getOrderById,
-							order: {...updateOrders},
+							...previousData.getOrderById,
+							order: {
+								...previousData.getOrderById.order,
+								status: updateOrders.status,
+							},
 						},
 					};
 				},

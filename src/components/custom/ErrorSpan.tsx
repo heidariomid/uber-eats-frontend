@@ -1,11 +1,12 @@
 interface IErrorSpan {
-	message?: string;
+	message?: unknown;
 }
 const ErrorSpan: React.FC<IErrorSpan> = ({message}) => {
-	if (message) {
+	const text = typeof message === 'string' ? message : undefined;
+	if (text) {
 		return (
 			<span role={'alert'} className='bg-red-600 text-white px-4 span rounded-md absolute '>
-				{message}
+				{text}
 			</span>
 		);
 	}

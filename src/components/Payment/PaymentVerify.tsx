@@ -1,5 +1,5 @@
 import {useEffect} from 'react';
-import {useMutation} from '@apollo/client';
+import {useMutation} from '@apollo/client/react';
 import {VERIFY_PAYMENT} from '../../graphql/mutations';
 import {useNavigate} from 'react-router-dom';
 import Loading from '../loading/Loading';

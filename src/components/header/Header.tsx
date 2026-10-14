@@ -12,16 +12,16 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import {Link} from 'react-router-dom';
 import {themeHandler, userLoggedOut} from '../../apollo';
-import {useQuery, useReactiveVar} from '@apollo/client';
+import {useQuery, useReactiveVar} from '@apollo/client/react';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 import useUser from '../../hooks/useUser';
-import {Order, OrderStatus, UserRole} from '../../graphql/schemaTypes';
+import {GetOrdersQuery, GetOrdersQueryVariables, OrderStatus, UserRole} from '../../graphql/schemaTypes';
 import {ORDERS} from '../../graphql/queries';
 import {useEffect, useState} from 'react';
 import Loading from '../loading/Loading';
-import {SunIcon} from '@heroicons/react/solid';
+import {SunIcon} from '@heroicons/react/24/solid';
 
 const Header = () => {
 	const isDark = useReactiveVar(isDarkVar);
@@ -37,9 +37,9 @@ const Header = () => {
 			payload: {status: basketItem?.status ? false : true},
 		});
 	};
-	const [orders, setOrders] = useState<Order[] | null>(null);
+	const [orders, setOrders] = useState<GetOrdersQuery['getOrders']['orders'] | null>(null);
 	const [totalQuantity, setTotalQuantity] = useState<number | null>(null);
-	const {data} = useQuery(ORDERS, {variables: {data: {status: OrderStatus.Cooking}}});
+	const {data} = useQuery<GetOrdersQuery, GetOrdersQueryVariables>(ORDERS, {variables: {data: {status: OrderStatus.Cooking}}});
 	useEffect(() => {
 		if (!data?.getOrders.ok) {
 			setOrders(null);

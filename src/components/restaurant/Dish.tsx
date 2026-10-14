@@ -1,4 +1,4 @@
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {useState} from 'react';
 import {isDarkVar} from '../../apollo/GlobalVar';
 import {Dish as IDish} from '../../graphql/schemaTypes';

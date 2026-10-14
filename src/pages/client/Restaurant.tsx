@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {RESTAURANT} from '../../graphql/queries';
 import {RestaurantQuery, RestaurantQueryVariables} from '../../graphql/schemaTypes';
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import Loading from '../../components/loading/Loading';
 import Restaurant from '../../components/restaurant/client/Restaurant';
 import ErrorPage from '../../components/custom/ErrorPage';

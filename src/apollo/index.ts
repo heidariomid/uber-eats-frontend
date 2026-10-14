@@ -1,10 +1,9 @@
-import {ApolloClient, ApolloLink, createHttpLink, InMemoryCache, split} from '@apollo/client';
-import {setContext} from '@apollo/client/link/context';
-import {isDarkVar, isLoginVar} from './GlobalVar';
-import {createClient} from 'graphql-ws';
+import {ApolloClient, ApolloLink, HttpLink, InMemoryCache} from '@apollo/client';
+import {SetContextLink} from '@apollo/client/link/context';
 import {GraphQLWsLink} from '@apollo/client/link/subscriptions';
 import {getMainDefinition} from '@apollo/client/utilities';
-import {authToken} from './GlobalVar';
+import {createClient} from 'graphql-ws';
+import {authToken, isDarkVar, isLoginVar} from './GlobalVar';
 
 const url =
 	process.env.NODE_ENV === 'production'
@@ -13,16 +12,16 @@ const url =
 const wsLink = new GraphQLWsLink(
 	createClient({
 		url,
-		connectionParams: {
-			authToken,
-		},
+		connectionParams: () => ({
+			authToken: authToken(),
+		}),
 	}),
 );
 const uri =
 	process.env.NODE_ENV === 'production'
 		? 'https://uber-back.iran.liara.run/graphql'
 		: 'http://localhost:4000/graphql';
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
 	uri,
 });
 const cleanTypeName = new ApolloLink((operation, forward) => {
@@ -30,21 +29,19 @@ const cleanTypeName = new ApolloLink((operation, forward) => {
 		const omitTypename = (key, value) => (key === '__typename' ? undefined : value);
 		operation.variables = JSON.parse(JSON.stringify(operation.variables), omitTypename);
 	}
-	return forward(operation).map((data) => {
-		return data;
-	});
+	return forward(operation);
 });
 const httpLinkWithErrorHandling = ApolloLink.from([cleanTypeName, httpLink]);
-const authLink = setContext((_, {headers}) => {
+const authLink = new SetContextLink((prevContext) => {
 	const token = localStorage.getItem('token');
 	return {
 		headers: {
-			...headers,
+			...prevContext.headers,
 			authorization: token ? token : '',
 		},
 	};
 });
-const splitLink = split(
+const splitLink = ApolloLink.split(
 	({query}) => {
 		const definition = getMainDefinition(query);
 		return definition.kind === 'OperationDefinition' && definition.operation === 'subscription';

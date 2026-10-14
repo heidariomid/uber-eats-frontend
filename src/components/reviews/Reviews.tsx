@@ -1,5 +1,5 @@
-import {useReactiveVar} from '@apollo/client';
-import {StarIcon} from '@heroicons/react/solid';
+import {useReactiveVar} from '@apollo/client/react';
+import {StarIcon} from '@heroicons/react/24/solid';
 import {isDarkVar} from '../../apollo/GlobalVar';
 
 const reviews = [

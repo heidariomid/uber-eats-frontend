@@ -1,4 +1,4 @@
-import {useMutation, useReactiveVar} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client/react';
 import {useForm} from 'react-hook-form';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import 'react-phone-number-input/style.css';

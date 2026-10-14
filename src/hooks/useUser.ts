@@ -1,4 +1,4 @@
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import {authToken} from '../apollo/GlobalVar';
 import {LOGGED_IN_USER} from '../graphql/queries';
 import {LoggedInUserQuery} from '../graphql/schemaTypes';

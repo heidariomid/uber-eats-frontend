@@ -2,7 +2,7 @@ import {faLock} from '@fortawesome/free-solid-svg-icons';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {totalAllDishPrice} from '../shopping-cart/Basket';
 import Zarinpal from '../../images/zarinpal.png';
-import {useMutation, useReactiveVar} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client/react';
 import {AddressItem, CreateOrderMutation, CreateOrderMutationVariables} from '../../graphql/schemaTypes';
 import {CREATE_ORDER} from '../../graphql/mutations';
 import {useNavigate} from 'react-router-dom';

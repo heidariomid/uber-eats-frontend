@@ -1,4 +1,4 @@
-import {useMutation, useQuery} from '@apollo/client';
+import {useMutation, useQuery} from '@apollo/client/react';
 import {useForm} from 'react-hook-form';
 import {Link, useNavigate} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
@@ -55,7 +55,12 @@ const AddRestaurant = () => {
 		onCompleted,
 		refetchQueries: [{query: RESTAURANTS_OWNER}],
 	});
-	useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
+	const {data: categoriesData} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES);
+	useEffect(() => {
+		if (categoriesData) {
+			onCompletedCategories(categoriesData);
+		}
+	}, [categoriesData]);
 
 	const onValidSubmit = async () => {
 		if (loading) return;

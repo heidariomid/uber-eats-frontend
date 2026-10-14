@@ -6,7 +6,7 @@ import useUser from '../../hooks/useUser';
 import PreaperFood from '../../images/preaper.svg';
 import PreaperFoodDark from '../../images/preaperBlack.svg';
 import Dining from '../../images/dining.svg';
-import {useMutation, useReactiveVar} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client/react';
 import {EDIT_ORDER} from '../../graphql/mutations';
 import {isDarkVar} from '../../apollo/GlobalVar';
 function classNames(...classes) {

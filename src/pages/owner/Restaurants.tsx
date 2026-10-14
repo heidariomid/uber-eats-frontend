@@ -1,5 +1,5 @@
-import {useQuery, useReactiveVar} from '@apollo/client';
-import {useState} from 'react';
+import {useQuery, useReactiveVar} from '@apollo/client/react';
+import {useEffect, useState} from 'react';
 import Loading from '../../components/loading/Loading';
 import {CATEGORIES, RESTAURANTS_OWNER} from '../../graphql/queries';
 import {CategoriesQuery, CategoriesQueryVariables, RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables} from '../../graphql/schemaTypes';
@@ -35,7 +35,6 @@ const Restaurants = () => {
 	};
 
 	const {loading, error, data} = useQuery<RestaurantsOwnerQuery, RestaurantsOwnerQueryVariables>(RESTAURANTS_OWNER, {
-		onCompleted: onCompletedRestaurants,
 		variables: {data: {page}},
 	});
 	const onCompletedCategories = (data: CategoriesQuery) => {
@@ -48,7 +47,17 @@ const Restaurants = () => {
 		}
 	};
 
-	const {loading: categoriesLoading, error: categoriesError} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES, {onCompleted: onCompletedCategories});
+	const {loading: categoriesLoading, error: categoriesError, data: categoriesData} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES);
+	useEffect(() => {
+		if (data) {
+			onCompletedRestaurants(data);
+		}
+	}, [data]);
+	useEffect(() => {
+		if (categoriesData) {
+			onCompletedCategories(categoriesData);
+		}
+	}, [categoriesData]);
 	return (
 		<>
 			{categoriesLoading && <Loading />}
@@ -106,7 +115,7 @@ const Restaurants = () => {
 						)}
 					</section>
 					<div className='h-24 '></div>
-					<Pagination totalPages={data?.getOwnerRestaurants.totalPages} currentPage={page} setCurrentPage={setPage} />
+					<Pagination totalPages={data?.getOwnerRestaurants?.totalPages} currentPage={page} setCurrentPage={setPage} />
 				</div>
 			)}
 		</>

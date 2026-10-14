@@ -1,4 +1,4 @@
-import {useMutation} from '@apollo/client';
+import {useMutation} from '@apollo/client/react';
 import {useEffect, useState} from 'react';
 import {useNavigate} from 'react-router-dom';
 import {VALIDATE_EMAIL} from '../../graphql/mutations';

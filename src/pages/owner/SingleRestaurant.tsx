@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {RESTAURANT_OWNER} from '../../graphql/queries';
 import {RestaurantOwnerQuery, RestaurantOwnerQueryVariables} from '../../graphql/schemaTypes';
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import Loading from '../../components/loading/Loading';
 import ErrorPage from '../../components/custom/ErrorPage';
 import RestaurantOwner from '../../components/restaurant/owner/RestaurantOwner';

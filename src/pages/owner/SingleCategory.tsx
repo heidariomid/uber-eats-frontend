@@ -1,4 +1,4 @@
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import {useParams} from 'react-router-dom';
 import ErrorPage from '../../components/custom/ErrorPage';
 import Loading from '../../components/loading/Loading';

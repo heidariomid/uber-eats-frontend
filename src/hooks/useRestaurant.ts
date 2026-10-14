@@ -1,4 +1,4 @@
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import {useParams} from 'react-router-dom';
 import {RESTAURANT} from '../graphql/queries';
 import {RestaurantQuery, RestaurantQueryVariables} from '../graphql/schemaTypes';

@@ -1,4 +1,4 @@
-import {useMutation, useReactiveVar} from '@apollo/client';
+import {useMutation, useReactiveVar} from '@apollo/client/react';
 import {useEffect} from 'react';
 import {useLocation} from 'react-router-dom';
 import {isDarkVar} from '../../apollo/GlobalVar';

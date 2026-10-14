@@ -1,4 +1,4 @@
-import {useLazyQuery} from '@apollo/client';
+import {useLazyQuery} from '@apollo/client/react';
 import {Transition} from '@headlessui/react';
 import {Fragment, useEffect, useState} from 'react';
 import {useForm} from 'react-hook-form';
@@ -43,13 +43,17 @@ const RestaurantsSearch = () => {
 		}
 	};
 
-	const [handler, {loading}] = useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT, {onCompleted});
+	const [handler, {loading}] = useLazyQuery<SearchRestaurantsQuery, SearchRestaurantsQueryVariables>(SEARCH_RESTAURANT);
 	useEffect(() => {
 		if (query) {
 			handler({
 				variables: {
 					data: {query},
 				},
+			}).then((result) => {
+				if (result.data) {
+					onCompleted(result.data);
+				}
 			});
 		} else if (query === '') {
 			window.location.reload();

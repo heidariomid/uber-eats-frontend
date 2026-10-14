@@ -1,33 +1,33 @@
-import {useQuery} from '@apollo/client';
+import {useQuery} from '@apollo/client/react';
 import {useEffect, useState} from 'react';
 import {ORDERS} from '../../graphql/queries';
-import {Order} from '../../graphql/schemaTypes';
+import {GetOrdersQuery, GetOrdersQueryVariables, UpdateOrdersSubscription} from '../../graphql/schemaTypes';
 import {NEW_UPDATE_ORDER} from '../../graphql/subscriptions';
 import Footer from '../footer/Footer';
 import OrdersTable from './OrdersTable';
 
 const Orders = () => {
-	const [orders, setOrders] = useState<Order[] | null>(null);
+	const [orders, setOrders] = useState<GetOrdersQuery['getOrders']['orders'] | null>(null);
 
-	const {data, subscribeToMore} = useQuery(ORDERS, {variables: {data: {status: null}}});
+	const {data, subscribeToMore} = useQuery<GetOrdersQuery, GetOrdersQueryVariables>(ORDERS, {variables: {data: {status: null}}});
 
 	useEffect(() => {
 		if (!data?.getOrders.ok) {
 			setOrders(null);
 		}
 		if (data?.getOrders.ok && data?.getOrders.orders) {
-			subscribeToMore({
+			subscribeToMore<UpdateOrdersSubscription>({
 				document: NEW_UPDATE_ORDER,
-				updateQuery: (prev, {subscriptionData}) => {
-					if (!subscriptionData.data) {
-						return prev;
+				updateQuery: (_prev, {subscriptionData, complete, previousData}) => {
+					if (!complete || !subscriptionData.data) {
+						return;
 					}
 					const {updateOrders} = subscriptionData.data;
-
 					return {
+						...previousData,
 						getOrders: {
-							...prev.getOrders,
-							order: {...updateOrders},
+							...previousData.getOrders,
+							orders: previousData.getOrders.orders.map((order) => (order.id === updateOrders.id ? {...order, status: updateOrders.status} : order)),
 						},
 					};
 				},

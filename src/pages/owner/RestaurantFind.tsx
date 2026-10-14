@@ -1,7 +1,7 @@
 import {useParams} from 'react-router-dom';
 import {SEARCH_RESTAURANT} from '../../graphql/queries';
 import {SearchRestaurantsQuery, SearchRestaurantsQueryVariables} from '../../graphql/schemaTypes';
-import {useLazyQuery} from '@apollo/client';
+import {useLazyQuery} from '@apollo/client/react';
 import RestaurantCover from '../../components/restaurant/client/RestaurantCover';
 import Loading from '../../components/loading/Loading';
 import Header from '../../components/header/Header';

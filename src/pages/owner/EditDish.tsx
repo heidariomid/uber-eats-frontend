@@ -1,4 +1,4 @@
-import {useMutation, useQuery, useReactiveVar} from '@apollo/client';
+import {useMutation, useQuery, useReactiveVar} from '@apollo/client/react';
 import {useForm} from 'react-hook-form';
 import {Link, useNavigate, useParams} from 'react-router-dom';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';

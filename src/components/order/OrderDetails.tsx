@@ -1,10 +1,10 @@
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {isDarkVar} from '../../apollo/GlobalVar';
-import {Order} from '../../graphql/schemaTypes';
+import {GetOrderByIdQuery} from '../../graphql/schemaTypes';
 import OrderItems from './OrderItems';
 import OrderStatusBar from './OrderStatusBar';
 
-const OrderDetails = ({order}: {order: Order}) => {
+const OrderDetails = ({order}: {order: GetOrderByIdQuery['getOrderById']['order']}) => {
 	const isDark = useReactiveVar(isDarkVar);
 
 	return (
@@ -17,7 +17,7 @@ const OrderDetails = ({order}: {order: Order}) => {
 
 					<p className={`text-sm ${isDark ? 'text-white' : 'text-gray-600'}`}>
 						<time dateTime='2021-03-22' className={`text-sm ${isDark ? 'text-white' : 'text-gray-900 font-medium'}`}>
-							{new Date(order.createdAt).toLocaleDateString()}
+							{order.createdAt ? new Date(order.createdAt).toLocaleDateString() : ''}
 						</time>
 					</p>
 				</div>

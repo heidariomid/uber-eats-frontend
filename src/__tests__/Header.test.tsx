@@ -1,6 +1,6 @@
 import {render} from '@testing-library/react';
 import Header from '../components/header/Header';
-import {MockedProvider} from '@apollo/client/testing';
+import {MockedProvider} from '@apollo/client/testing/react';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 jest.mock('../routes', () => {

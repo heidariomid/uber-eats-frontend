@@ -1,5 +1,5 @@
-import {useQuery, useReactiveVar} from '@apollo/client';
-import {useState} from 'react';
+import {useQuery, useReactiveVar} from '@apollo/client/react';
+import {useEffect, useState} from 'react';
 import ErrorSpan from '../../components/custom/ErrorSpan';
 import Loading from '../../components/loading/Loading';
 import {CATEGORIES, RESTAURANTS} from '../../graphql/queries';
@@ -49,14 +49,20 @@ const Restaurants = () => {
 		}
 	};
 
-	const {loading, error, data} = useQuery<RestaurantsQuery, RestaurantsQueryVariables>(
-		RESTAURANTS,
-		{onCompleted: onCompletedRestaurants, variables: {data: {page, slug}}},
-	);
-	const {loading: categoriesLoading, error: categoriesError} = useQuery<
-		CategoriesQuery,
-		CategoriesQueryVariables
-	>(CATEGORIES, {onCompleted: onCompletedCategories});
+	const {loading, error, data} = useQuery<RestaurantsQuery, RestaurantsQueryVariables>(RESTAURANTS, {
+		variables: {data: {page, slug}},
+	});
+	const {loading: categoriesLoading, error: categoriesError, data: categoriesData} = useQuery<CategoriesQuery, CategoriesQueryVariables>(CATEGORIES);
+	useEffect(() => {
+		if (data) {
+			onCompletedRestaurants(data);
+		}
+	}, [data]);
+	useEffect(() => {
+		if (categoriesData) {
+			onCompletedCategories(categoriesData);
+		}
+	}, [categoriesData]);
 	const restaurantsHandler = () => {
 		if (state.restaurant.restaurants) {
 			return state.restaurant.restaurants.map((restaurant) => (
@@ -114,7 +120,7 @@ const Restaurants = () => {
 								<div className='h-24 '></div>
 								{!loading ? (
 									<Pagination
-										totalPages={data?.getRestaurants.totalPages}
+										totalPages={data?.getRestaurants?.totalPages}
 										currentPage={page}
 										setCurrentPage={setPage}
 									/>

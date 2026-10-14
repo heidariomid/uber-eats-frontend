@@ -1,14 +1,14 @@
 /* This example requires Tailwind CSS v2.0+ */
 import {Fragment, useState} from 'react';
 import {Dialog, Transition} from '@headlessui/react';
-import {XIcon} from '@heroicons/react/outline';
+import {XMarkIcon} from '@heroicons/react/24/outline';
 import {Link} from 'react-router-dom';
 import {useStateValue} from '../../store/context/ContextManager';
 import {actions} from '../../store/actions';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import NumericInput from '../custom/NumericInput';
-import {useReactiveVar} from '@apollo/client';
+import {useReactiveVar} from '@apollo/client/react';
 import {isBasketItemVar, isDarkVar} from '../../apollo/GlobalVar';
 import EmptyBasket from '../../images/empty-basket.svg';
 export const totalAllDishPrice = (basket) => {
@@ -63,7 +63,10 @@ const Basket = () => {
 			<Dialog
 				as='div'
 				className='relative z-10'
-				onClose={setOpen}
+				onClose={() => {
+					setOpen(false);
+					setTimeout(changeBasketStatus, 500);
+				}}
 				onClick={() =>
 					setTimeout(() => {
 						changeBasketStatus();
@@ -113,7 +116,7 @@ const Basket = () => {
 														}}
 													>
 														<span className='sr-only'>Close panel</span>
-														<XIcon className='h-6 w-6 focus:ring-0 focus:border-none' aria-hidden='true' />
+														<XMarkIcon className='h-6 w-6 focus:ring-0 focus:border-none' aria-hidden='true' />
 													</button>
 												</div>
 											</div>
